@@ -1,0 +1,29 @@
+{% extends 'homepage/base.html' %}
+{% block content %}
+<div class="container mt-4">
+  <h2>{{ department.name }}</h2>
+
+  <!-- Sub-navbar -->
+  <ul class="nav nav-tabs mt-4">
+    {% for key in sections %}
+      <li class="nav-item">
+        <a class="nav-link {% if forloop.first %}active{% endif %}" data-bs-toggle="tab" href="#{{ key }}">{{ key|capfirst }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <div class="tab-content mt-3">
+    {% for key, items in sections.items %}
+      <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="{{ key }}">
+        {% for item in items %}
+          <h4>{{ item.heading }}</h4>
+          <p>{{ item.content|linebreaks }}</p>
+          {% if item.table_html %}<div class="table-responsive">{{ item.table_html|safe }}</div>{% endif %}
+          {% if item.image %}<img src="{{ item.image.url }}" class="img-fluid mb-2">{% endif %}
+          {% if item.pdf %}<a href="{{ item.pdf.url }}" target="_blank">Download PDF</a>{% endif %}
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

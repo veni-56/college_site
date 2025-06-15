@@ -1,0 +1,10 @@
+{% extends 'homepage/base.html' %}
+{% block content %}
+{% if content.main_image %}
+        <img src="{{ content.main_image.url }}" alt="Main College Building">
+    {% else %}
+<!-- Handle the case when main_image is empty or null -->
+ <p>No main image available.</p>
+ {% endif %}
+
+{% endblock %}

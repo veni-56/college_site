@@ -1,0 +1,40 @@
+{% extends 'homepage/base.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h2 class="text-success fw-bold text-uppercase">{{ menu.title }}</h2>
+    <hr>
+
+    {% for block in menu.blocks.all %}
+        {% if block.heading %}
+            <h5 class="fw-bold">{{ block.heading }}</h5>
+        {% endif %}
+
+        {% if block.description %}
+            <p>{{ block.description|linebreaks }}</p>
+        {% endif %}
+
+        {% if block.file %}
+            <p class="ms-3">
+                – <a href="{{ block.file.url }}" target="_blank">Click Here</a>
+            </p>
+        {% endif %}
+
+        {% if block.image %}
+            <img src="{{ block.image.url }}" class="img-fluid mb-3" alt="">
+        {% endif %}
+
+        {% if block.video %}
+            <video controls width="100%" class="mb-3">
+                <source src="{{ block.video.url }}" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        {% endif %}
+
+        {% if block.table_html %}
+            <div class="table-responsive">{{ block.table_html|safe }}</div>
+        {% endif %}
+
+        <hr>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'homepage/base.html' %}
+{% block content %}
+
+<!-- IQAC Submenu Navbar -->
+<div class="container mt-4">
+  <ul class="nav nav-pills justify-content-center mb-4" style="background: #f5f5f5; padding: 10px; border-radius: 10px;">
+    {% for menu in submenus %}
+      <li class="nav-item">
+        <a class="nav-link {% if menu.id == current_menu.id %}active{% endif %}"
+           href="{% url 'naac_submenu' menu.id %}">
+           {{ menu.title }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <!-- Submenu Title -->
+  <h3 class="text-center text-primary fw-bold mb-4">{{ current_menu.title }}</h3>
+
+  <!-- Optional: Content Display -->
+  {% for item in contents %}
+    <div class="mb-4">
+      <h5>{{ item.heading }}</h5>
+      {% if item.content_type == 'text' %}
+        <p>{{ item.content }}</p>
+      {% elif item.content_type == 'image' %}
+        <img src="{{ item.image.url }}" class="img-fluid">
+      {% elif item.content_type == 'pdf' %}
+        <a href="{{ item.pdf.url }}" class="btn btn-success" target="_blank">View PDF</a>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
+
+{% endblock %}

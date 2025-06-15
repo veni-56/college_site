@@ -1,0 +1,43 @@
+{% extends 'homepage/base.html' %}
+
+{% block content %}
+<div class="container mt-4">
+  <h2 class="mb-4 text-primary">{{ section.name }}</h2>
+
+  {% for content in contents %}
+    <div class="mb-5">
+      {% if content.heading %}
+        <h4 class="text-dark">{{ content.heading }}</h4>
+      {% endif %}
+
+      {% if content.content %}
+        <p class="text-justify">{{ content.content|linebreaks }}</p>
+      {% endif %}
+
+      {% if content.block %}
+        <blockquote class="blockquote border-start ps-3 text-muted">{{ content.block }}</blockquote>
+      {% endif %}
+
+      {% if content.table %}
+        <div class="table-responsive">
+          {{ content.table|safe }}
+        </div>
+      {% endif %}
+
+      {% if content.image %}
+        <div class="my-3">
+          <img src="{{ content.image.url }}" alt="Image" class="img-fluid rounded shadow">
+        </div>
+      {% endif %}
+
+      {% if content.pdf %}
+        <p>
+          <a class="btn btn-outline-primary" href="{{ content.pdf.url }}" target="_blank">
+            📄 Download PDF
+          </a>
+        </p>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

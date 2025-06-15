@@ -1,0 +1,15 @@
+{% extends 'homepage/base.html' %}
+{% block content %}
+<div class="container">
+  <h2 class="mt-4">Departments</h2>
+  <ul class="list-group">
+    {% for dept in departments %}
+      <li class="list-group-item">
+        <a href="{% url 'department_detail' dept.slug %}">
+          {{ dept.name|linebreaks }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

@@ -1,0 +1,70 @@
+body, html {
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+header, .college-header {
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+}
+
+
+/* Navbar */
+.navbar {
+    font-weight: 500;
+}
+
+.navbar .nav-link {
+    color: black !important;
+}
+
+/* Sub-bar */
+.sub-bar {
+    background-color: #004080;
+    padding: 8px 0;
+    text-align: center;
+}
+
+.sub-bar ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.sub-bar ul li {
+    margin: 0 15px;
+    color: #ffffff;
+    cursor: pointer;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+/* Main Image */
+.main-image {
+    width: 100%;
+    height: auto;
+}
+
+.main-image img {
+    width: 100%;
+    height: auto;
+}
+
+/*.main-image img:hover {
+    transform: scale(1.02);
+}*/
+
+/* Dropdown Submenu Styling */
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -1px;
+    border-radius: 0;
+}
+ .navbar { margin-bottom: 20px; }
+.content-area { padding: 20px; background-color: #f9f9f9; border-radius: 10px; }

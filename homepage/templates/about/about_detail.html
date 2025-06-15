@@ -1,0 +1,32 @@
+{% extends 'homepage/base.html' %}
+{% block title %}{{ submenu.title }}{% endblock %}
+
+{% block content %}
+<div class="container py-4">
+  <h2 class="text-center text-primary fw-bold mb-4">{{ submenu.title }}</h2>
+
+  {% for block in blocks %}
+    <div class="mb-5">
+      <h4 class="fw-bold text-success">{{ block.heading }}</h4>
+
+      {% if block.content %}
+        <p>{{ block.content|linebreaks }}</p>
+      {% endif %}
+
+      {% if block.table_html %}
+        <div class="table-responsive">
+          {{ block.table_html|safe }}
+        </div>
+      {% endif %}
+
+      {% if block.image %}
+        <img src="{{ block.image.url }}" class="img-fluid my-3 rounded">
+      {% endif %}
+
+      {% if block.pdf %}
+        <a href="{{ block.pdf.url }}" class="btn btn-outline-primary btn-sm" target="_blank">View PDF</a>
+      {% endif %}
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}
