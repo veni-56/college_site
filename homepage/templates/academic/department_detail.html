@@ -5,7 +5,7 @@
 
   <!-- Sub-navbar -->
   <ul class="nav nav-tabs mt-4">
-    {% for key in sections %}
+    {% for key in content %}
       <li class="nav-item">
         <a class="nav-link {% if forloop.first %}active{% endif %}" data-bs-toggle="tab" href="#{{ key }}">{{ key|capfirst }}</a>
       </li>
@@ -13,7 +13,7 @@
   </ul>
 
   <div class="tab-content mt-3">
-    {% for key, items in sections.items %}
+    {% for key, items in content.items %}
       <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="{{ key }}">
         {% for item in items %}
           <h4>{{ item.heading }}</h4>

@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
-from .models import HomePageContent,AboutSubmenu, AboutContentBlock,AcademicSubMenu, AcademicContentBlock,Department,Department, DepartmentContent,StudentDeskMenu,NAACSubmenu, NAACContent,ActivitySection
+from .models import HomePageContent,AboutSubmenu, AboutContentBlock,AcademicSubMenu, AcademicContentBlock,Department,Department, DepartmentContent,StudentDeskMenu,NAACSubmenu,ActivitySection
+
 #home
 def home(request):
     content = HomePageContent.objects.first()
@@ -15,7 +16,7 @@ def about_detail_view(request, submenu_id):
     return render(request, 'about/about_detail.html', {
         'submenu': submenu,
         'blocks': blocks
-    })
+    })  
 #academic_detail
 def academic_detail(request, slug):
     submenu = get_object_or_404(AcademicSubMenu, slug=slug)
@@ -49,17 +50,16 @@ def studentdesk_detail(request, slug):
     })
 
 #naac
-def naac_submenu_view(request, submenu_id):
-    submenus = NAACSubmenu.objects.all()
-    current_menu = get_object_or_404(NAACSubmenu, id=submenu_id)
-    contents = NAACContent.objects.filter(submenu=current_menu)  # Optional
-
-    return render(request, 'naac/naac_submenu.html', {
-        'submenus': submenus,
-        'current_menu': current_menu,
-        'contents': contents
+def naac_detail_view(request, submenu_id):
+    submenu = get_object_or_404(NAACSubmenu, id=submenu_id)
+    blocks = NAACContentBlock.objects.filter(submenu=submenu)
+    return render(request, 'naac/naac_detail.html', {
+        'submenu': submenu,
+        'blocks': blocks
     })
-#activityS
+
+
+#activitys
 def activity_detail(request, slug):
     section = get_object_or_404(ActivitySection, slug=slug)
     contents = section.contents.all()

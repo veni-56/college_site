@@ -68,18 +68,16 @@
           </ul>
         </li>
 
-
-
-        <!-- IQAC (dynamic) -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle {% if 'naac' in request.path %}active{% endif %}" href="#"
-             data-bs-toggle="dropdown">NAAC</a>
-          <ul class="dropdown-menu">
-            {% for sub in naac_submenus %}
-              <li><a class="dropdown-item" href="{% url 'naac_submenu' sub.id %}">{{ sub.title }}</a></li>
-            {% endfor %}
-          </ul>
-        </li>
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="naacDropdown" role="button" data-bs-toggle="dropdown">
+    NAAC
+  </a>
+  <ul class="dropdown-menu">
+    {% for item in naac_submenus %}
+      <li><a class="dropdown-item" href="{% url 'naac_detail' item.slug %}">{{ item.title }}</a></li>
+    {% endfor %}
+  </ul>
+</li>
 
     <li class="nav-item dropdown">
   <a class="nav-link dropdown-toggle" href="#" id="activitiesDropdown" role="button" data-bs-toggle="dropdown">

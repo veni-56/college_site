@@ -1,20 +1,21 @@
 from django.contrib import admin
-from .models import HomePageContent,AboutSubmenu, AboutContentBlock,AcademicSubMenu, AcademicContentBlock,Department,Department, DepartmentContent,StudentDeskMenu,StudentDeskContentBlock,NAACSubmenu,NAACContent,ActivitySection, ActivityContent
+from .models import HomePageContent,AboutSubmenu, AboutContentBlock,AcademicSubMenu,AcademicContentBlock,Department,Department, DepartmentContent,StudentDeskMenu,StudentDeskContentBlock,NAACSubmenu,NAACContentBlock,ActivitySection, ActivityContent
 
 admin.site.register(HomePageContent)
-
 
 class AboutContentBlockInline(admin.StackedInline):
     model = AboutContentBlock
     extra = 1
-    fields = ['heading','image', 'content', 'pdf',]
+    fields = ['heading', 'image', 'content', 'table_html', 'pdf']
 
+class AboutSubmenuAdmin(admin.ModelAdmin):
+    inlines = [AboutContentBlockInline]
+
+admin.site.register(AboutSubmenu, AboutSubmenuAdmin)
 admin.site.register(AcademicSubMenu)
 admin.site.register(AcademicContentBlock)
-from django.contrib import admin
-from .models import Department, DepartmentContent
 
-class DepartmentContentInline(admin.StackedInline):  # You can change to TabularInline if preferred
+class DepartmentContentInline(admin.StackedInline):  
     model = DepartmentContent
     extra = 1
     show_change_link = True
@@ -43,8 +44,17 @@ class StudentDeskMenuAdmin(admin.ModelAdmin):
     inlines = [StudentDeskContentBlockInline]
 
 admin.site.register(StudentDeskMenu, StudentDeskMenuAdmin)
-admin.site.register(NAACSubmenu)
-admin.site.register(NAACContent)
+
+class NAACContentBlockInline(admin.StackedInline):
+    model = NAACContentBlock
+    extra = 1
+    fields = ['heading', 'image', 'content', 'table_html', 'pdf']
+
+class NAACSubmenuAdmin(admin.ModelAdmin):
+    inlines = [NAACContentBlockInline]
+
+admin.site.register(NAACSubmenu, NAACSubmenuAdmin)
+
 
 @admin.register(ActivitySection)
 class ActivitySectionAdmin(admin.ModelAdmin):

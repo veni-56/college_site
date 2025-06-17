@@ -8,7 +8,7 @@ urlpatterns = [
     path('academic/department/<slug:slug>/', views.department_detail, name='department_detail'),
     path('academic/<slug:slug>/', views.academic_detail, name='academic_detail'),
     path('students-desk/<slug:slug>/', views.studentdesk_detail, name='student_desk_detail'),
-    path('naac/<int:submenu_id>/', views.naac_submenu_view, name='naac_submenu'),
+    path('<int:submenu_id>/', views.naac_detail_view, name='naac_detail'),
     path('activities/<slug:slug>/', views.activity_detail, name='activity_detail'),
 
 
