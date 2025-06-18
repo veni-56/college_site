@@ -17,7 +17,7 @@ def basic_info(request):
         "college_info" : HomePageContent.objects.first(),
         "about_menus": AboutSubmenu.objects.all(),
         "student_desk_menus": StudentDeskMenu.objects.all(),
-        "naac_submenus": NAACSubmenu.objects.all(),
+        "submenus": NAACSubmenu.objects.all(),
         "nav_sections":parents,
 
     }
