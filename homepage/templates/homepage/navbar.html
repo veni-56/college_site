@@ -73,9 +73,9 @@
     NAAC
   </a>
   <ul class="dropdown-menu">
-    {% for item in naac_submenus %}
-      <li><a class="dropdown-item" href="{% url 'naac_detail' item.slug %}">{{ item.title }}</a></li>
-    {% endfor %}
+    {% for submenu in submenus %}
+  <a href="{% url 'naac_detail' submenu.id %}">{{ submenu.title }}</a>
+{% endfor %}
   </ul>
 </li>
 
