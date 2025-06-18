@@ -7,6 +7,7 @@ from .models import (
 )
 from django.db.models import Prefetch
 
+# Updated for submenu fix
 def basic_info(request):
     parents = ActivitySection.objects.filter(parent__isnull=True).prefetch_related(
     Prefetch('children', queryset=ActivitySection.objects.filter(parent__isnull=False))
