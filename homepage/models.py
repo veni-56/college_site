@@ -112,18 +112,19 @@ class NAACSubmenu(models.Model):
 
     def __str__(self):
         return self.title
-
-
 class NAACContentBlock(models.Model):
-    submenu = models.ForeignKey(NAACSubmenu, on_delete=models.CASCADE, related_name='content_blocks')
-    heading = models.CharField(max_length=200, blank=True, null=True)
-    content = models.TextField(blank=True, null=True)
-    table_html = models.TextField(blank=True, null=True)
+    submenu = models.ForeignKey(NAACSubmenu, on_delete=models.CASCADE)
+    heading = models.CharField(max_length=200, blank=True)
+    content = models.TextField(blank=True)
     image = models.ImageField(upload_to='naac/images/', blank=True, null=True)
     pdf = models.FileField(upload_to='naac/pdfs/', blank=True, null=True)
+    table_html = models.TextField(blank=True)
+    date = models.DateField(auto_now_add=True)  
 
     def __str__(self):
-        return f"{self.submenu.title} - {self.heading}"
+        return self.heading or "Untitled Content"
+
+
 
 
 
