@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils.text import slugify
 
+
 class HomePageContent(models.Model):
     college_name = models.CharField(max_length=200)
     logo = models.ImageField(upload_to='logos/')
@@ -119,8 +120,7 @@ class NAACContentBlock(models.Model):
     image = models.ImageField(upload_to='naac/images/', blank=True, null=True)
     pdf = models.FileField(upload_to='naac/pdfs/', blank=True, null=True)
     table_html = models.TextField(blank=True)
-    date = models.DateField(default=now)
- 
+    
     def __str__(self):
         return self.heading or "Untitled Content"
 
