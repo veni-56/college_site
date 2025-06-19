@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import HomePageContent,AboutSubmenu, AboutContentBlock,AcademicSubMenu, AcademicContentBlock,Department,Department, DepartmentContent,StudentDeskMenu,NAACSubmenu,ActivitySection
+from .models import HomePageContent,AboutSubmenu, AboutContentBlock,AcademicSubMenu, AcademicContentBlock,Department,Department, DepartmentContent,StudentDeskMenu,NAACSubmenu,NAACContentBlock,ActivitySection
 
 #home
 def home(request):
