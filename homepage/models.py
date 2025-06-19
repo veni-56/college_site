@@ -122,8 +122,9 @@ class NAACContentBlock(models.Model):
     table_html = models.TextField(blank=True)
     
     def __str__(self):
-        return self.heading or "Untitled Content"
-
+        return f"{self.submenu.title} - {self.heading}"
+    
+    
 
 
 
