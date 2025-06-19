@@ -67,15 +67,20 @@
         </li>
 
 <li class="nav-item dropdown">
-  <a class="nav-link dropdown-toggle" href="#" id="naacDropdown" role="button" data-bs-toggle="dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="naacDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     NAAC
   </a>
   <ul class="dropdown-menu" aria-labelledby="naacDropdown">
     {% for submenu in submenus %}
-  <a href="{% url 'naac_detail' submenu.id %}">{{ submenu.title }}</a>
-{% endfor %}
+      <li>
+        <a class="dropdown-item" href="{% url 'naac_detail' submenu.id %}">
+          {{ submenu.title }}
+        </a>
+      </li>
+    {% endfor %}
   </ul>
 </li>
+
 
 
     <li class="nav-item dropdown">
