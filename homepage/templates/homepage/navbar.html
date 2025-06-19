@@ -72,7 +72,7 @@
   <a class="nav-link dropdown-toggle" href="#" id="naacDropdown" role="button" data-bs-toggle="dropdown">
     NAAC
   </a>
-  <ul class="dropdown-menu">
+  <ul class="dropdown-menu" aria-labelledby="naacDropdown">
     {% for submenu in submenus %}
   <a href="{% url 'naac_detail' submenu.id %}">{{ submenu.title }}</a>
 {% endfor %}
