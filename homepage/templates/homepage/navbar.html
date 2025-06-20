@@ -66,22 +66,20 @@
           </ul>
         </li>
 
-<li class="nav-item dropdown">
-  <a class="nav-link dropdown-toggle" href="#" id="naacDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+        <li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="naacDropdown" role="button">
     NAAC
   </a>
   <ul class="dropdown-menu" aria-labelledby="naacDropdown">
     {% for submenu in submenus %}
-      <li>
-        <a class="dropdown-item" href="{% url 'naac_detail' submenu.id %}">
-          {{ submenu.title }}
-        </a>
-      </li>
+      {% if request.path == '/' %}
+        <li><a class="dropdown-item" href="#" onclick="return false;">{{ submenu.title }}</a></li>
+      {% else %}
+        <li><a class="dropdown-item" href="{% url 'naac_detail' submenu.id %}">{{ submenu.title }}</a></li>
+      {% endif %}
     {% endfor %}
   </ul>
 </li>
-
-
 
     <li class="nav-item dropdown">
   <a class="nav-link dropdown-toggle" href="#" id="activitiesDropdown" role="button" data-bs-toggle="dropdown">
