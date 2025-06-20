@@ -5,7 +5,6 @@ from django.utils.text import slugify
 class HomePageContent(models.Model):
     college_name = models.CharField(max_length=200)
     logo = models.ImageField(upload_to='logos/')
-    main_image = models.ImageField(upload_to='main_images/', null=True, blank=True)
 
     def __str__(self):
         return self.college_name
