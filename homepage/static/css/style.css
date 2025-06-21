@@ -118,3 +118,15 @@ header, .college-header {
     display: none;
   }
 }
+.akddr-box {
+  width: 180px;
+  padding: 25px 10px 15px;
+  border-top-left-radius: 60% 40%;
+  border-top-right-radius: 60% 40%;
+  transition: transform 0.3s ease;
+}
+
+.akddr-box:hover {
+  transform: translateY(-5px);
+  background-color: #e8f0ff;
+}
