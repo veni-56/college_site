@@ -1,5 +1,6 @@
 from .models import (
     HomePageContent,
+    SliderImage,
     AboutSubmenu,
     StudentDeskMenu,
     NAACSubmenu,
@@ -16,6 +17,7 @@ def basic_info(request):
 
     return {
         "college_info" : HomePageContent.objects.first(),
+        'slider_images': SliderImage.objects.all()
         "about_menus": AboutSubmenu.objects.all(),
         "student_desk_menus": StudentDeskMenu.objects.all(),
         "submenus": NAACSubmenu.objects.all(),
