@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import HomePageContent,AboutSubmenu, AboutContentBlock,AcademicSubMenu, AcademicContentBlock,Department,Department, DepartmentContent,StudentDeskMenu,NAACSubmenu,NAACContentBlock,ActivitySection
+from .models import HomePageContent,SliderImage,AboutSubmenu, AboutContentBlock,AcademicSubMenu, AcademicContentBlock,Department,Department, DepartmentContent,StudentDeskMenu,NAACSubmenu,NAACContentBlock,ActivitySection
 
 #home
 def home(request):
@@ -9,6 +9,11 @@ def home(request):
         'content': content,
         'about_pages': about_pages
     })
+
+def home(request):
+    slider_images = SliderImage.objects.all()
+    return render(request, 'homepage/home.html', {'slider_images': slider_images})
+
 #about
 def about_detail_view(request, submenu_id):
     submenu = get_object_or_404(AboutSubmenu, id=submenu_id)
