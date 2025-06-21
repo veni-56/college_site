@@ -9,6 +9,14 @@ class HomePageContent(models.Model):
     def __str__(self):
         return self.college_name
 
+class SliderImage(models.Model):
+    image = models.ImageField(upload_to='slider/')
+    caption = models.CharField(max_length=200, blank=True)
+
+    def __str__(self):
+        return self.caption or f"Slider Image {self.id}"
+
+
 
 class AboutSubmenu(models.Model):
     title = models.CharField(max_length=200)
