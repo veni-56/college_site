@@ -17,7 +17,7 @@ def basic_info(request):
 
     return {
         "college_info" : HomePageContent.objects.first(),
-        'slider_images': SliderImage.objects.all()
+        'slider_images': SliderImage.objects.all(),
         "about_menus": AboutSubmenu.objects.all(),
         "student_desk_menus": StudentDeskMenu.objects.all(),
         "submenus": NAACSubmenu.objects.all(),
