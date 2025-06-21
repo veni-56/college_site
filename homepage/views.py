@@ -12,7 +12,7 @@ def home(request):
 
 def home(request):
     slider_images = SliderImage.objects.all()
-    return render(request, 'homepage/home.html', {'slider_images': slider_images})
+    return render(request, 'homepage/index.html', {'slider_images': slider_images})
 
 #about
 def about_detail_view(request, submenu_id):
