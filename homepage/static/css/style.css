@@ -120,6 +120,7 @@ header, .college-header {
 }
 .akddr-box {
   width: 180px;
+  background-color: #004080;
   padding: 25px 10px 15px;
   border-top-left-radius: 60% 40%;
   border-top-right-radius: 60% 40%;
