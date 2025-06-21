@@ -72,8 +72,8 @@ header, .college-header {
 /* ========== Slider Image Style ========== */
 .carousel-inner img {
   width: 100%;
-  height: 100vh; /* 80% of screen height */
-  object-fit: cover; /* Maintain image ratio, crop if needed */
+  height: 100vh; 
+  object-fit: cover; 
 }
 
 /* ========== Caption Style ========== */
