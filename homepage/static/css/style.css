@@ -68,3 +68,53 @@ header, .college-header {
 }
  .navbar { margin-bottom: 20px; }
 .content-area { padding: 20px; background-color: #f9f9f9; border-radius: 10px; }
+
+/* ========== Slider Image Style ========== */
+.carousel-inner img {
+  width: 100%;
+  height: 80vh; /* 80% of screen height */
+  object-fit: cover; /* Maintain image ratio, crop if needed */
+}
+
+/* ========== Caption Style ========== */
+.carousel-caption {
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent dark background */
+  padding: 10px 20px;
+  border-radius: 10px;
+  bottom: 40px;
+}
+
+.carousel-caption h5 {
+  color: #fff;
+  font-size: 1.8rem;
+  font-weight: 500;
+}
+
+/* ========== Indicators (dots) ========== */
+.carousel-indicators [data-bs-target] {
+  background-color: #ffffff; /* white dots */
+  width: 10px;
+  height: 10px;
+  border-radius: 100%;
+  margin: 0 5px;
+}
+
+.carousel-indicators .active {
+  background-color: #0d6efd; /* active dot color - bootstrap primary */
+}
+
+/* ========== Arrows ========== */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 50%;
+  background-size: 60% 60%;
+  padding: 15px;
+}
+
+/* ========== Responsive Caption Hide on Small Devices ========== */
+@media (max-width: 576px) {
+  .carousel-caption {
+    display: none;
+  }
+}
