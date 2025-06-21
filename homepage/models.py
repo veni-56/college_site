@@ -17,6 +17,16 @@ class SliderImage(models.Model):
         return self.caption or f"Slider Image {self.id}"
 
 
+class HomeQuickLink(models.Model):
+    title = models.CharField(max_length=100)
+    icon = models.CharField(max_length=50, help_text="Use Bootstrap icon class (e.g., 'bi-bank')")
+    link = models.URLField(blank=True, help_text="Optional: Add link to internal/external page")
+
+    def __str__(self):
+        return self.title
+
+
+
 
 class AboutSubmenu(models.Model):
     title = models.CharField(max_length=200)
