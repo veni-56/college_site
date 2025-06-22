@@ -33,21 +33,19 @@
     <span class="visually-hidden">Next</span>
   </button>
 </div>
-
-<!-- 🔹 Quick Links Section Below Slider -->
+<!-- 🔹 HomeQuickLink Section with Dark Blue Background -->
 <div class="py-4" style="background-color: #004080;">
-  <div class="container d-flex flex-wrap justify-content-center gap-4">
+  <div class="container d-flex flex-wrap justify-content-center gap-5">
     {% for item in quick_links %}
-      <a href="{{ item.link|default:'#' }}" class="text-white text-decoration-none text-center">
-        <div>
-          <div class="bg-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-2"
-               style="width: 100px; height: 100px; color: #004080;">
-            <i class="bi {{ item.icon }} fs-1"></i>
-          </div>
-          <h6 class="fw-semibold">{{ item.title }}</h6>
+      <a href="{{ item.link|default:'#' }}" class="text-decoration-none text-center quick-box">
+        <div class="icon-circle mb-2">
+          <i class="bi {{ item.icon }} fs-2"></i>
         </div>
+        <div class="title-text">{{ item.title }}</div>
       </a>
     {% endfor %}
   </div>
 </div>
+
+
 {% endblock %}
