@@ -22,21 +22,6 @@
     {% endfor %}
   </div>
 
-<div class="akddr-icon-section py-4" style="background-color: #004080;">
-  <div class="container d-flex flex-wrap justify-content-center gap-4">
-
-    {% for link in quick_links %}
-    <a href="{{ link.link }}" class="text-decoration-none">
-      <i class="bi {{ link.icon }} fs-1"></i>
-      <div class="akddr-box text-center bg-white text-primary shadow">
-        <i class="bi {{ link.icon }} fs-1"></i>
-        <h6 class="mt-2">{{ link.title }}</h6>
-      </div>
-    </a>
-{% endfor %}
-  </div>
-</div>
-
 
 
 {% endblock %}
