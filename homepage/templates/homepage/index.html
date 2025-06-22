@@ -33,18 +33,22 @@
     <span class="visually-hidden">Next</span>
   </button>
 </div>
-<div class="container-fluid py-4" style="background-color: #004080;">
-  <div class="row justify-content-center">
-    {% for item in quick_links %}
-      <div class="col-md-3 mb-3">
-        <a href="{{ item.link }}" class="text-decoration-none">
-          <div class="quicklink-hover">
-            <i class="bi {{ item.icon }}"></i>
-            <h5>{{ item.title }}</h5>
-          </div>
-        </a>
-      </div>
-    {% endfor %}
+<div class="container-fluid py-5" style="background-color: #004080;">
+  <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+      {% for item in quick_links %}
+        <div class="col">
+          <a href="{{ item.link }}" class="text-decoration-none">
+            <div class="quicklink-box text-center d-flex flex-column justify-content-center align-items-center h-100">
+              <div class="icon-wrapper mb-3">
+                <i class="bi {{ item.icon }}"></i>
+              </div>
+              <h6 class="link-title">{{ item.title }}</h6>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
   </div>
 </div>
 
