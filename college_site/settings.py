@@ -65,6 +65,8 @@ TEMPLATES = [
                 'homepage.context_processors.basic_info',
                 'homepage.context_processors.academic_menu_processor',
                 'homepage.context_processors.department_list',
+                'homepage.context_processors.quicklink_sections', 
+
 
 
             ],
