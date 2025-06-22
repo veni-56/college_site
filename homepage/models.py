@@ -1,7 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
 
-
 class HomePageContent(models.Model):
     college_name = models.CharField(max_length=200)
     logo = models.ImageField(upload_to='logos/')
@@ -17,24 +16,32 @@ class SliderImage(models.Model):
         return self.caption or f"Slider Image {self.id}"
 
 
-class HomeQuickLink(models.Model):
-    title = models.CharField(max_length=100)
-    icon = models.CharField(max_length=50, help_text="Use Bootstrap icon class (e.g., 'bi-bank')")
-    link = models.URLField(blank=True, help_text="Optional: Add link to internal/external page")
+class HomeQuickLinkSection(models.Model):
+    title = models.CharField(max_length=200)
+    order = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return self.title
 
+class HomeQuickLinkBlock(models.Model):
+    section = models.ForeignKey(HomeQuickLinkSection, on_delete=models.CASCADE, related_name='blocks')
+    heading = models.CharField(max_length=200)
+    paragraph = models.TextField(blank=True)
+    icon = models.CharField(max_length=50, help_text="Eg: bi-bank, bi-camera-video")
+    image = models.ImageField(upload_to='quicklinks/images/', blank=True, null=True)
+    pdf = models.FileField(upload_to='quicklinks/pdfs/', blank=True, null=True)
+    table_html = models.TextField(blank=True, help_text="Paste <table> HTML code")
+    link = models.URLField(blank=True, null=True, help_text="Optional link for heading")
+    order = models.PositiveIntegerField(default=0)
 
-
+    def __str__(self):
+        return f"{self.section.title} - {self.heading}"
 
 class AboutSubmenu(models.Model):
     title = models.CharField(max_length=200)
 
     def __str__(self):
         return self.title
-
-
 class AboutContentBlock(models.Model):
     submenu = models.ForeignKey(AboutSubmenu, on_delete=models.CASCADE, related_name='content_blocks')
     heading = models.CharField(max_length=200, blank=True, null=True)
@@ -45,7 +52,6 @@ class AboutContentBlock(models.Model):
 
     def __str__(self):
         return f"{self.submenu.title} - {self.heading}"
-
 
 class AcademicSubMenu(models.Model):
     title = models.CharField(max_length=200)
@@ -77,7 +83,6 @@ class Department(models.Model):
 
     def __str__(self):
         return self.name
-
 
 class DepartmentContent(models.Model):
     SECTION_CHOICES = [
@@ -141,10 +146,6 @@ class NAACContentBlock(models.Model):
     def __str__(self):
         return f"{self.submenu.title} - {self.heading}"
     
-    
-
-
-
 
 class ActivitySection(models.Model):
     name = models.CharField(max_length=200)
