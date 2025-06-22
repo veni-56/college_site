@@ -20,21 +20,22 @@
         {% endif %}
       </div>
     {% endfor %}
-  </div>
-  <div class="akddr-icon-section py-4" style="background: #004080;">
+    <!-- 🔹 Quick Links (Icon + Title) Section -->
+       <div class="akddr-icon-section py-4" style="background: #004080;">
   <div class="container d-flex flex-wrap justify-content-center gap-4">
-
-    {% for link in quick_links %}
-    <a href="{{ link.link }}" class="text-decoration-none">
-      <div class="akddr-box text-center bg-white" style="color: #004080;">
-        <i class="bi {{ link.icon }} fs-1"></i>
-        <h6 class="mt-2">{{ link.title }}</h6>
-      </div>
-    </a>
+    {% for item in quick_links %}
+      <a href="{{ item.link|default:'#' }}" class="text-white text-decoration-none text-center">
+        <div>
+          <div class="bg-white rounded-circle d-flex align-items-center justify-content-center mx-auto mb-2" style="color: #004080;">               style="width: 100px; height: 100px;">
+            <i class="bi {{ item.icon }} fs-1"></i>
+          </div>
+          <h6 class="fw-semibold">{{ item.title }}</h6>
+        </div>
+      </a>
     {% endfor %}
-
   </div>
 </div>
+
 
 
 {% endblock %}
