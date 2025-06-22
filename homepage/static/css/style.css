@@ -130,38 +130,35 @@ header, .college-header {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
 }
 
-/* HomeQuickLink Styles */
 .quicklink-hover {
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
-  border: 3px solid #004080;
-  border-radius: 0px; /* Square box - remove rounded corners */
+  transition: 0.3s;
+  border: 2px solid #004080;
+  padding: 20px;
   background-color: white;
-  min-height: 180px;
+  text-align: center;
+  height: 160px;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center;
+  border-radius: 0px;
 }
-
 .quicklink-hover:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
   background-color: #004080;
+  color: white;
+  transform: translateY(-5px);
 }
-
-.quicklink-hover:hover i,
-.quicklink-hover:hover h5 {
-  color: white !important;
-}
-
 .quicklink-hover i {
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: #004080;
 }
-
+.quicklink-hover:hover i {
+  color: white;
+}
 .quicklink-hover h5 {
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: 1.1rem;
+  margin-top: 10px;
   color: #004080;
-  margin-top: 12px;
+}
+.quicklink-hover:hover h5 {
+  color: white;
 }
