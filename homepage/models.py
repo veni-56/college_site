@@ -16,26 +16,16 @@ class SliderImage(models.Model):
         return self.caption or f"Slider Image {self.id}"
 
 
-class HomeQuickLinkSection(models.Model):
-    title = models.CharField(max_length=200)
-    order = models.PositiveIntegerField(default=0)
+class HomeQuickLink(models.Model):
+    title = models.CharField(max_length=100)
+    icon = models.CharField(max_length=50, help_text="Use Bootstrap icon class (e.g., 'bi-bank')")
+    link = models.URLField(blank=True, help_text="Optional: Add link to internal/external page")
 
     def __str__(self):
         return self.title
 
-class HomeQuickLinkBlock(models.Model):
-    section = models.ForeignKey(HomeQuickLinkSection, on_delete=models.CASCADE, related_name='blocks')
-    heading = models.CharField(max_length=200)
-    paragraph = models.TextField(blank=True)
-    icon = models.CharField(max_length=50, help_text="Eg: bi-bank, bi-camera-video")
-    image = models.ImageField(upload_to='quicklinks/images/', blank=True, null=True)
-    pdf = models.FileField(upload_to='quicklinks/pdfs/', blank=True, null=True)
-    table_html = models.TextField(blank=True, help_text="Paste <table> HTML code")
-    link = models.URLField(blank=True, null=True, help_text="Optional link for heading")
-    order = models.PositiveIntegerField(default=0)
 
-    def __str__(self):
-        return f"{self.section.title} - {self.heading}"
+
 
 class AboutSubmenu(models.Model):
     title = models.CharField(max_length=200)
