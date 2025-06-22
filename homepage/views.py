@@ -17,7 +17,7 @@ def home(request):
 
 def home_view(request):
     quick_sections = HomeQuickLinkSection.objects.prefetch_related('blocks').order_by('order')
-    return render(request, 'homepage/home.html', {
+    return render(request, 'homepage/index.html', {
         'quick_sections': quick_sections,
     })
 
