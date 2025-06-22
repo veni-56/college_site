@@ -1,11 +1,23 @@
 from django.contrib import admin
-from .models import HomePageContent,SliderImage,HomeQuickLink,AboutSubmenu, AboutContentBlock,AcademicSubMenu,AcademicContentBlock,Department,Department, DepartmentContent,StudentDeskMenu,StudentDeskContentBlock,NAACSubmenu,NAACContentBlock,ActivitySection, ActivityContent
+from .models import HomePageContent,SliderImage,HomeQuickLinkSection,HomeQuickLinkBlock,AboutSubmenu, AboutContentBlock,AcademicSubMenu,AcademicContentBlock,Department,Department, DepartmentContent,StudentDeskMenu,StudentDeskContentBlock,NAACSubmenu,NAACContentBlock,ActivitySection, ActivityContent
 
 admin.site.register(HomePageContent)
 admin.site.register(SliderImage)
-admin.site.register(HomeQuickLink)
 
+class HomeQuickLinkBlockInline(admin.TabularInline):
+    model = HomeQuickLinkBlock
+    extra = 1
 
+@admin.register(HomeQuickLinkSection)
+class HomeQuickLinkSectionAdmin(admin.ModelAdmin):
+    inlines = [HomeQuickLinkBlockInline]
+    list_display = ['title', 'order']
+    ordering = ['order']
+
+@admin.register(HomeQuickLinkBlock)
+class HomeQuickLinkBlockAdmin(admin.ModelAdmin):
+    list_display = ['heading', 'section', 'order']
+    ordering = ['section__order', 'order']
 
 class AboutContentBlockInline(admin.StackedInline):
     model = AboutContentBlock
