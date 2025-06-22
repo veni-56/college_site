@@ -66,10 +66,10 @@ def studentdesk_detail(request, slug):
 #naac
 def naac_detail_view(request, submenu_id):
     submenu = get_object_or_404(NAACSubmenu, id=submenu_id)
-    blocks = NAACContentBlock.objects.filter(submenu=submenu)
+    content = NAACContentBlock.objects.filter(submenu=submenu)
     return render(request, 'naac/naac_detail.html', {
         'submenu': submenu,
-        'blocks': blocks
+        'content' : content
     })
 
 
