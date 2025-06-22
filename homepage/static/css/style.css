@@ -118,15 +118,24 @@ header, .college-header {
     display: none;
   }
 }
-.akddr-box {
-  width: 180px;
-  padding: 25px 10px 15px;
-  border-top-left-radius: 60% 40%;
-  border-top-right-radius: 60% 40%;
-  transition: transform 0.3s ease;
+/* 🔵 Quick Link Icon Box */
+.quick-link-box {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: inline-block;
+  text-align: center;
 }
 
-.akddr-box:hover {
-  transform: translateY(-5px);
-  background-color: #e8f0ff;
+.quick-link-box:hover {
+  transform: translateY(-8px) scale(1.05);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
+
+/* 🎯 Icon animation */
+.quick-link-icon {
+  transition: transform 0.4s ease;
+}
+
+.quick-link-box:hover .quick-link-icon {
+  transform: rotate(8deg) scale(1.15);
+}
+
