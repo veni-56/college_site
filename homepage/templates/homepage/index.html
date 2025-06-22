@@ -21,43 +21,24 @@
       </div>
     {% endfor %}
   </div>
-
-<div class="text-white py-4" style="background-color: #004080;">
+  <div class="akddr-icon-section bg-primary py-4">
   <div class="container d-flex flex-wrap justify-content-center gap-4">
-    {% for section in quick_sections %}
-      {% for block in section.blocks.all %}
-        <div class="bg-white text-primary shadow p-4 rounded text-center" style="width: 260px; border-radius: 60px 60px 0 0;">
-          <div class="mb-3">
-            <i class="bi {{ block.icon }} fs-1"></i>
-          </div>
-    <div>
 
-          {% if block.link %}
-            <h5><a href="{{ block.link }}" class="text-decoration-none text-primary">{{ block.heading }}</a></h5>
-          {% else %}
-            <h5 class="fw-bold">{{ block.heading }}</h5>
-          {% endif %}
-          {% if block.paragraph %}
-            <p>{{ block.paragraph }}</p>
-          {% endif %}
-          {% if block.image %}
-            <img src="{{ block.image.url }}" class="img-fluid mb-2" style="max-height: 150px;">
-          {% endif %}
-          {% if block.pdf %}
-            <a href="{{ block.pdf.url }}" class="btn btn-sm btn-outline-primary mt-2" target="_blank">Download PDF</a>
-          {% endif %}
-          {% if block.table_html %}
-            <div class="table-responsive mt-2">
-              {{ block.table_html|safe }}
-            </div>
-          {% endif %}
-        </div>
-      {% endfor %}
+    {% for link in quick_links %}
+    <a href="{{ link.link }}" class="text-decoration-none">
+      <div class="akddr-box text-center bg-white text-primary shadow">
+        <i class="bi {{ link.icon }} fs-1"></i>
+        <h6 class="mt-2">{{ link.title }}</h6>
+      </div>
+    </a>
     {% endfor %}
-  </div>
-</div>
 
+  </div>
 </div>
 
 
 {% endblock %}
+
+    {% block content %}
+    
+    {% endblock %}
