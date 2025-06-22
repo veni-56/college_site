@@ -1,7 +1,6 @@
 from .models import (
     HomePageContent,
     SliderImage,
-    HomeQuickLink,
     AboutSubmenu,
     StudentDeskMenu,
     NAACSubmenu,
@@ -19,7 +18,6 @@ def basic_info(request):
     return {
         "college_info" : HomePageContent.objects.first(),
         'slider_images': SliderImage.objects.all(),
-        'quick_links': HomeQuickLink.objects.all(),
         "about_menus": AboutSubmenu.objects.all(),
         "student_desk_menus": StudentDeskMenu.objects.all(),
         "submenus": NAACSubmenu.objects.all(),
@@ -40,4 +38,11 @@ def department_list(request):
     departments = Department.objects.all()
     return {
         'departments': departments
+    }
+from .models import HomeQuickLinkSection
+
+def quicklink_sections(request):
+    sections = HomeQuickLinkSection.objects.prefetch_related('blocks').order_by('order')
+    return {
+        'quick_sections': sections
     }
