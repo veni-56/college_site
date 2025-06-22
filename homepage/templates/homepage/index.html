@@ -33,14 +33,17 @@
     <span class="visually-hidden">Next</span>
   </button>
 </div>
-<!--  HomeQuickLink Section -->
-<div class="py-4" style="background-color: #004080;">
-  <div class="container d-flex flex-wrap justify-content-center gap-4">
-    {% for item in quick_links %}
-      <a href="{{ item.link|default:'#' }}" class="text-decoration-none quick-box">
-        <i class="bi {{ item.icon }}"></i>
-        <p class="title-text">{{ item.title }}</p>
-      </a>
+<div class="container-fluid py-4" style="background-color: #004080;">
+  <div class="row justify-content-center">
+    {% for item in homequicklinks %}
+      <div class="col-md-3 mb-3">
+        <a href="{{ item.link }}" class="text-decoration-none">
+          <div class="quicklink-hover">
+            <i class="bi {{ item.icon }}"></i>
+            <h5>{{ item.title }}</h5>
+          </div>
+        </a>
+      </div>
     {% endfor %}
   </div>
 </div>
