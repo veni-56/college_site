@@ -33,11 +33,12 @@ def about_detail_view(request, submenu_id):
 #academic_detail
 def academic_detail(request, slug):
     submenu = get_object_or_404(AcademicSubMenu, slug=slug)
-    blocks = AcademicContentBlock.objects.filter(submenu=submenu)
+    contents = AcademicContentBlock.objects.filter(submenu=submenu)
     return render(request, 'academic/academic_detail.html', {
         'submenu': submenu,
-        'blocks': blocks
+        'contents': contents
     })
+
 
 def department_list(request):
     departments = Department.objects.all()

@@ -31,7 +31,8 @@ from homepage.models import AcademicSubMenu
 
 def academic_menu_processor(request):
     return {
-        'academic_submenus': AcademicSubMenu.objects.all().order_by('order')
+    'academic_submenus': AcademicSubMenu.objects.all().order_by('order')
+
     }
 
 from .models import Department
