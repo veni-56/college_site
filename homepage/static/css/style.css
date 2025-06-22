@@ -130,37 +130,38 @@ header, .college-header {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
 }
 
-/* 🔵 Mepco-Style HomeQuickLink Boxes */
-.quick-box {
-  width: 160px;
-  height: 130px;
-  background-color: #ffffff;
-  border: 2px solid #004080;
-  border-radius: 6px;
-  padding: 15px 10px;
-  text-align: center;
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+/* HomeQuickLink Styles */
+.quicklink-hover {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  border: 3px solid #004080;
+  border-radius: 0px; /* Square box - remove rounded corners */
+  background-color: white;
+  min-height: 180px;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
 }
 
-.quick-box:hover {
-  transform: translateY(-6px);
-  background-color: #e6f0ff;
+.quicklink-hover:hover {
+  transform: translateY(-8px);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  background-color: #004080;
 }
 
-.quick-box i {
-  font-size: 28px;
-  color: #004080;
-  margin-bottom: 8px;
+.quicklink-hover:hover i,
+.quicklink-hover:hover h5 {
+  color: white !important;
 }
 
-.quick-box p.title-text {
-  font-size: 16px;
-  font-weight: bold;
-  margin: 0;
+.quicklink-hover i {
+  font-size: 2.5rem;
   color: #004080;
+}
+
+.quicklink-hover h5 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #004080;
+  margin-top: 12px;
 }
