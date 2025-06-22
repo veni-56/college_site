@@ -35,7 +35,7 @@
 </div>
 <div class="container-fluid py-4" style="background-color: #004080;">
   <div class="row justify-content-center">
-    {% for item in homequicklinks %}
+    {% for item in quick_links %}
       <div class="col-md-3 mb-3">
         <a href="{{ item.link }}" class="text-decoration-none">
           <div class="quicklink-hover">
@@ -47,7 +47,6 @@
     {% endfor %}
   </div>
 </div>
-
 
 
 {% endblock %}
