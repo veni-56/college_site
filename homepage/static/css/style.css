@@ -130,33 +130,37 @@ header, .college-header {
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
 }
 
-/* Icon Circle */
-.icon-circle {
-  width: 100px;
-  height: 100px;
+/* 🔵 Mepco-Style HomeQuickLink Boxes */
+.quick-box {
+  width: 160px;
+  height: 130px;
   background-color: #ffffff;
   border: 2px solid #004080;
-  border-radius: 50%;
+  border-radius: 6px;
+  padding: 15px 10px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  margin: 0 auto;
-  transition: background-color 0.3s ease;
+  align-items: center;
 }
 
-.quick-box:hover .icon-circle {
+.quick-box:hover {
+  transform: translateY(-6px);
   background-color: #e6f0ff;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
 }
 
-/* Icon and Title Colors */
-.icon-circle i {
+.quick-box i {
+  font-size: 28px;
+  color: #004080;
+  margin-bottom: 8px;
+}
+
+.quick-box p.title-text {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
   color: #004080;
 }
-
-.title-text {
-  font-size: 17px;
-  margin-top: 4px;
-  color: #ffffff;
-  font-weight: bold;
-}
-
