@@ -156,10 +156,10 @@ header, .college-header {
   transform: translateY(-5px);
 }
 
-.quicklink-box:hover .icon-wrapper {
+/*.quicklink-box:hover .icon-wrapper {
   background-color: white;
   color: #004080;
-}
+}*/
 
 .quicklink-box:hover .icon-wrapper i {
   color: #004080;
