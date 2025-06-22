@@ -50,7 +50,7 @@ def department_detail(request, slug):
         section: DepartmentContent.objects.filter(department=department, section=section)
         for section in sections
     }
-    return render(request, 'homepage/academic/department_detail.html', {
+    return render(request, 'academic/department_detail.html', {
         'department': department,
         'content': content,
     })
