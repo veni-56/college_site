@@ -118,39 +118,53 @@ header, .college-header {
     display: none;
   }
 }
-.quicklink-hover {
+.quicklink-box {
   background-color: white;
   border: 3px solid #004080;
-  border-radius: 0px; /* Box - no curve */
-  padding: 30px 15px;
+  border-radius: 0;
+  padding: 30px 20px;
+  transition: 0.3s ease;
   min-height: 160px;
-  transition: transform 0.3s ease, background-color 0.3s ease;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+}
+
+.icon-wrapper {
+  background-color: #004080;
+  color: white;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
+  transition: 0.3s ease;
 }
 
-.quicklink-hover i {
-  font-size: 2.5rem;
-  color: #004080;
-  margin-bottom: 10px;
+.icon-wrapper i {
+  font-size: 1.5rem;
 }
 
-.quicklink-hover h5 {
-  font-size: 1.2rem;
+.link-title {
   color: #004080;
   font-weight: 600;
+  font-size: 1rem;
   margin: 0;
 }
 
-.quicklink-hover:hover {
+.quicklink-box:hover {
   background-color: #004080;
-  transform: translateY(-6px);
+  transform: translateY(-5px);
 }
 
-.quicklink-hover:hover i,
-.quicklink-hover:hover h5 {
+.quicklink-box:hover .icon-wrapper {
+  background-color: white;
+  color: #004080;
+}
+
+.quicklink-box:hover .icon-wrapper i {
+  color: #004080;
+}
+
+.quicklink-box:hover .link-title {
   color: white;
 }
-
