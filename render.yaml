@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: college-website
+    name: college_site-1
     env: python
     buildCommand: |
       pip install -r requirements.txt
@@ -12,4 +12,4 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: ALLOWED_HOSTS
-        value: college-site.setting
+        value: college-site-hrgk.onrender.com
