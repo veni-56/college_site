@@ -1,5 +1,5 @@
-env/ 
-media/
+.env
+/media/
 media/*
 !media/slider/
 !media/slider/**
