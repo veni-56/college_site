@@ -4,19 +4,18 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 
-# Register
 def register_view(request):
     if request.method == 'POST':
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
         if User.objects.filter(username=username).exists():
-            return render(request, 'register.html', {'error': 'Username already exists'})
+            return render(request, 'homepage/register.html', {'error': 'Username already exists'})
         User.objects.create_user(username=username, email=email, password=password)
         return redirect('login')
-    return render(request, 'register.html')
+    return render(request, 'homepage/register.html')
 
-# Login
+
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
@@ -26,17 +25,15 @@ def login_view(request):
             login(request, user)
             return redirect('dashboard')
         else:
-            return render(request, 'login.html', {'error': 'Invalid credentials'})
-    return render(request, 'login.html')
+            return render(request, 'homepage/login.html', {'error': 'Invalid credentials'})
+    return render(request, 'homepage/login.html')
 
 
-# Dashboard
 @login_required(login_url='login')
 def dashboard_view(request):
-    return render(request, 'dashboard.html')
+    return render(request, 'homepage/dashboard.html')
 
 
-# Logout
 def logout_view(request):
     logout(request)
     return redirect('login')
