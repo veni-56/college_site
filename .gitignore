@@ -1,6 +1,5 @@
 /
 env/
-/media/
 media/*
 !media/slider/
 !media/slider/**
@@ -9,3 +8,4 @@ __pycache__/
 *.pyc
 staticfiles/
 db.sqlite3
+media/
