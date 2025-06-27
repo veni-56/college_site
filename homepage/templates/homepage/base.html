@@ -5,9 +5,7 @@
   <meta charset="UTF-8">
   <title>{% block title %}College Website{% endblock %}</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-  <!-- Bootstrap Icons -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
-
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
@@ -19,30 +17,34 @@
     </nav>
   </div>
 
-  <!--Header -->
+  <!-- Header -->
   {% include 'homepage/header.html' %}
 
-  <!-- Main Navigation Bar -->
-  {% include 'homepage/navbar.html' %}
+  <!--  Main Navigation Bar (staff vs public) -->
+  {% if user.is_authenticated and user.is_staff %}
+    {% include 'homepage/navbar_staff.html' %}
+  {% else %}
+    {% include 'homepage/navbar.html' %}
+  {% endif %}
 
-  <!-- Sub Navigation Bar -->
-  {% include 'homepage/subnavbar.html' %}
+  <!-- Sub Navigation Bar (only for public, not staff) -->
+  {% if not user.is_authenticated or not user.is_staff %}
+    {% include 'homepage/subnavbar.html' %}
+  {% endif %}
 
-  <!--  Full Width Block-->
+  <!-- Full Width Block -->
   {% block fullwidth %}{% endblock %}
 
-  <!--  Regular Container Content Block -->
+  <!-- Main Page Content -->
   <div class="container content-area my-4">
     {% block content %}{% endblock %}
   </div>
 
   <!-- Footer -->
   {% include 'homepage/footer.html' %}
+
+  <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
   <script src="{% static 'js/main.js' %}"></script>
-  <style></style>
-  <script src="{% static 'js/main.js' %}"></script>
-
-
 </body>
 </html>
