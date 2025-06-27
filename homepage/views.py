@@ -1,43 +1,37 @@
 from django.shortcuts import render, get_object_or_404,redirect
 from .models import HomePageContent,SliderImage,HomeQuickLink,AboutSubmenu, AboutContentBlock,AcademicSubMenu, AcademicContentBlock,Department,Department, DepartmentContent,StudentDeskMenu,NAACSubmenu,NAACContentBlock,ActivitySection
-from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, user_passes_test
+from .forms import StaffLoginForm
+from .models import StaffProfile
+from django.contrib import messages
 
-def register_view(request):
+def staff_login(request):
     if request.method == 'POST':
-        username = request.POST['username']
-        email = request.POST['email']
-        password = request.POST['password']
-        if User.objects.filter(username=username).exists():
-            return render(request, 'homepage/register.html', {'error': 'Username already exists'})
-        User.objects.create_user(username=username, email=email, password=password)
-        return redirect('login')
-    return render(request, 'homepage/register.html')
-
-
-def login_view(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
-        if user is not None:
-            login(request, user)
-            return redirect('dashboard')
+        form = StaffLoginForm(request, data=request.POST)
+        if form.is_valid():
+            user = form.get_user()
+            if user.is_staff:
+                login(request, user)
+                return redirect('staff_dashboard')
+            else:
+                messages.error(request, "Not authorized as staff.")
         else:
-            return render(request, 'homepage/login.html', {'error': 'Invalid credentials'})
-    return render(request, 'homepage/login.html')
+            messages.error(request, "Invalid login.")
+    else:
+        form = StaffLoginForm()
+    return render(request, 'homepage/staff_login.html', {'form': form})
 
+@login_required
+def staff_dashboard(request):
+    if not request.user.is_staff:
+        return redirect('staff_login')
+    profile = StaffProfile.objects.get(user=request.user)
+    return render(request, 'homepage/staff_dashboard.html', {'profile': profile})
 
-@login_required(login_url='login')
-def dashboard_view(request):
-    return render(request, 'homepage/dashboard.html')
-
-
-def logout_view(request):
+def staff_logout(request):
     logout(request)
-    return redirect('login')
-
+    return redirect('staff_login')
 
 #home
 def home(request):
