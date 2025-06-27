@@ -1,11 +1,22 @@
-/
-env/
-media/*
-!media/slider/
-!media/slider/**
-
+# Python bytecode & cache
 __pycache__/
-*.pyc
-staticfiles/
+*.py[cod]
+
+# SQLite database (only for local dev)
 db.sqlite3
+
+# Environment file (important: secret keys)
+.env
+
+# Static files after collectstatic (for Render, not needed in repo)
+staticfiles/
+
+# Media folder (images are stored on Cloudinary, so skip local)
 media/
+
+# VSCode settings (optional, personal)
+.vscode/
+
+# OS generated files (optional)
+.DS_Store
+Thumbs.db
