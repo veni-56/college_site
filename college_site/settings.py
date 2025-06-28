@@ -144,9 +144,7 @@ STATIC_URL = "/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
 
 # Additional locations the staticfiles app will traverse
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),  # only if you have custom static files here
-]
+STATICFILES_DIRS = [ BASE_DIR / "static" ]
 
 
 # WhiteNoise settings
