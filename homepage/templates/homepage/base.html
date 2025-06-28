@@ -20,12 +20,7 @@
   <!-- Header -->
   {% include 'homepage/header.html' %}
 
-  <!--  Main Navigation Bar (staff vs public) -->
-  {% if user.is_authenticated and user.is_staff %}
-    {% include 'homepage/navbar_staff.html' %}
-  {% else %}
     {% include 'homepage/navbar.html' %}
-  {% endif %}
 
   <!-- Sub Navigation Bar (only for public, not staff) -->
   {% if not user.is_authenticated or not user.is_staff %}
