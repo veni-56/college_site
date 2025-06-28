@@ -1,39 +1,36 @@
 from django.shortcuts import render, get_object_or_404,redirect
 from .models import HomePageContent,SliderImage,HomeQuickLink,AboutSubmenu, AboutContentBlock,AcademicSubMenu, AcademicContentBlock,Department,Department, DepartmentContent,StudentDeskMenu,NAACSubmenu,NAACContentBlock,ActivitySection,StaffProfile
-from django.contrib.auth.forms import AuthenticationForm
-from django.contrib.auth import login, logout
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.contrib.auth.decorators import login_required
 
 def staff_login(request):
-    form = AuthenticationForm(request, data=request.POST or None)
-    if request.method == "POST" and form.is_valid():
-        user = form.get_user()
-        if user.is_staff:
-            login(request, user)
-            return redirect('staff_dashboard')
-        messages.error(request, "Not authorised as staff.")
-    return render(request, 'homepage/staff_login.html', {'form': form})
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
 
-@login_required
+        user = authenticate(request, username=username, password=password)
+
+        if user is not None:
+            if hasattr(user, 'staffprofile'):  # Check if it's a staff
+                login(request, user)
+                return redirect('staff_dashboard')
+            else:
+                messages.error(request, "You are not authorized as staff.")
+        else:
+            messages.error(request, "Invalid username or password.")
+
+    return render(request, 'staff_login.html')
+
+
+@login_required(login_url='staff_login')
 def staff_dashboard(request):
-    if not request.user.is_staff:
-        return redirect('home')
-    profile = request.user.staffprofile
-    return render(request, 'homepage/staff_dashboard.html', {'profile': profile})
+    return render(request, 'staff_dashboard.html')
 
-@login_required
-def staff_profile(request):
-    if not request.user.is_staff:
-        return redirect('home')
-    return render(request, 'homepage/staff_profile.html',
-                  {'profile': request.user.staffprofile})
 
 def staff_logout(request):
     logout(request)
     return redirect('staff_login')
-
-
 #home
 def home(request):
     content = HomePageContent.objects.first()
