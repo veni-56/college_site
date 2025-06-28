@@ -140,17 +140,15 @@ USE_TZ = True
 
 # Static files settings
 STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"   # static collect பண்ணும்போது use ஆகும்
-
-# This folder exist பண்ணனும் (இல்லனா error வரும்)
-STATICFILES_DIRS = [ BASE_DIR / "static" ]   # or remove if folder illa
+STATIC_ROOT = BASE_DIR / "staticfiles"   
+STATICFILES_DIRS = [ BASE_DIR / "static" ]   
 
 # WhiteNoise settings
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Media files settings
 MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"   # safer than "/var/media"
+MEDIA_ROOT = BASE_DIR / "media"   
 
 # Cloudinary settings
 CLOUDINARY_STORAGE = {
