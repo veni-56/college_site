@@ -106,19 +106,13 @@
   </ul>
 </li>
     
-    <!-- Only one link inside -->
-    <div class="collapse navbar-collapse justify-content-end" id="navMenu">
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <a class="nav-link {% if request.resolver_match.url_name == 'staff_login' %}active{% endif %}"
-             href="{% url 'staff_login' %}">
-             Staff Login
-          </a>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+    <li class="nav-item">
+  <a class="nav-link {% if request.resolver_match.url_name == 'staff_login' %}active{% endif %}"
+     href="{% url 'staff_login' %}">
+     Staff Login
+  </a>
+</li>
+
 </ul>
 </ul>
 </div></div></nav>
