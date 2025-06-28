@@ -3,13 +3,29 @@ from django.utils.text import slugify
 from django.contrib.auth.models import User
 
 class StaffProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    department = models.CharField(max_length=100)
-    phone = models.CharField(max_length=15, blank=True)
+    user        = models.OneToOneField(User, on_delete=models.CASCADE)
+    department  = models.CharField(max_length=120)
+    phone       = models.CharField(max_length=15, blank=True)
+    photo       = models.ImageField(upload_to='staff_photos/', blank=True)
 
     def __str__(self):
-        return self.user.username
+        return self.user.get_full_name() or self.user.username
 
+
+class LeaveRequest(models.Model):
+    staff       = models.ForeignKey(StaffProfile, on_delete=models.CASCADE)
+    start_date  = models.DateField()
+    end_date    = models.DateField()
+    reason      = models.TextField()
+    status      = models.CharField(max_length=20,
+                                   choices=[('Pending','Pending'),
+                                            ('Approved','Approved'),
+                                            ('Rejected','Rejected')],
+                                   default='Pending')
+    requested_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.staff.user.username} ({self.start_date}–{self.end_date})"
 
 
 class HomePageContent(models.Model):
