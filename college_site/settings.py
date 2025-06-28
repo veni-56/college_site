@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-load_dotenv()                           # pip install python-dotenv
+load_dotenv()                          
 
 
 
@@ -25,13 +25,17 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-)#@r-mq4vc8(xql5+dcr002oxbg78c!^#3k=94f$0s2uvwrk1i'
+SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG      = os.getenv("DJANGO_DEBUG", "False") == "True"
 
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'college-site-1-5pzw.onrender.com']
+ALLOWED_HOSTS = [
+    '127.0.0.1', 
+    'localhost', 
+    'college-site-1-5pzw.onrender.com'
+    ]
 
 
 
@@ -134,16 +138,21 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 
-
-
+# Static files settings
 STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"
-STATICFILES_DIRS = [ os.path.join(BASE_DIR, "static") ]
+STATIC_ROOT = BASE_DIR / "staticfiles"   # static collect பண்ணும்போது use ஆகும்
+
+# This folder exist பண்ணனும் (இல்லனா error வரும்)
+STATICFILES_DIRS = [ BASE_DIR / "static" ]   # or remove if folder illa
+
+# WhiteNoise settings
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
+# Media files settings
 MEDIA_URL = "/media/"
-MEDIA_ROOT = "/var/media"
+MEDIA_ROOT = BASE_DIR / "media"   # safer than "/var/media"
 
+# Cloudinary settings
 CLOUDINARY_STORAGE = {
     "CLOUD_NAME": os.getenv("CLOUD_NAME"),
     "API_KEY":   os.getenv("CLOUD_API_KEY"),
