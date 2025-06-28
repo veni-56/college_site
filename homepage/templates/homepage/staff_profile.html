@@ -1,9 +1,0 @@
-{% extends "homepage/base.html" %}
-{% block title %}Profile{% endblock %}
-{% block content %}
-<table class="table w-50">
-  <tr><th>User</th><td>{{ request.user.username }}</td></tr>
-  <tr><th>Department</th><td>{{ profile.department }}</td></tr>
-  <tr><th>Phone</th><td>{{ profile.phone }}</td></tr>
-</table>
-{% endblock %}

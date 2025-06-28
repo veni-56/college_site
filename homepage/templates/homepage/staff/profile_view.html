@@ -1,0 +1,31 @@
+{% extends 'homepage/staff/base_staff.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <h3>Staff Profile</h3>
+
+    <div class="card shadow-sm p-3 mb-4 bg-white rounded w-50">
+        <div class="row g-2 align-items-center">
+            <!--  ▸ Photo  -->
+            <div class="col-md-4 text-center">
+                {% if profile.photo %}
+                    <img src="{{ profile.photo.url }}" class="img-fluid rounded-circle" alt="Profile Photo">
+                {% else %}
+                    <img src="{% static 'images/default-user.png' %}" class="img-fluid rounded-circle" alt="Default">
+                {% endif %}
+            </div>
+
+            <!--  ▸ Details  -->
+            <div class="col-md-8">
+                <p><strong>Name:</strong> {{ request.user.get_full_name|default:request.user.username }}</p>
+                <p><strong>Email:</strong> {{ request.user.email|default:"Not available" }}</p>
+                <p><strong>Department:</strong> {{ profile.department }}</p>
+                <p><strong>Phone:</strong> {{ profile.phone }}</p>
+
+                <a href="{% url 'profile_edit' %}" class="btn btn-primary mt-2">Edit Profile</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

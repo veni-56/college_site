@@ -1,0 +1,11 @@
+{% extends 'homepage/staff/base_staff.html' %}
+{% block content %}
+<div class="container mt-4">
+    <h3>Apply for Leave</h3>
+    <form method="POST" class="w-50">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Submit Request</button>
+    </form>
+</div>
+{% endblock %}
