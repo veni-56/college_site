@@ -1,7 +1,16 @@
-# homepage/forms.py
 from django import forms
-from django.contrib.auth.forms import AuthenticationForm
+from .models import StaffProfile, LeaveRequest
 
-class StaffLoginForm(AuthenticationForm):
-    username = forms.CharField(widget=forms.TextInput(attrs={'class': 'form-control'}))
-    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
+class StaffProfileForm(forms.ModelForm):
+    class Meta:
+        model  = StaffProfile
+        fields = ['department', 'phone', 'photo']
+
+class LeaveRequestForm(forms.ModelForm):
+    class Meta:
+        model  = LeaveRequest
+        fields = ['start_date', 'end_date', 'reason']
+        widgets = {
+            'start_date': forms.DateInput(attrs={'type':'date'}),
+            'end_date':   forms.DateInput(attrs={'type':'date'}),
+        }

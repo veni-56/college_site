@@ -1,36 +1,40 @@
 from django.shortcuts import render, get_object_or_404,redirect
 from .models import HomePageContent,SliderImage,HomeQuickLink,AboutSubmenu, AboutContentBlock,AcademicSubMenu, AcademicContentBlock,Department,Department, DepartmentContent,StudentDeskMenu,NAACSubmenu,NAACContentBlock,ActivitySection,StaffProfile
-from django.contrib.auth import authenticate, login, logout
-from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-
-def staff_login(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            if hasattr(user, 'staffprofile'):  # Check if it's a staff
-                login(request, user)
-                return redirect('staff_dashboard')
-            else:
-                messages.error(request, "You are not authorized as staff.")
-        else:
-            messages.error(request, "Invalid username or password.")
-
-    return render(request, 'staff_login.html')
-
+from django.contrib import messages
+from .forms import StaffProfileForm, LeaveRequestForm
 
 @login_required(login_url='staff_login')
 def staff_dashboard(request):
-    return render(request, 'staff_dashboard.html')
+    return render(request, 'staff/dashboard.html')
 
+@login_required(login_url='staff_login')
+def profile_view(request):
+    profile = request.user.staffprofile
+    return render(request, 'staff/profile_view.html', {'profile': profile})
 
-def staff_logout(request):
-    logout(request)
-    return redirect('staff_login')
+@login_required(login_url='staff_login')
+def profile_edit(request):
+    profile = request.user.staffprofile
+    form = StaffProfileForm(request.POST or None,
+                            request.FILES or None,
+                            instance=profile)
+    if form.is_valid():
+        form.save()
+        messages.success(request, "Profile updated.")
+        return redirect('staff:profile')
+    return render(request, 'staff/profile_edit.html', {'form': form})
+
+@login_required(login_url='staff_login')
+def leave_apply(request):
+    form = LeaveRequestForm(request.POST or None)
+    if form.is_valid():
+        leave = form.save(commit=False)
+        leave.staff = request.user.staffprofile
+        leave.save()
+        messages.success(request, "Leave request sent.")
+        return redirect('staff:dashboard')
+    return render(request, 'staff/leave_apply.html', {'form': form})
 #home
 def home(request):
     content = HomePageContent.objects.first()
