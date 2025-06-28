@@ -137,15 +137,9 @@ USE_TZ = True
 
 import os
 
-# Static files (CSS, JavaScript, Images)
 STATIC_URL = "/static/"
-
-# Directory where static files will be collected (used in deployment)
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
-
-# Additional locations the staticfiles app will traverse
 STATICFILES_DIRS = [ BASE_DIR / "static" ]
-
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # WhiteNoise settings
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
