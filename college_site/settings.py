@@ -28,14 +28,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.getenv("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG      = os.getenv("DJANGO_DEBUG", "False") == "True"
+DEBUG = os.getenv("DJANGO_DEBUG") == "True"
 
 
-ALLOWED_HOSTS = [
-    '127.0.0.1', 
-    'localhost', 
-    'college-site-1-5pzw.onrender.com'
-    ]
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost', 'college-site-1-5pzw.onrender.com']
 
 
 
@@ -139,10 +135,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 
-# Static files settings
+import os
+
+# Static files (CSS, JavaScript, Images)
 STATIC_URL = "/static/"
-STATIC_ROOT = BASE_DIR / "staticfiles"   
-STATICFILES_DIRS = [ os.path.join(BASE_DIR, "static") ]
+
+# Directory where static files will be collected (used in deployment)
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+
+# Additional locations the staticfiles app will traverse
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),  # only if you have custom static files here
+]
 
 
 # WhiteNoise settings
