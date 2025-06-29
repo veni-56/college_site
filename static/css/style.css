@@ -7,6 +7,47 @@ header, .college-header {
   margin-top: 0 !important;
   padding-top: 0 !important;
 }
+.header-wrap {
+  margin: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.college-text {
+  line-height: 1.3;
+  margin: 0;
+  padding: 0;
+}
+
+.college-name {
+  color: #004080;
+  font-size: 22px;
+  font-weight: bold;
+  padding-top: 0;
+  margin-bottom: 5px;
+}
+
+.college-sub {
+  color: #004080;
+  font-weight: 500;
+  font-size: 16px;
+  margin-bottom: 3px;
+}
+
+/* ✅ Responsive for mobile */
+@media (max-width: 576px) {
+  .college-name {
+    font-size: 18px;
+  }
+
+  .college-sub {
+    font-size: 13px;
+  }
+
+  .header-wrap img {
+    height: 60px;
+  }
+}
 
 
 /* Navbar */
