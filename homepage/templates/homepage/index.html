@@ -1,18 +1,3 @@
-<style>
-  .carousel-image {
-  height: 80vh;
-  object-fit: cover;
-}
-
-/* Small screen height adjustment */
-@media (max-width: 768px) {
-  .carousel-image {
-    height: 45vh;
-  }
-}
-
-</style>
-
 {% extends 'homepage/base.html' %}
 
 {% block fullwidth %}
@@ -30,8 +15,8 @@
   <div class="carousel-inner">
     {% for image in slider_images %}
       <div class="carousel-item {% if forloop.first %}active{% endif %}">
-        <img src="{{ image.image.url }}" class="d-block w-100 img-fluid carousel-image" alt="Slide {{ forloop.counter }}">
-        {% if image.caption %}
+      <img src="{{ image.image.url }}" class="d-block w-100 img-fluid carousel-image" alt="Slide">
+          {% if image.caption %}
           <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-2 rounded">
             <h5 class="text-white">{{ image.caption }}</h5>
           </div>
