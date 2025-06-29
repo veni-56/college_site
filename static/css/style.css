@@ -37,15 +37,19 @@ header, .college-header {
 /* ✅ Responsive for mobile */
 @media (max-width: 576px) {
   .college-name {
-    font-size: 18px;
+    font-size: 17px; /* 🔽 slightly smaller for mobile */
   }
 
   .college-sub {
     font-size: 13px;
   }
 
+  .college-text p {
+    font-size: 12.5px;
+  }
+
   .header-wrap img {
-    height: 60px;
+    height: 55px; /* 🔽 reduce logo size */
   }
 }
 
