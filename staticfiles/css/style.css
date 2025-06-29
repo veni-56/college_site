@@ -17,6 +17,7 @@ header, .college-header {
   line-height: 1.3;
   margin: 0;
   padding: 0;
+  text-align: center;
 }
 
 .college-name {
@@ -37,15 +38,25 @@ header, .college-header {
 /* ✅ Responsive for mobile */
 @media (max-width: 576px) {
   .college-name {
-    font-size: 18px;
+    font-size: 15px; /* 🔽 slightly smaller for mobile */
+    margin: 0;
   }
 
   .college-sub {
     font-size: 13px;
+    font-weight: bold;
   }
 
+  .college-text p {
+    font-size: 12.5px;
+    text-align: end;
+  }
+.ms-auto.text-end.align-items-end{
+  align-items: center !important;
+}  
+
   .header-wrap img {
-    height: 60px;
+    height: 55px; /* 🔽 reduce logo size */
   }
 }
 
