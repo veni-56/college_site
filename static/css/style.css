@@ -37,7 +37,7 @@ header, .college-header {
 /* ✅ Responsive for mobile */
 @media (max-width: 576px) {
   .college-name {
-    font-size: 17px; /* 🔽 slightly smaller for mobile */
+    font-size: 15px; /* 🔽 slightly smaller for mobile */
   }
 
   .college-sub {
