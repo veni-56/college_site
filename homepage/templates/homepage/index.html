@@ -1,38 +1,57 @@
+<style>
+  .carousel-image {
+  height: 80vh;
+  object-fit: cover;
+}
+
+/* Small screen height adjustment */
+@media (max-width: 768px) {
+  .carousel-image {
+    height: 45vh;
+  }
+}
+
+</style>
+
 {% extends 'homepage/base.html' %}
 
 {% block fullwidth %}
-<!-- ✅ Full Width Carousel -->
+<!-- ✅ Responsive Bootstrap Carousel -->
 <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3000">
+  <!-- Indicators -->
   <div class="carousel-indicators">
     {% for image in slider_images %}
       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter0 }}"
-        {% if forloop.first %}class="active"{% endif %}></button>
+        {% if forloop.first %}class="active"{% endif %} aria-label="Slide {{ forloop.counter }}"></button>
     {% endfor %}
   </div>
 
+  <!-- Slides -->
   <div class="carousel-inner">
     {% for image in slider_images %}
       <div class="carousel-item {% if forloop.first %}active{% endif %}">
-        <img src="{{ image.image.url }}" class="d-block w-100 img-fluid carousel-image" alt="Slide">
+        <img src="{{ image.image.url }}" class="d-block w-100 img-fluid carousel-image" alt="Slide {{ forloop.counter }}">
         {% if image.caption %}
-          <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 rounded">
-            <h5>{{ image.caption }}</h5>
+          <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-2 rounded">
+            <h5 class="text-white">{{ image.caption }}</h5>
           </div>
         {% endif %}
       </div>
     {% endfor %}
   </div>
 
+  <!-- Controls -->
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-    <span class="carousel-control-prev-icon"></span>
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Previous</span>
   </button>
 
   <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-    <span class="carousel-control-next-icon"></span>
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>
 </div>
+
 <div class="container-fluid py-5" style="background-color: #004080;">
   <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
@@ -52,5 +71,5 @@
   </div>
 </div>
 
-
 {% endblock %}
+
