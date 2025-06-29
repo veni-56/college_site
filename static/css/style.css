@@ -69,7 +69,7 @@ header, .college-header {
  .navbar { margin-bottom: 20px; }
 .content-area { padding: 20px; background-color: #f9f9f9; border-radius: 10px; }
 
-/* ========== Slider Image Style ========== */
+/* ========== Slider Image Style ========== 
 .carousel-image {
   height: 80vh;
   object-fit: cover;
@@ -90,6 +90,16 @@ header, .college-header {
 @media (max-width: 575.98px) {
   .carousel-image {
     height: 50vh;
+  }
+}*/
+.carousel-image {
+  height: 80vh;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .carousel-image {
+    height: 40vh;
   }
 }
 
