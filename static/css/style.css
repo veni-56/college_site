@@ -38,6 +38,7 @@ header, .college-header {
 @media (max-width: 576px) {
   .college-name {
     font-size: 15px; /* 🔽 slightly smaller for mobile */
+    margin: 0;
   }
 
   .college-sub {
