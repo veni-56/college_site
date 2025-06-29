@@ -51,9 +51,9 @@ header, .college-header {
     height: auto;
 }
 
-/*.main-image img:hover {
+.main-image img:hover {
     transform: scale(1.02);
-}*/
+}
 
 /* Dropdown Submenu Styling */
 .dropdown-submenu {
