@@ -34,31 +34,6 @@ header, .college-header {
   margin-bottom: 3px;
 }
 
-/* ✅ Responsive for mobile */
-@media (max-width: 576px) {
-  .college-name {
-    font-size: 15px; /* 🔽 slightly smaller for mobile */
-    margin: 0;
-  }
-
-  .college-sub {
-    font-size: 13px;
-    font-weight: bold;
-  }
-
-  .college-text p {
-    font-size: 12.5px;
-  }
-.ms-auto.text-end.align-items-end{
-  align-items: center !important;
-}  
-
-  .header-wrap img {
-    height: 55px; /* 🔽 reduce logo size */
-  }
-}
-
-
 /* Navbar */
 .navbar {
     font-weight: 500;
@@ -174,12 +149,7 @@ header, .college-header {
   padding: 15px;
 }
 
-/* ========== Responsive Caption Hide on Small Devices ========== */
-@media (max-width: 576px) {
-  .carousel-caption {
-    display: none;
-  }
-}
+
 .quicklink-box {
   color: white;
   border: 3px solid #004080;
