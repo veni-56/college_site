@@ -1,5 +1,7 @@
-<nav class="navbar navbar-expand-lg w-100">
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg bg-light w-100">
   <div class="container-fluid">
+    <!-- Toggler for mobile -->
     <button
       class="navbar-toggler"
       type="button"
@@ -12,44 +14,41 @@
       <span class="navbar-toggler-icon"></span>
     </button>
 
+    <!-- Navbar items -->
     <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
       <ul class="navbar-nav">
 
+        <!-- Home -->
         <li class="nav-item">
           <a class="nav-link" href="{% url 'home' %}">HOME</a>
         </li>
+
+        <!-- About -->
         <li class="nav-item dropdown">
-  <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">ABOUT</a>
-  <ul class="dropdown-menu">
-    {% for menu in about_menus %}
-      <li><a class="dropdown-item" href="{% url 'about_detail' menu.id %}">{{ menu.title }}</a></li>
-    {% endfor %}
-  </ul>
-</li>
+          <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">ABOUT</a>
+          <ul class="dropdown-menu">
+            {% for menu in about_menus %}
+              <li><a class="dropdown-item" href="{% url 'about_detail' menu.id %}">{{ menu.title }}</a></li>
+            {% endfor %}
+          </ul>
+        </li>
 
-<li class="nav-item dropdown">
-  <a class="nav-link dropdown-toggle" href="#" id="academicDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    ACADEMIC
-  </a>
-  <ul class="dropdown-menu" aria-labelledby="academicDropdown">
+        <!-- Academic -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="academicDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            ACADEMIC
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="academicDropdown">
+            <li><a class="dropdown-item" href="{% url 'department_list' %}">Department</a></li>
+            {% for submenu in academic_submenus %}
+              {% if submenu.slug != "department" %}
+                <li><a class="dropdown-item" href="{% url 'academic_detail' submenu.slug %}">{{ submenu.title }}</a></li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </li>
 
-    <li><a class="dropdown-item" href="{% url 'department_list' %}">Department</a></li>
-
-    {% for submenu in academic_submenus %}
-        {% if submenu.slug != "department" %} 
-
-      <li>
-        <a class="dropdown-item" href="{% url 'academic_detail' submenu.slug %}">
-          {{ submenu.title }}
-        </a>
-      </li>
-     {% endif %} 
-    {% endfor %}
-  </ul>
-</li>
-
-
-        <!-- Student’s Desk Dropdown -->
+        <!-- Student’s Desk -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="studentsDeskDropdown" role="button" data-bs-toggle="dropdown">
             STUDENT’S DESK
@@ -65,64 +64,88 @@
           </ul>
         </li>
 
-<li class="nav-item dropdown">
-  <a class="nav-link dropdown-toggle" href="#" id="naacDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-    NAAC
-  </a>
-  <ul class="dropdown-menu" aria-labelledby="naacDropdown">
-    {% for submenu in submenus %}
-      <li>
-        <a class="dropdown-item" href="{% url 'naac_detail' submenu.id %}">
-          {{ submenu.title }}
-        </a>
-      </li>
-    {% endfor %}
-  </ul>
-</li>
-
-    <li class="nav-item dropdown">
-  <a class="nav-link dropdown-toggle" href="#" id="activitiesDropdown" role="button" data-bs-toggle="dropdown">
-    ACTIVITIES & ALUMNI
-  </a>
-  <ul class="dropdown-menu" aria-labelledby="activitiesDropdown">
-    {% for section in nav_sections %}
-      {% if section.children.all %}
-        <!-- Parent with children -->
-        <li class="dropdown-submenu">
-          <a class="dropdown-item dropdown-toggle" href="#">{{ section.name }}</a>
-          <ul class="dropdown-menu">
-            {% for child in section.children.all %}
+        <!-- NAAC -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="naacDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            NAAC
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="naacDropdown">
+            {% for submenu in submenus %}
               <li>
-                <a class="dropdown-item" href="{% url 'activity_detail' child.slug %}">{{ child.name }}</a>
+                <a class="dropdown-item" href="{% url 'naac_detail' submenu.id %}">
+                  {{ submenu.title }}
+                </a>
               </li>
             {% endfor %}
           </ul>
         </li>
-      {% else %}
-        <!-- Parent without children -->
-        <li><a class="dropdown-item" href="{% url 'activity_detail' section.slug %}">{{ section.name }}</a></li>
-      {% endif %}
-    {% endfor %}
-  </ul>
-</li>
-    
-    <li class="nav-item">
-  <a class="nav-link {% if request.resolver_match.url_name == 'staff_login' %}active{% endif %}"
-     href="{% url 'staff_login' %}">
-     Staff Login
-  </a>
-</li>
 
-</ul>
-</ul>
-</div></div></nav>
-        
+        <!-- Activities & Alumni with Nested Submenu -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="activitiesDropdown" role="button" data-bs-toggle="dropdown">
+            ACTIVITIES & ALUMNI
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="activitiesDropdown" data-bs-auto-close="outside">
+            {% for section in nav_sections %}
+              {% if section.children.all %}
+                <li class="dropdown-submenu">
+                  <a class="dropdown-item dropdown-toggle" href="#">{{ section.name }}</a>
+                  <ul class="dropdown-menu">
+                    {% for child in section.children.all %}
+                      <li><a class="dropdown-item" href="{% url 'activity_detail' child.slug %}">{{ child.name }}</a></li>
+                    {% endfor %}
+                  </ul>
+                </li>
+              {% else %}
+                <li><a class="dropdown-item" href="{% url 'activity_detail' section.slug %}">{{ section.name }}</a></li>
+              {% endif %}
+            {% endfor %}
+          </ul>
+        </li>
+
+        <!-- Staff Login -->
+        <li class="nav-item">
+          <a class="nav-link {% if request.resolver_match.url_name == 'staff_login' %}active{% endif %}" href="{% url 'staff_login' %}">
+            Staff Login
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- CSS for multi-level dropdown (add in base.html or head) -->
+<style>
+  .dropdown-submenu {
+    position: relative;
+  }
+
+  .dropdown-submenu > .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -1px;
+    display: none;
+  }
+
+  .dropdown-submenu:hover > .dropdown-menu {
+    display: block;
+  }
+
+  /* Show submenu on mobile when JS adds 'show' */
+  .dropdown-submenu > .dropdown-menu.show {
+    display: block;
+    position: static;
+    float: none;
+  }
+</style>
+
+<!-- JavaScript for submenu toggle on mobile -->
 <script>
   document.querySelectorAll('.dropdown-submenu .dropdown-toggle').forEach(function(el) {
     el.addEventListener('click', function(e) {
       e.preventDefault();
       e.stopPropagation();
-
       const submenu = this.nextElementSibling;
       if (submenu) {
         submenu.classList.toggle('show');
