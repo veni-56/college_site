@@ -76,7 +76,7 @@ def home_view(request):
 
 def home(request):
     counters = HomepageCounter.objects.all().order_by('order')
-    return render(request, 'home.html', {'homepage_counters': counters})
+    return render(request, 'homepage/index.html', {'homepage_counters': counters})
 
 #about
 def about_detail_view(request, submenu_id):
