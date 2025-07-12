@@ -56,17 +56,15 @@
   </div>
 </div>
 
-<section class="statistics-section text-white py-5" style="background-color:#0f1c2e;">
+<section class="statistics-section text-white py-5" style="background-color: #0f1c2e;">
   <div class="container text-center">
     <div class="row">
-
-      {% for s in stats %}
-      <div class="col-md-2 col-6 mb-3">
-        <h2 class="counter" data-target="{{ s.value }}">0</h2>
-        <p>{{ s.label }}</p>
-      </div>
+      {% for counter in homepage_counters %}
+        <div class="col-md-2 col-6 mb-3">
+          <h2 class="counter" data-target="{{ counter.value }}">0</h2>
+          <p>{{ counter.label }}</p>
+        </div>
       {% endfor %}
-
     </div>
   </div>
 </section>
