@@ -3,25 +3,6 @@
 
 {% block content %}
 
-<div class="container my-5">
-  <h2 class="text-center mb-4">Departments</h2>
-  <div class="row">
-    {% for dept in departments %}
-      <div class="col-md-4 col-sm-6 mb-4">
-        <a href="{% url 'department_detail' dept.slug %}" class="dept-link">
-          {% if dept.image %}
-            <img src="{{ dept.image.url }}" alt="{{ dept.name }}" class="dept-img">
-          {% else %}
-            <img src="{% static 'images/noimage.jpg' %}" alt="{{ dept.name }}" class="dept-img">
-          {% endif %}
-          <div class="dept-title">{{ dept.name }}</div>
-        </a>
-      </div>
-    {% endfor %}
-  </div>
-</div>
-{% endblock %}
-
 <style>
   .dept-card {
     border: none;
@@ -55,3 +36,23 @@
   }
 
 </style>
+
+<div class="container my-5">
+  <h2 class="text-center mb-4">Departments</h2>
+  <div class="row">
+    {% for dept in departments %}
+      <div class="col-md-4 col-sm-6 mb-4">
+        <a href="{% url 'department_detail' dept.slug %}" class="dept-link">
+          {% if dept.image %}
+            <img src="{{ dept.image.url }}" alt="{{ dept.name }}" class="dept-img">
+          {% else %}
+            <img src="{% static 'images/noimage.jpg' %}" alt="{{ dept.name }}" class="dept-img">
+          {% endif %}
+          <div class="dept-title">{{ dept.name }}</div>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
+
