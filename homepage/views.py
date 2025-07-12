@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404,redirect
-from .models import HomePageContent,SliderImage,HomeQuickLink,AboutSubmenu, AboutContentBlock,AcademicSubMenu, AcademicContentBlock,Department,Department, DepartmentContent,StudentDeskMenu,NAACSubmenu,NAACContentBlock,ActivitySection,StaffProfile
+from .models import HomePageContent,SliderImage,HomeQuickLink,StatCounter,AboutSubmenu, AboutContentBlock,AcademicSubMenu, AcademicContentBlock,Department,Department, DepartmentContent,StudentDeskMenu,NAACSubmenu,NAACContentBlock,ActivitySection,StaffProfile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -40,7 +40,7 @@ def profile_edit(request):
     if form.is_valid():
         form.save()
         messages.success(request, "Profile updated.")
-        return redirect('profile')         # ←  NOT  'staff:profile'
+        return redirect('profile')        
 
     return render(request,
                   'homepage/staff/profile_edit.html',
@@ -74,6 +74,10 @@ def home_view(request):
         'quick_links': quick_links
     })
 
+
+def home(request):
+    stats = StatCounter.objects.all()    
+    return render(request, "homepage/index.html", {"stats": stats})
 
 
 #about
