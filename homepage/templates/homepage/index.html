@@ -56,5 +56,41 @@
   </div>
 </div>
 
+<section class="statistics-section text-white py-5" style="background-color:#0f1c2e;">
+  <div class="container text-center">
+    <div class="row">
+
+      {% for s in stats %}
+      <div class="col-md-2 col-6 mb-3">
+        <h2 class="counter" data-target="{{ s.value }}">0</h2>
+        <p>{{ s.label }}</p>
+      </div>
+      {% endfor %}
+
+    </div>
+  </div>
+</section>
+
 {% endblock %}
 
+<!-- Counter animation -->
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.counter').forEach(counter => {
+    const target = +counter.dataset.target;
+    const inc    = target / 120;               // speed tweak
+    let current  = 0;
+
+    const run = () => {
+      current += inc;
+      if (current < target) {
+        counter.textContent = Math.ceil(current);
+        requestAnimationFrame(run);
+      } else {
+        counter.textContent = target;
+      }
+    };
+    run();
+  });
+});
+</script>
