@@ -79,13 +79,14 @@ def home(request):
     return render(request, 'homepage/index.html', {'homepage_counters': counters})
 
 #about
-def about_detail_view(request, submenu_id):
+
+def about_submenu_detail(request, submenu_id):
     submenu = get_object_or_404(AboutSubmenu, id=submenu_id)
-    blocks = AboutContentBlock.objects.filter(submenu=submenu)
-    return render(request, 'about/about_detail.html', {
+    content_blocks = submenu.content_blocks.all()
+    return render(request, 'about/submenu_detail.html', {
         'submenu': submenu,
-        'blocks': blocks
-    })  
+        'content_blocks': content_blocks,
+    })
 #academic_detail
 def academic_detail(request, slug):
     submenu = get_object_or_404(AcademicSubMenu, slug=slug)
