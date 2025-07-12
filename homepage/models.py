@@ -53,9 +53,9 @@ class HomeQuickLink(models.Model):
 
 
 class HomepageCounter(models.Model):
-    label = models.CharField(max_length=100)   # Example: "Students"
-    value = models.PositiveIntegerField()      # Example: 3782
-    order = models.PositiveIntegerField(default=0)  # Display order
+    label = models.CharField(max_length=100)  
+    value = models.PositiveIntegerField()      
+    order = models.PositiveIntegerField(default=0)  
 
     def __str__(self):
         return f"{self.label} - {self.value}"
@@ -97,6 +97,7 @@ class AcademicContentBlock(models.Model):
 class Department(models.Model):
     name = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=True)
+    image = models.ImageField(upload_to="department_images/", blank=True, null=True) 
     order = models.PositiveIntegerField(default=0)  
 
     def save(self, *args, **kwargs):
