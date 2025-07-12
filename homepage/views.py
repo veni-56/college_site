@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404,redirect
-from .models import HomePageContent,SliderImage,HomeQuickLink,StatCounter,AboutSubmenu, AboutContentBlock,AcademicSubMenu, AcademicContentBlock,Department,Department, DepartmentContent,StudentDeskMenu,NAACSubmenu,NAACContentBlock,ActivitySection,StaffProfile
+from .models import HomePageContent,SliderImage,HomeQuickLink,HomepageCounter,AboutSubmenu, AboutContentBlock,AcademicSubMenu, AcademicContentBlock,Department,Department, DepartmentContent,StudentDeskMenu,NAACSubmenu,NAACContentBlock,ActivitySection,StaffProfile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -74,11 +74,9 @@ def home_view(request):
         'quick_links': quick_links
     })
 
-
 def home(request):
-    stats = StatCounter.objects.all()    
-    return render(request, "homepage/index.html", {"stats": stats})
-
+    counters = HomepageCounter.objects.all().order_by('order')
+    return render(request, 'home.html', {'homepage_counters': counters})
 
 #about
 def about_detail_view(request, submenu_id):

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import HomePageContent,StaffProfile,SliderImage,StatCounter,HomeQuickLink,AboutSubmenu, AboutContentBlock,AcademicSubMenu,AcademicContentBlock,Department,Department, DepartmentContent,StudentDeskMenu,StudentDeskContentBlock,NAACSubmenu,NAACContentBlock,ActivitySection, ActivityContent
+from .models import HomePageContent,StaffProfile,SliderImage,HomepageCounter,HomeQuickLink,AboutSubmenu, AboutContentBlock,AcademicSubMenu,AcademicContentBlock,Department,Department, DepartmentContent,StudentDeskMenu,StudentDeskContentBlock,NAACSubmenu,NAACContentBlock,ActivitySection, ActivityContent
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
@@ -7,12 +7,10 @@ admin.site.register(HomePageContent)
 admin.site.register(SliderImage)
 admin.site.register(HomeQuickLink)
 
-@admin.register(StatCounter)
-class StatCounterAdmin(admin.ModelAdmin):
-    list_display  = ('label', 'value', 'order')
-    list_editable = ('value', 'order')
-    ordering      = ('order',)
-
+@admin.register(HomepageCounter)
+class HomepageCounterAdmin(admin.ModelAdmin):
+    list_display = ('label', 'value', 'order')
+    ordering = ['order']
 class StaffProfileInline(admin.StackedInline):
     model = StaffProfile
     can_delete = False

@@ -71,24 +71,22 @@
 
 {% endblock %}
 
-<!-- Counter animation -->
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  document.querySelectorAll('.counter').forEach(counter => {
-    const target = +counter.dataset.target;
-    const inc    = target / 120;               // speed tweak
-    let current  = 0;
+  const counters = document.querySelectorAll('.counter');
+  counters.forEach(counter => {
+    counter.innerText = '0';
+    const updateCounter = () => {
+      const target = +counter.getAttribute('data-target');
+      const current = +counter.innerText;
+      const increment = target / 100;
 
-    const run = () => {
-      current += inc;
       if (current < target) {
-        counter.textContent = Math.ceil(current);
-        requestAnimationFrame(run);
+        counter.innerText = `${Math.ceil(current + increment)}`;
+        setTimeout(updateCounter, 30);
       } else {
-        counter.textContent = target;
+        counter.innerText = target;
       }
     };
-    run();
+    updateCounter();
   });
-});
 </script>
