@@ -51,8 +51,19 @@ class HomeQuickLink(models.Model):
     def __str__(self):
         return self.title
 
+class StatCounter(models.Model):
+    label   = models.CharField(max_length=100)        
+    value   = models.PositiveIntegerField()           
+    order   = models.PositiveSmallIntegerField(
+                default=0, help_text="Display order (0,1,2 …)")
 
+    class Meta:
+        ordering = ['order']
+        verbose_name = "Homepage Counter"
+        verbose_name_plural = "Homepage Counters"
 
+    def __str__(self):
+        return f"{self.label} – {self.value}"
 
 
 class AboutSubmenu(models.Model):
