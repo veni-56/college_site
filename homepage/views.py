@@ -83,7 +83,7 @@ def home(request):
 def about_submenu_detail(request, submenu_id):
     submenu = get_object_or_404(AboutSubmenu, id=submenu_id)
     content_blocks = submenu.content_blocks.all()
-    return render(request, 'about/submenu_detail.html', {
+    return render(request, 'about/about_detail.html', {
         'submenu': submenu,
         'content_blocks': content_blocks,
     })
