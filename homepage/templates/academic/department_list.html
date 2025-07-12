@@ -1,26 +1,26 @@
 {% extends 'homepage/base.html' %}
 {% block fullwidth %}
 
-<div class="container my-5">
+<div class="container-fluid my-5">
   <h2 class="text-center mb-4">Departments</h2>
-  <div class="row">
-    {% for dept in departments %}
-      <div class="col-md-3 col-sm-6 mb-4">
-        <a href="{% url 'department_detail' slug=dept.slug %}">
-          <div class="card h-100 shadow-sm text-center">
-            {% if dept.image %}
-              <img src="{{ dept.image.url }}" class="card-img-top img-fluid" style="height: 150px; object-fit: cover;" alt="{{ dept.name }}">
-            {% else %}
-              <img src="{% static 'images/noimage.jpg' %}" class="card-img-top img-fluid" alt="No Image">
-            {% endif %}
-            <div class="card-body">
-              <h5 class="card-title">{{ dept.name }}</h5>
-            </div>
-          </div>
-        </a>
+
+  {% for dept in departments %}
+    <a href="{% url 'department_detail' slug=dept.slug %}" class="text-decoration-none text-dark">
+      <div class="d-flex align-items-center border rounded shadow-sm mb-3 px-3 py-2" style="background-color: #f8f9fa;">
+        <div style="width: 150px; height: 100px;" class="me-3 text-center">
+          {% if dept.image %}
+            <img src="{{ dept.image.url }}" class="img-fluid h-100" style="object-fit: cover;" alt="{{ dept.name }}">
+          {% else %}
+            <img src="{% static 'images/noimage.jpg' %}" class="img-fluid h-100" style="object-fit: cover;" alt="No Image">
+          {% endif %}
+        </div>
+        <div class="flex-grow-1">
+          <h5 class="mb-0">{{ dept.name }}</h5>
+        </div>
       </div>
-    {% endfor %}
-  </div>
+    </a>
+  {% endfor %}
+
 </div>
 
 {% endblock %}
