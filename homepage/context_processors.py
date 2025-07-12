@@ -6,7 +6,8 @@ from .models import (
     StudentDeskMenu,
     NAACSubmenu,
     ActivitySection,
-    StatCounter,
+    HomepageCounter,
+
 )
 from django.db.models import Prefetch
 
@@ -25,8 +26,6 @@ def basic_info(request):
         "student_desk_menus": StudentDeskMenu.objects.all(),
         "submenus": NAACSubmenu.objects.all(),
         "nav_sections":parents,
-        "stats": StatCounter.objects.all(), 
-
 
     }
 
@@ -45,3 +44,8 @@ def department_list(request):
     return {
         'departments': departments
     }
+
+
+def homepage_counters(request):
+    counters = HomepageCounter.objects.all().order_by('order')
+    return {'homepage_counters': counters}
