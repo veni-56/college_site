@@ -1,15 +1,26 @@
 {% extends 'homepage/base.html' %}
-{% block content %}
-<div class="container">
-  <h2 class="mt-4">Departments</h2>
-  <ul class="list-group">
+{% block fullwidth %}
+
+<div class="container my-5">
+  <h2 class="text-center mb-4">Departments</h2>
+  <div class="row">
     {% for dept in departments %}
-      <li class="list-group-item">
-        <a href="{% url 'department_detail' dept.slug %}">
-          {{ dept.name|linebreaks }}
+      <div class="col-md-3 col-sm-6 mb-4">
+        <a href="{% url 'department_detail' slug=dept.slug %}">
+          <div class="card h-100 shadow-sm text-center">
+            {% if dept.image %}
+              <img src="{{ dept.image.url }}" class="card-img-top img-fluid" style="height: 150px; object-fit: cover;" alt="{{ dept.name }}">
+            {% else %}
+              <img src="{% static 'images/noimage.jpg' %}" class="card-img-top img-fluid" alt="No Image">
+            {% endif %}
+            <div class="card-body">
+              <h5 class="card-title">{{ dept.name }}</h5>
+            </div>
+          </div>
         </a>
-      </li>
+      </div>
     {% endfor %}
-  </ul>
+  </div>
 </div>
+
 {% endblock %}
