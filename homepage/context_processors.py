@@ -6,6 +6,7 @@ from .models import (
     StudentDeskMenu,
     NAACSubmenu,
     ActivitySection,
+    StatCounter,
 )
 from django.db.models import Prefetch
 
@@ -24,6 +25,8 @@ def basic_info(request):
         "student_desk_menus": StudentDeskMenu.objects.all(),
         "submenus": NAACSubmenu.objects.all(),
         "nav_sections":parents,
+        "stats": StatCounter.objects.all(), 
+
 
     }
 
