@@ -97,22 +97,15 @@ def academic_detail(request, slug):
         'content_blocks': content_blocks,
     })
 
-def department_list(request):
-    departments = Department.objects.all()
-    return render(request, 'academic/department_list.html', {'departments': departments})
+def department_detail(request, slug, section='about'):
+    dept = get_object_or_404(Department, slug=slug)
+    all_blocks = dept.departmentcontent_set.filter(section=section)
 
-def department_detail(request, slug):
-    department = get_object_or_404(Department, slug=slug)
-    sections = ['about', 'faculty', 'association', 'syllabus', 'gallery', 'achievements', 'intercollege']
-    content = {
-        section: DepartmentContent.objects.filter(department=department, section=section)
-        for section in sections
-    }
     return render(request, 'academic/department_detail.html', {
-        'department': department,
-        'content': content,
+        'department': dept,
+        'section': section,
+        'content_blocks': all_blocks,
     })
-
 
 def studentdesk_detail(request, slug):
     menu = get_object_or_404(StudentDeskMenu, slug=slug)
