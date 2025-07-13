@@ -1,28 +1,35 @@
-{% extends 'homepage/base.html' %}
-{% block content %}
-<div class="container mt-4">
+{% extends "homepage/base.html" %}
+{% load static %}
+{% block fullwidth %}
 
-  <!-- Sub-navbar -->
-  <ul class="nav nav-tabs mt-4">
-    {% for key in content %}
-      <li class="nav-item">
-        <a class="nav-link {% if forloop.first %}active{% endif %}" data-bs-toggle="tab" href="#{{ key }}">{{ key|capfirst }}</a>
-      </li>
-    {% endfor %}
-  </ul>
+<div class="container my-5">
+  <h2 class="text-center mb-4 text-primary fw-bold">{{ department.name }} - {{ section|title }}</h2>
 
-  <div class="tab-content mt-3">
-    {% for key, items in content.items %}
-      <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="{{ key }}">
-        {% for item in items %}
-          <h4>{{ item.heading }}</h4>
-          <p>{{ item.content|linebreaks }}</p>
-          {% if item.table_html %}<div class="table-responsive">{{ item.table_html|safe }}</div>{% endif %}
-          {% if item.image %}<img src="{{ item.image.url }}" class="img-fluid mb-2">{% endif %}
-          {% if item.pdf %}<a href="{{ item.pdf.url }}" target="_blank">Download PDF</a>{% endif %}
-        {% endfor %}
+  {% if content_blocks %}
+    {% for block in content_blocks %}
+      <div class="mb-5">
+        {% if block.heading %}
+          <h4 class="fw-bold text-dark">{{ block.heading }}</h4>
+        {% endif %}
+
+        {% if block.content %}
+          <p class="text-justify" style="font-size: 17px;">{{ block.content|linebreaks }}</p>
+        {% endif %}
+
+        {% if block.image %}
+          <div class="text-center my-3">
+            <img src="{{ block.image.url }}" class="img-fluid rounded shadow" alt="{{ block.heading }}">
+          </div>
+        {% endif %}
+
+        {% if block.pdf %}
+          <a href="{{ block.pdf.url }}" class="btn btn-outline-primary btn-sm" target="_blank">Download PDF</a>
+        {% endif %}
       </div>
     {% endfor %}
-  </div>
+  {% else %}
+    <p class="text-muted">No content available for this section.</p>
+  {% endif %}
 </div>
+
 {% endblock %}
