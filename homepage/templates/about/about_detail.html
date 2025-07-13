@@ -3,18 +3,17 @@
 {% block fullwidth %}
 
 <style>
-  /* Layout styles */
   .about-block {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
-    margin-bottom: 50px;
+    margin-bottom: 30px; /* reduced space */
   }
 
   .about-text {
     flex: 1 1 60%;
     padding: 10px;
-    color: #111; /* DARKER black text */
+    color: #000; /* real black */
     font-size: 18px;
     line-height: 1.8;
     text-align: justify;
@@ -30,17 +29,16 @@
     max-width: 100%;
     height: auto;
     border-radius: 10px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
   }
 
   .about-image img:hover {
-    transform: scale(1.05);
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    transform: scale(1.03);
   }
 
   .about-heading {
-    font-weight: bold;
+    font-weight: 700;
     font-size: 22px;
     margin-bottom: 10px;
     color: #000;
@@ -49,9 +47,9 @@
   .about-divider {
     width: 70px;
     height: 4px;
-    background: #006400; /* dark green */
+    background-color: #006400;
+    margin-bottom: 20px;
     border: none;
-    margin: 0 0 20px 0;
   }
 
   @media (max-width: 768px) {
@@ -59,7 +57,8 @@
       flex-direction: column;
     }
 
-    .about-text, .about-image {
+    .about-text,
+    .about-image {
       flex: 1 1 100%;
     }
 
@@ -70,14 +69,11 @@
 </style>
 
 <div class="container my-5">
-  <!-- Submenu Title -->
-  <h2 class="fw-bold mb-4 text-success text-center">{{ submenu.title }}</h2>
 
   {% if content_blocks %}
     {% for block in content_blocks %}
       <div class="about-block">
-
-        <!-- Left: Text -->
+        <!-- Text block -->
         <div class="about-text">
           {% if block.heading %}
             <div class="about-heading">{{ block.heading }}</div>
@@ -97,18 +93,17 @@
           {% endif %}
         </div>
 
-        <!-- Right: Image -->
+        <!-- Image block only if image exists -->
         {% if block.image %}
           <div class="about-image">
             <img src="{{ block.image.url }}" alt="{{ block.heading }}">
           </div>
         {% endif %}
-
       </div>
     {% endfor %}
   {% else %}
     <p class="text-muted">No content available.</p>
   {% endif %}
-</div>
 
+</div>
 {% endblock %}
