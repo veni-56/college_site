@@ -90,12 +90,12 @@ def about_submenu_detail(request, submenu_id):
 #academic_detail
 def academic_detail(request, slug):
     submenu = get_object_or_404(AcademicSubMenu, slug=slug)
-    contents = AcademicContentBlock.objects.filter(submenu=submenu)
+    content_blocks = submenu.academiccontentblock_set.all().order_by('order')
+
     return render(request, 'academic/academic_detail.html', {
         'submenu': submenu,
-        'contents': contents
+        'content_blocks': content_blocks,
     })
-
 
 def department_list(request):
     departments = Department.objects.all()

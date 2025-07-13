@@ -31,8 +31,18 @@ class AboutSubmenuAdmin(admin.ModelAdmin):
     inlines = [AboutContentBlockInline]
 
 admin.site.register(AboutSubmenu, AboutSubmenuAdmin)
-admin.site.register(AcademicSubMenu)
-admin.site.register(AcademicContentBlock)
+class AcademicContentBlockInline(admin.StackedInline):
+    model = AcademicContentBlock
+    extra = 1  
+    fields = ['heading', 'content', 'table_html', 'image', 'pdf', 'order']
+    ordering = ['order']  
+
+class AcademicSubMenuAdmin(admin.ModelAdmin):
+    list_display = ['title', 'slug', 'order']
+    prepopulated_fields = {'slug': ('title',)}  
+    inlines = [AcademicContentBlockInline]
+
+admin.site.register(AcademicSubMenu, AcademicSubMenuAdmin)
 
 class DepartmentContentInline(admin.StackedInline):  
     model = DepartmentContent

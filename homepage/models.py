@@ -76,8 +76,6 @@ class AboutContentBlock(models.Model):
     def __str__(self):
         return f"{self.submenu.title} - {self.heading}"
 
-from django.db import models
-
 class AcademicSubMenu(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
@@ -94,9 +92,6 @@ class AcademicContentBlock(models.Model):
     image = models.ImageField(upload_to='academic/images/', blank=True, null=True)
     pdf = models.FileField(upload_to='academic/pdfs/', blank=True, null=True)
     order = models.PositiveIntegerField(default=0)
-
-    def __str__(self):
-        return f"{self.submenu.title} - {self.heading}"
 
 class Department(models.Model):
     name = models.CharField(max_length=200)
