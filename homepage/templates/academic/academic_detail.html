@@ -1,36 +1,44 @@
 {% extends 'homepage/base.html' %}
-
+{% load static %}
 {% block content %}
-<div class="container mt-4">
-  <h2 class="mb-4 text-primary fw-bold">{{ submenu.title }}</h2>
 
-  {% for block in contents %}
+<div class="container-fluid my-5 px-4">
+  <!-- Submenu Title -->
+  <h2 class="mb-4" style="color: #004d00; border-bottom: 4px solid #004d00; display: inline-block;">
+    {{ submenu.title }}
+  </h2>
 
-    <div class="mb-4 p-3 bg-light rounded shadow-sm">
-      {% if block.heading %}
-        <h4 class="text-secondary">{{ block.heading }}</h4>
-      {% endif %}
+  {% if content_blocks %}
+    {% for block in content_blocks %}
+      <div class="mb-5">
 
-      {% if block.content %}
-        <div class="mt-2">
-          {{ block.content|linebreaks }}
-        </div>
-      {% endif %}
+        {% if block.heading %}
+          <h4 class="fw-bold">{{ block.heading }}</h4>
+        {% endif %}
 
-      {% if block.image %}
-        <div class="mt-3">
-          <img src="{{ block.image.url }}" alt="{{ block.heading }}" class="img-fluid rounded border">
-        </div>
-      {% endif %}
+        {% if block.image %}
+          <div class="text-center my-3">
+            <img src="{{ block.image.url }}" class="img-fluid rounded shadow" alt="{{ block.heading }}" style="max-height: 400px;">
+          </div>
+        {% endif %}
 
-      {% if block.pdf %}
-        <div class="mt-3">
-          <a href="{{ block.pdf.url }}" class="btn btn-outline-primary" target="_blank">
-            📄 Download PDF
-          </a>
-        </div>
-      {% endif %}
-    </div>
-  {% endfor %}
+        {% if block.content %}
+          <p class="mt-3">{{ block.content|linebreaks }}</p>
+        {% endif %}
+
+        {% if block.table_html %}
+          <div class="table-responsive mt-3">{{ block.table_html|safe }}</div>
+        {% endif %}
+
+        {% if block.pdf %}
+          <a href="{{ block.pdf.url }}" target="_blank" class="btn btn-outline-primary btn-sm mt-3">Download PDF</a>
+        {% endif %}
+
+      </div>
+    {% endfor %}
+  {% else %}
+    <p>No content available.</p>
+  {% endif %}
 </div>
+
 {% endblock %}
