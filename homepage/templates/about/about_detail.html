@@ -23,7 +23,7 @@
     flex: 1 1 40%;
     padding: 10px;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 90px;
   }
 
   .about-image img {
@@ -33,16 +33,25 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
   }
+  .about-content {
+  font-size: 17px;
+  font-weight: bold;
+  color: #111;
+  line-height: 1.8;
+  text-align: justify;
+  margin-bottom: 20px;
+}
+
 
   .about-image img:hover {
     transform: scale(1.03);
   }
 
   .about-heading {
-    font-weight: 700;
+    font-weight: bold;
     font-size: 22px;
     margin-bottom: 10px;
-    color: black;
+    color: #004080;
   }
 
   .about-divider {
@@ -80,10 +89,11 @@
             <div class="about-heading">{{ block.heading }}</div>
             <hr class="about-divider">
           {% endif %}
-
-          {% if block.content %}
-            {{ block.content|linebreaks }}
-          {% endif %}
+       {% if block.content %}
+           <div class="about-content">
+          {{ block.content|linebreaks }}
+       </div>
+       {% endif %}
 
           {% if block.table_html %}
             <div class="table-responsive mt-3">{{ block.table_html|safe }}</div>
