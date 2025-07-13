@@ -76,6 +76,8 @@ class AboutContentBlock(models.Model):
     def __str__(self):
         return f"{self.submenu.title} - {self.heading}"
 
+from django.db import models
+
 class AcademicSubMenu(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True)
@@ -88,8 +90,10 @@ class AcademicContentBlock(models.Model):
     submenu = models.ForeignKey(AcademicSubMenu, on_delete=models.CASCADE)
     heading = models.CharField(max_length=255, blank=True)
     content = models.TextField(blank=True)
+    table_html = models.TextField(blank=True, null=True)
     image = models.ImageField(upload_to='academic/images/', blank=True, null=True)
     pdf = models.FileField(upload_to='academic/pdfs/', blank=True, null=True)
+    order = models.PositiveIntegerField(default=0)
 
     def __str__(self):
         return f"{self.submenu.title} - {self.heading}"
