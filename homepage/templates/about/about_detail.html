@@ -1,44 +1,72 @@
-{% extends 'homepage/base.html' %}
-{% load static %}
+{% extends "homepage/base.html" %}
 {% block fullwidth %}
 
-<div class="container-fluid my-5 px-4">
-  <!-- Submenu Title -->
-  <h2 class="mb-4" style="color: #004d00; border-bottom: 4px solid #004d00; display: inline-block;">
-    {{ submenu.title }}
-  </h2>
+<style>
+  .about-block {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin-bottom: 40px;
+  }
 
-  {% if content_blocks %}
-    {% for block in content_blocks %}
-      <div class="mb-5">
+  .about-text {
+    flex: 1 1 60%;
+    padding: 10px;
+    color: #000; /* Dark black text */
+    font-size: 17px;
+    line-height: 1.7;
+  }
 
-        {% if block.heading %}
-          <h4 class="fw-bold">{{ block.heading }}</h4>
-        {% endif %}
+  .about-image {
+    flex: 1 1 40%;
+    text-align: center;
+    padding: 10px;
+  }
 
-        {% if block.image %}
-          <div class="text-center my-3">
-            <img src="{{ block.image.url }}" class="img-fluid rounded shadow" alt="{{ block.heading }}" style="max-height: 400px;">
-          </div>
-        {% endif %}
+  .about-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+  }
 
+  @media (max-width: 768px) {
+    .about-block {
+      flex-direction: column;
+    }
+
+    .about-text,
+    .about-image {
+      flex: 1 1 100%;
+    }
+  }
+</style>
+
+{% if content_blocks %}
+  {% for block in content_blocks %}
+    <div class="about-block">
+      <!-- Text -->
+      <div class="about-text">
         {% if block.content %}
-          <p class="mt-3">{{ block.content|linebreaks }}</p>
+          <p>{{ block.content|linebreaks }}</p>
         {% endif %}
-
         {% if block.table_html %}
           <div class="table-responsive mt-3">{{ block.table_html|safe }}</div>
         {% endif %}
-
         {% if block.pdf %}
-          <a href="{{ block.pdf.url }}" target="_blank" class="btn btn-outline-primary btn-sm mt-3">Download PDF</a>
+          <a href="{{ block.pdf.url }}" target="_blank" class="btn btn-outline-primary mt-3">Download PDF</a>
         {% endif %}
-
       </div>
-    {% endfor %}
-  {% else %}
-    <p>No content available.</p>
-  {% endif %}
-</div>
+
+      <!-- Image -->
+      {% if block.image %}
+        <div class="about-image">
+          <img src="{{ block.image.url }}" alt="Image">
+        </div>
+      {% endif %}
+    </div>
+  {% endfor %}
+{% else %}
+  <p>No content available.</p>
+{% endif %}
 
 {% endblock %}
