@@ -1,12 +1,14 @@
 {% extends "homepage/base.html" %}
+{% load static %}
 {% block fullwidth %}
 
 <style>
+  /* Container layout */
   .about-block {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-start;
-    margin-bottom: 40px;
+    margin-bottom: 50px;
   }
 
   .about-text {
@@ -15,18 +17,35 @@
     color: #000; /* Dark black text */
     font-size: 17px;
     line-height: 1.7;
+    text-align: justify;
   }
 
   .about-image {
     flex: 1 1 40%;
-    text-align: center;
     padding: 10px;
+    text-align: center;
   }
 
   .about-image img {
     max-width: 100%;
     height: auto;
     border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .about-heading {
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 6px;
+    color: #000;
+  }
+
+  .about-divider {
+    width: 70px;
+    height: 4px;
+    background: #007b5e; /* Dark green */
+    border: none;
+    margin: 0 0 18px 0;
   }
 
   @media (max-width: 768px) {
@@ -34,39 +53,56 @@
       flex-direction: column;
     }
 
-    .about-text,
-    .about-image {
+    .about-text, .about-image {
       flex: 1 1 100%;
+    }
+
+    .about-image {
+      margin-top: 15px;
     }
   }
 </style>
 
-{% if content_blocks %}
-  {% for block in content_blocks %}
-    <div class="about-block">
-      <!-- Text -->
-      <div class="about-text">
-        {% if block.content %}
-          <p>{{ block.content|linebreaks }}</p>
-        {% endif %}
-        {% if block.table_html %}
-          <div class="table-responsive mt-3">{{ block.table_html|safe }}</div>
-        {% endif %}
-        {% if block.pdf %}
-          <a href="{{ block.pdf.url }}" target="_blank" class="btn btn-outline-primary mt-3">Download PDF</a>
-        {% endif %}
-      </div>
+<div class="container my-5">
+  <!-- Submenu title -->
+  <h2 class="fw-bold mb-4 text-success text-center">{{ submenu.title }}</h2>
 
-      <!-- Image -->
-      {% if block.image %}
-        <div class="about-image">
-          <img src="{{ block.image.url }}" alt="Image">
+  {% if content_blocks %}
+    {% for block in content_blocks %}
+      <div class="about-block">
+
+        <!-- Left: Text -->
+        <div class="about-text">
+          {% if block.heading %}
+            <div class="about-heading">{{ block.heading }}</div>
+            <hr class="about-divider">
+          {% endif %}
+
+          {% if block.content %}
+            {{ block.content|linebreaks }}
+          {% endif %}
+
+          {% if block.table_html %}
+            <div class="table-responsive mt-3">{{ block.table_html|safe }}</div>
+          {% endif %}
+
+          {% if block.pdf %}
+            <a href="{{ block.pdf.url }}" target="_blank" class="btn btn-outline-primary btn-sm mt-3">Download PDF</a>
+          {% endif %}
         </div>
-      {% endif %}
-    </div>
-  {% endfor %}
-{% else %}
-  <p>No content available.</p>
-{% endif %}
+
+        <!-- Right: Image -->
+        {% if block.image %}
+          <div class="about-image">
+            <img src="{{ block.image.url }}" alt="{{ block.heading }}">
+          </div>
+        {% endif %}
+
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="text-muted">No content available.</p>
+  {% endif %}
+</div>
 
 {% endblock %}
