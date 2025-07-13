@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import HomePageContent,StaffProfile,SliderImage,HomepageCounter,HomeQuickLink,AboutSubmenu, AboutContentBlock,AcademicSubMenu,AcademicContentBlock,Department,Department, DepartmentContent,StudentDeskMenu,StudentDeskContentBlock,NAACSubmenu,NAACContentBlock,ActivitySection, ActivityContent
+from .models import HomePageContent,StaffProfile,SliderImage,HomepageCounter,HomeQuickLink,AboutSubmenu, AboutContentBlock,AcademicSubMenu,AcademicContentBlock,Department,DepartmentContent,StudentDeskMenu,StudentDeskContentBlock,NAACSubmenu,NAACContentBlock,ActivitySection, ActivityContent
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
@@ -44,25 +44,16 @@ class AcademicSubMenuAdmin(admin.ModelAdmin):
 
 admin.site.register(AcademicSubMenu, AcademicSubMenuAdmin)
 
-class DepartmentContentInline(admin.StackedInline):  
+class DepartmentContentInline(admin.StackedInline):
     model = DepartmentContent
     extra = 1
-    show_change_link = True
     fields = ['section', 'heading', 'content', 'image', 'pdf']
-    readonly_fields = []
 
 @admin.register(Department)
 class DepartmentAdmin(admin.ModelAdmin):
-    list_display = ['name', 'slug', 'order']
-    prepopulated_fields = {'slug': ('name',)}
-    ordering = ['order']
     inlines = [DepartmentContentInline]
-
-@admin.register(DepartmentContent)
-class DepartmentContentAdmin(admin.ModelAdmin):
-    list_display = ['department', 'section', 'heading']
-    list_filter = ['department', 'section']
-    search_fields = ['heading', 'content']
+    list_display = ('name', 'order')
+    prepopulated_fields = {'slug': ('name',)}
 
 class StudentDeskContentBlockInline(admin.StackedInline): 
     model = StudentDeskContentBlock
