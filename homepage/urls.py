@@ -16,8 +16,9 @@ urlpatterns = [
     path('students-desk/<slug:slug>/', views.studentdesk_detail, name='student_desk_detail'),
     path('naac/<int:submenu_id>/', views.naac_detail_view, name='naac_detail'),
     path('activities/<slug:slug>/', views.activity_detail, name='activity_detail'),
-
-
+    path('activities/<slug:cat_slug>/<slug:sub_slug>/', views.activity_detail, name='activity_detail'),
+    path('activities/<slug:cat_slug>/', views.activity_subsection_list, name='activity_subsection_list'),
 ]
+
 
 

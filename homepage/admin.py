@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import HomePageContent,StaffProfile,SliderImage,HomepageCounter,HomeQuickLink,AboutSubmenu, AboutContentBlock,AcademicSubMenu,AcademicContentBlock,Department,DepartmentContent,StudentDeskMenu,StudentDeskContentBlock,NAACSubmenu,NAACContentBlock,ActivitySection, ActivityContent
+from .models import HomePageContent,StaffProfile,SliderImage,HomepageCounter,HomeQuickLink,AboutSubmenu, AboutContentBlock,AcademicSubMenu,AcademicContentBlock,Department,DepartmentContent,StudentDeskMenu,StudentDeskContentBlock,NAACSubmenu,NAACContentBlock,ActivitySection, ActivityContent,ActivityCategory, ActivitySubsection, ActivityContentBlock
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
@@ -85,3 +85,28 @@ class ActivitySectionAdmin(admin.ModelAdmin):
 class ActivityContentAdmin(admin.ModelAdmin):
     list_display = ('section', 'heading')
     search_fields = ('heading', 'content', 'block')
+
+
+class ActivityContentBlockInline(admin.StackedInline):
+    model  = ActivityContentBlock
+    extra  = 1
+    fields = ['heading', 'content', 'table_html', 'image', 'pdf', 'order']
+    ordering = ['order']
+
+class ActivitySubsectionInline(admin.StackedInline):
+    model  = ActivitySubsection
+    extra  = 1
+    fields = ['title', 'slug', 'order']
+    ordering = ['order']
+
+@admin.register(ActivityCategory)
+class ActivityCategoryAdmin(admin.ModelAdmin):
+    list_display        = ('name', 'order')
+    prepopulated_fields = {'slug': ('name',)}
+    inlines            = [ActivitySubsectionInline]
+
+@admin.register(ActivitySubsection)
+class ActivitySubsectionAdmin(admin.ModelAdmin):
+    list_display        = ('title', 'category', 'order')
+    prepopulated_fields = {'slug': ('title',)}
+    inlines            = [ActivityContentBlockInline]

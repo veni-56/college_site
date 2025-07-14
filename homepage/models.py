@@ -198,3 +198,46 @@ class ActivityContent(models.Model):
     def __str__(self):
         return f"{self.section.name} - {self.heading}"
 
+class ActivityCategory(models.Model):
+    """Top‑level menu inside *Activities* (e.g. Sports, Extension, Gallery, IIC, Achievement)."""
+    name  = models.CharField(max_length=120)
+    slug  = models.SlugField(unique=True, blank=True)
+    order = models.PositiveIntegerField(default=0)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+class ActivitySubsection(models.Model):
+    """Second‑level navbar inside a category (e.g. About, Vision, Faculty under Sports)."""
+    category = models.ForeignKey(ActivityCategory, on_delete=models.CASCADE, related_name="subsections")
+    title    = models.CharField(max_length=150)
+    slug     = models.SlugField()
+    order    = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        unique_together = ('category', 'slug')
+        ordering        = ['order']
+
+    def __str__(self):
+        return f"{self.category.name} – {self.title}"
+
+class ActivityContentBlock(models.Model):
+    subsection = models.ForeignKey(ActivitySubsection, on_delete=models.CASCADE, related_name="content_blocks")
+    heading    = models.CharField(max_length=255, blank=True)
+    content    = models.TextField(blank=True)
+    table_html = models.TextField(blank=True, null=True)
+    image      = models.ImageField(upload_to='activities/images/', blank=True, null=True)
+    pdf        = models.FileField(upload_to='activities/pdfs/', blank=True, null=True)
+    order      = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return f"{self.subsection.title} – {self.heading}"
+

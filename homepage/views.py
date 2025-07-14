@@ -137,3 +137,31 @@ def activity_detail(request, slug):
         'section': section,
         'contents': contents
     })
+
+#  activities/views.py
+from django.shortcuts import render, get_object_or_404
+from .models import ActivityCategory, ActivitySubsection
+
+# list all subsections of a category (e.g. /activities/sports/)
+def activity_subsection_list(request, cat_slug):
+    category     = get_object_or_404(ActivityCategory, slug=cat_slug)
+    subsections  = category.subsections.all()
+    return render(request, 'activities/activity_subsection_list.html', {
+        'category': category,
+        'subsections': subsections,
+    })
+
+# detail view (with tabs inside) e.g. /activities/sports/about/
+def activity_detail(request, cat_slug, sub_slug):
+    category    = get_object_or_404(ActivityCategory, slug=cat_slug)
+    subsection  = get_object_or_404(ActivitySubsection, category=category, slug=sub_slug)
+    blocks      = subsection.content_blocks.all()
+    # for side‑tabs we also need all subsections of this category
+    side_tabs   = category.subsections.all()
+    return render(request, 'activities/activity_detail.html', {
+        'category': category,
+        'subsection': subsection,
+        'blocks': blocks,
+        'side_tabs': side_tabs,
+    })
+

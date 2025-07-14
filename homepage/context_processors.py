@@ -7,6 +7,7 @@ from .models import (
     NAACSubmenu,
     ActivitySection,
     HomepageCounter,
+    ActivityCategory,
 
 )
 from django.db.models import Prefetch
@@ -49,3 +50,9 @@ def department_list(request):
 def homepage_counters(request):
     counters = HomepageCounter.objects.all().order_by('order')
     return {'homepage_counters': counters}
+from .models import ActivityCategory
+
+def activity_menus(request):
+    return {
+        'activity_categories': ActivityCategory.objects.all().order_by('order'),
+    }
