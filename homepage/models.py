@@ -188,8 +188,6 @@ class StudentDeskContentBlock(models.Model):
     def __str__(self):
         return f"{self.menu.title} - {self.heading}"
 
-# models.py
-from django.db import models
 
 class RankHolder(models.Model):
     academic_year = models.CharField(max_length=20)  # Example: "2019-2020"
@@ -212,6 +210,14 @@ class EndowmentPrize(models.Model):
 
     def __str__(self):
         return f"{self.sno}. {self.title}"
+        
+class Form(models.Model):
+    sno = models.PositiveIntegerField()
+    name = models.CharField(max_length=255)
+    file = models.FileField(upload_to='studentdesk/forms/')
+
+    def __str__(self):
+        return f"{self.sno}. {self.name}"
 
 
 class NAACSubmenu(models.Model):

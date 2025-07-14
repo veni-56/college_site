@@ -1,0 +1,33 @@
+{% extends "homepage/base.html" %}
+{% block fullwidth %}
+<div class="container py-4">
+  <h2 class="text-center mb-4">Forms</h2>
+  <div class="table-responsive">
+    <table class="table table-bordered forms-table">
+      <thead class="table-dark">
+        <tr>
+          <th>S.No</th>
+          <th>Name of the Form</th>
+          <th>Download</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for form in forms %}
+        <tr>
+          <td>{{ form.sno }}</td>
+          <td>{{ form.name }}</td>
+          <td><a href="{{ form.file.url }}" class="btn btn-sm btn-success" download>Get the Form</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<style>
+  .forms-table th, .forms-table td {
+    text-align: center;
+    vertical-align: middle;
+  }
+</style>
+{% endblock %}
