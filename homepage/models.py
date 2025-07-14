@@ -116,10 +116,14 @@ class DepartmentContent(models.Model):
         ('gallery', 'Gallery'),
         ('achievements', 'Achievements'),
         ('intercollege', 'Intercollege Meet'),
+        ('vision', 'Vision Mission'),
+        
     ]
+
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     section = models.CharField(max_length=50, choices=SECTION_CHOICES)
     heading = models.CharField(max_length=255, blank=True)
+    table_html = models.TextField(blank=True, null=True)
     content = models.TextField(blank=True)
     image = models.ImageField(upload_to='departments/images/', blank=True, null=True)
     pdf = models.FileField(upload_to='departments/pdfs/', blank=True, null=True)

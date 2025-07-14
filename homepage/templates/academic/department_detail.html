@@ -1,35 +1,109 @@
-{% extends "homepage/base.html" %}
-{% load static %}
-{% block fullwidth %}
+{% extends 'homepage/base.html' %}
+{% block fullwidth%}
 
-<div class="container my-5">
-  <h2 class="text-center mb-4 text-primary fw-bold">{{ department.name }} - {{ section|title }}</h2>
+<style>
+  /* Divider line below heading */
+  .divider-line {
+    width: 80px;
+    height: 4px;
+    background-color: #ade0ad; /* Dark Green */
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border-radius: 2px;
+  }
 
-  {% if content_blocks %}
-    {% for block in content_blocks %}
-      <div class="mb-5">
-        {% if block.heading %}
-          <h4 class="fw-bold text-dark">{{ block.heading }}</h4>
-        {% endif %}
+  /* Heading Color */
+  .custom-heading {
+    color:#004080;  /* Dark Green or change this to your preferred color */
+    font-weight: bold;
+  }
 
-        {% if block.content %}
-          <p class="text-justify" style="font-size: 17px;">{{ block.content|linebreaks }}</p>
-        {% endif %}
+  /* Tab styling */
+  .nav-tabs .nav-link {
+    font-weight: 600;
+    color: #004080;
+    border-radius: 0;
+  }
 
-        {% if block.image %}
-          <div class="text-center my-3">
-            <img src="{{ block.image.url }}" class="img-fluid rounded shadow" alt="{{ block.heading }}">
+  .nav-tabs .nav-link.active {
+    background-color: #004080;
+    color: white !important;
+    border: none;
+  }
+
+  .tab-pane {
+    animation: fadeIn 0.4s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+
+  @media (max-width: 768px) {
+    .tab-pane img {
+      margin-top: 15px;
+    }
+  }
+</style>
+
+<div class="container mt-4">
+  <!-- Sub-navbar Tabs -->
+  <ul class="nav nav-tabs mt-4">
+    {% for key in content %}
+      <li class="nav-item">
+        <a class="nav-link {% if forloop.first %}active{% endif %}" data-bs-toggle="tab" href="#{{ key }}">
+          {{ key|capfirst }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <!-- Tab Contents -->
+  <div class="tab-content mt-4">
+    {% for key, items in content.items %}
+      <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="{{ key }}">
+
+        {% for item in items %}
+        <div class="row align-items-center mb-5">
+          <!-- Text block -->
+          <div class="{% if item.image %}col-md-7{% else %}col-12{% endif %}">
+            {% if item.heading %}
+              <h4 class="custom-heading mb-2">{{ item.heading }}</h4>
+              <div class="divider-line"></div>
+            {% endif %}
+            {% if item.content %}
+              <p class="text-dark" style="text-align: justify; font-size: 17px; line-height: 1.8;">
+                {{ item.content|linebreaks }}
+              </p>
+            {% endif %}
+
+            {% if item.table_html %}
+              <div class="table-responsive mt-3">
+                {{ item.table_html|safe }}
+              </div>
+            {% endif %}
+
+            {% if item.pdf %}
+              <a href="{{ item.pdf.url }}" target="_blank" class="btn btn-outline-primary btn-sm mt-3">
+                Download PDF
+              </a>
+            {% endif %}
           </div>
-        {% endif %}
 
-        {% if block.pdf %}
-          <a href="{{ block.pdf.url }}" class="btn btn-outline-primary btn-sm" target="_blank">Download PDF</a>
-        {% endif %}
+          <!-- Image block -->
+          {% if item.image %}
+          <div class="col-md-5 text-center mt-4 mt-md-0">
+            <img src="{{ item.image.url }}" class="img-fluid rounded shadow" alt="{{ item.heading }}">
+          </div>
+          {% endif %}
+        </div>
+        <hr>
+        {% endfor %}
+
       </div>
     {% endfor %}
-  {% else %}
-    <p class="text-muted">No content available for this section.</p>
-  {% endif %}
+  </div>
 </div>
 
 {% endblock %}
