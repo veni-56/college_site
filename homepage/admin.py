@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import HomePageContent,StaffProfile,SliderImage,HomepageCounter,HomeQuickLink,AboutSubmenu, AboutContentBlock,AcademicSubMenu,AcademicContentBlock,Department,DepartmentContent,FacultyMember,Programme,StudentDeskMenu,StudentDeskContentBlock,RankHolder,NAACSubmenu,NAACContentBlock,ActivitySection, ActivityContent,ActivityCategory, ActivitySubsection, ActivityContentBlock
+from .models import HomePageContent,StaffProfile,SliderImage,HomepageCounter,HomeQuickLink,AboutSubmenu, AboutContentBlock,AcademicSubMenu,AcademicContentBlock,Department,DepartmentContent,FacultyMember,Programme,StudentDeskMenu,StudentDeskContentBlock,RankHolder,EndowmentPrize,NAACSubmenu,NAACContentBlock,ActivitySection, ActivityContent,ActivityCategory, ActivitySubsection, ActivityContentBlock
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
@@ -66,6 +66,10 @@ class ProgrammeAdmin(admin.ModelAdmin):
     list_display = ('name', 'level', 'department', 'eligibility', 'order')
     list_filter  = ('level', 'department')
     ordering     = ('level', 'order')
+
+@admin.register(EndowmentPrize)
+class EndowmentPrizeAdmin(admin.ModelAdmin):
+    list_display = ('sno', 'title', 'founder', 'amount')
 
 class StudentDeskContentBlockInline(admin.StackedInline): 
     model = StudentDeskContentBlock

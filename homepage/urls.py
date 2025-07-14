@@ -23,7 +23,8 @@ urlpatterns = [
     path('academic/department/<slug:slug>/', views.department_detail, name='department_detail'),  
     path('academic/<slug:slug>/', views.academic_detail, name='academic_detail'),  
 
-    # Student Desk
+#studentdesk
+    path('endowment-prizes/', views.endowment_prizes, name='endowment_prizes'),
     path('students-desk/rank-holders/', views.rank_holders, name='rank_holders'),
     path('students-desk/<slug:slug>/', views.studentdesk_detail, name='student_desk_detail'),
 

@@ -202,6 +202,18 @@ class RankHolder(models.Model):
     def __str__(self):
         return f"{self.name} - {self.department}"
 
+class EndowmentPrize(models.Model):
+    sno = models.PositiveIntegerField()
+    title = models.CharField(max_length=255)
+    founder = models.CharField(max_length=255)
+    memory_of = models.CharField(max_length=255)
+    awarded_to = models.TextField()
+    amount = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"{self.sno}. {self.title}"
+
+
 class NAACSubmenu(models.Model):
     title = models.CharField(max_length=200)
 

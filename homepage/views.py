@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404,redirect
-from .models import HomePageContent,SliderImage,HomeQuickLink,HomepageCounter,AboutSubmenu,AcademicSubMenu,Programme, AcademicContentBlock,Department,Department, DepartmentContent,FacultyMember,StudentDeskMenu,RankHolder,NAACSubmenu,NAACContentBlock,ActivitySection,StaffProfile
+from .models import HomePageContent,SliderImage,HomeQuickLink,HomepageCounter,AboutSubmenu,AcademicSubMenu,Programme, AcademicContentBlock,Department,Department, DepartmentContent,FacultyMember,StudentDeskMenu,RankHolder,EndowmentPrize,NAACSubmenu,NAACContentBlock,ActivitySection,StaffProfile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -147,6 +147,10 @@ def rank_holders(request):
     years = RankHolder.objects.values_list('academic_year', flat=True).distinct()
     grouped_data = {year: RankHolder.objects.filter(academic_year=year) for year in years}
     return render(request, 'studentdesk/rank_holders.html', {'grouped_data': grouped_data})
+
+def endowment_prizes(request):
+    prizes = EndowmentPrize.objects.all().order_by('sno')
+    return render(request, 'studentdesk/endowment_prizes.html', {'prizes': prizes})
 
 #naac
 def naac_detail_view(request, submenu_id):
