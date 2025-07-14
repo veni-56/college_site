@@ -197,3 +197,4 @@ class ActivityContent(models.Model):
 
     def __str__(self):
         return f"{self.section.name} - {self.heading}"
+
