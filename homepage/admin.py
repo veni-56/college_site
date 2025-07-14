@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import HomePageContent,StaffProfile,SliderImage,HomepageCounter,HomeQuickLink,AboutSubmenu, AboutContentBlock,AcademicSubMenu,AcademicContentBlock,Department,DepartmentContent,StudentDeskMenu,StudentDeskContentBlock,NAACSubmenu,NAACContentBlock,ActivitySection, ActivityContent,ActivityCategory, ActivitySubsection, ActivityContentBlock
+from .models import HomePageContent,StaffProfile,SliderImage,HomepageCounter,HomeQuickLink,AboutSubmenu, AboutContentBlock,AcademicSubMenu,AcademicContentBlock,Department,DepartmentContent,FacultyMember,Programme,StudentDeskMenu,StudentDeskContentBlock,NAACSubmenu,NAACContentBlock,ActivitySection, ActivityContent,ActivityCategory, ActivitySubsection, ActivityContentBlock
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
@@ -54,6 +54,18 @@ class DepartmentAdmin(admin.ModelAdmin):
     inlines = [DepartmentContentInline]
     list_display = ('name', 'order')
     prepopulated_fields = {'slug': ('name',)}
+
+
+@admin.register(FacultyMember)
+class FacultyMemberAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'department')
+    list_filter = ('department',)
+
+@admin.register(Programme)
+class ProgrammeAdmin(admin.ModelAdmin):
+    list_display = ('name', 'level', 'department', 'eligibility', 'order')
+    list_filter  = ('level', 'department')
+    ordering     = ('level', 'order')
 
 class StudentDeskContentBlockInline(admin.StackedInline): 
     model = StudentDeskContentBlock

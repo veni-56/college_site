@@ -131,6 +131,38 @@ class DepartmentContent(models.Model):
     def __str__(self):
         return f"{self.department.name} - {self.section} - {self.heading}"
 
+class FacultyMember(models.Model):
+    name = models.CharField(max_length=200)
+    email = models.EmailField()
+    photo = models.ImageField(upload_to="faculty/photos/")
+    department = models.ForeignKey(Department, on_delete=models.CASCADE)
+    cv_pdf = models.FileField(upload_to="faculty/cv/", blank=True, null=True)
+    position = models.CharField(max_length=200, blank=True)
+    qualifications = models.CharField(max_length=255, blank=True)
+
+    def __str__(self):
+        return f"{self.name} - {self.department.name}"
+
+class Programme(models.Model):
+    """College-ல் Offered ஆகும் Courses (UG / PG)."""
+    LEVEL_CHOICES = [
+        ('UG', 'UG'),
+        ('PG', 'PG'),
+    ]
+    level        = models.CharField(max_length=2, choices=LEVEL_CHOICES, default='UG')
+    name         = models.CharField(max_length=200)          # B.A. Tamil Literature …
+    eligibility  = models.CharField(max_length=200)          # H.S.C. …
+    department   = models.ForeignKey(Department, on_delete=models.SET_NULL,
+                                     null=True, blank=True,
+                                     help_text="Which department takes care of this course?")
+    order        = models.PositiveIntegerField(default=0)    # row order inside table
+
+    class Meta:
+        ordering = ['level', 'order']
+
+    def __str__(self):
+        return self.name
+
 
 class StudentDeskMenu(models.Model):
     title = models.CharField(max_length=200)

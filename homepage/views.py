@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404,redirect
-from .models import HomePageContent,SliderImage,HomeQuickLink,HomepageCounter,AboutSubmenu,AcademicSubMenu, AcademicContentBlock,Department,Department, DepartmentContent,StudentDeskMenu,NAACSubmenu,NAACContentBlock,ActivitySection,StaffProfile
+from .models import HomePageContent,SliderImage,HomeQuickLink,HomepageCounter,AboutSubmenu,AcademicSubMenu, AcademicContentBlock,Department,Department, DepartmentContent,FacultyMember,StudentDeskMenu,NAACSubmenu,NAACContentBlock,ActivitySection,StaffProfile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -111,6 +111,22 @@ def department_detail(request, slug):
     return render(request, 'academic/department_detail.html', {
         'department': department,
         'content': content,
+    })
+
+
+def faculty_view(request, dept_slug=None):
+    departments = Department.objects.all()
+    faculty_members = FacultyMember.objects.all()
+    selected_dept = None
+
+    if dept_slug:
+        selected_dept = get_object_or_404(Department, slug=dept_slug)
+        faculty_members = faculty_members.filter(department=selected_dept)
+
+    return render(request, 'academic/faculty_view.html', {
+        'departments': departments,
+        'faculty_members': faculty_members,
+        'selected_dept': selected_dept,
     })
 
 def studentdesk_detail(request, slug):
