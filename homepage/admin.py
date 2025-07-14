@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import HomePageContent,StaffProfile,SliderImage,HomepageCounter,HomeQuickLink,AboutSubmenu, AboutContentBlock,AcademicSubMenu,AcademicContentBlock,Department,DepartmentContent,FacultyMember,Programme,StudentDeskMenu,StudentDeskContentBlock,RankHolder,EndowmentPrize,Form,NAACSubmenu,NAACContentBlock,ActivitySection, ActivityContent,ActivityCategory, ActivitySubsection, ActivityContentBlock
+from .models import HomePageContent,StaffProfile,SliderImage,HomepageCounter,HomeQuickLink,AboutSubmenu, AboutContentBlock,AcademicSubMenu,AcademicContentBlock,Department,DepartmentContent,FacultyMember,Programme,StudentDeskMenu,StudentDeskContentBlock,RankHolder,EndowmentPrize,Form,NAACSubmenu,NAACContentBlock, ActivitySubMenu, ActivityContentBlock, AlumniSubMenu, AlumniContentBlock, ExtensionCategory, ExtensionContent
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
@@ -104,27 +104,26 @@ class NAACSubmenuAdmin(admin.ModelAdmin):
 
 admin.site.register(NAACSubmenu, NAACSubmenuAdmin)
 
+class ActivityContentInline(admin.StackedInline):
+    model = ActivityContentBlock
+    extra = 1
 
-@admin.register(ActivitySection)
-class ActivitySectionAdmin(admin.ModelAdmin):
-    list_display = ('name', 'parent', 'order')
-    prepopulated_fields = {'slug': ('name',)}
+@admin.register(ActivitySubMenu)
+class ActivitySubMenuAdmin(admin.ModelAdmin):
+    inlines = [ActivityContentInline]
 
-@admin.register(ActivityContent)
-class ActivityContentAdmin(admin.ModelAdmin):
-    list_display = ('section', 'heading')
-    search_fields = ('heading', 'content', 'block')
+class AlumniContentInline(admin.StackedInline):
+    model = AlumniContentBlock
+    extra = 1
 
+@admin.register(AlumniSubMenu)
+class AlumniSubMenuAdmin(admin.ModelAdmin):
+    inlines = [AlumniContentInline]
 
-class ActivityContentBlockInline(admin.StackedInline):
-    model  = ActivityContentBlock
-    extra  = 1
-    fields = ['heading', 'content', 'table_html', 'image', 'pdf', 'order']
-    ordering = ['order']
+@admin.register(ExtensionCategory)
+class ExtensionCategoryAdmin(admin.ModelAdmin):
+    list_display = ('name',)
 
-class ActivitySubsectionInline(admin.StackedInline):
-    model  = ActivitySubsection
-    extra  = 1
-    fields = ['title', 'slug', 'order']
-    ordering = ['order']
-
+@admin.register(ExtensionContent)
+class ExtensionContentAdmin(admin.ModelAdmin):
+    list_display = ('extension', 'section', 'heading')

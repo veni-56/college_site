@@ -236,28 +236,70 @@ class NAACContentBlock(models.Model):
     def __str__(self):
         return f"{self.submenu.title} - {self.heading}"
     
+class ActivitySubMenu(models.Model):
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True, blank=True)
 
-class ActivitySection(models.Model):
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
+
+class ActivityContentBlock(models.Model):
+    submenu = models.ForeignKey(ActivitySubMenu, on_delete=models.CASCADE, related_name='content_blocks')
+    heading = models.CharField(max_length=200)
+    content = models.TextField(blank=True, null=True)
+    table_html = models.TextField(blank=True, null=True)
+    file = models.FileField(upload_to='activities/files/', blank=True, null=True)
+    image = models.ImageField(upload_to='activities/images/', blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.submenu.title} - {self.heading}"
+class AlumniSubMenu(models.Model):
+    title = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
+
+class AlumniContentBlock(models.Model):
+    submenu = models.ForeignKey(AlumniSubMenu, on_delete=models.CASCADE, related_name='content_blocks')
+    heading = models.CharField(max_length=200)
+    content = models.TextField(blank=True, null=True)
+    table_html = models.TextField(blank=True, null=True)
+    file = models.FileField(upload_to='alumni/files/', blank=True, null=True)
+    image = models.ImageField(upload_to='alumni/images/', blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.submenu.title} - {self.heading}"
+class ExtensionCategory(models.Model):
     name = models.CharField(max_length=200)
-    slug = models.SlugField(unique=True)
-    parent = models.ForeignKey('self', on_delete=models.CASCADE, null=True, blank=True, related_name='children')
-    order = models.PositiveIntegerField(default=0)
+    slug = models.SlugField(unique=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
 
-    class Meta:
-        ordering = ['order', 'name']
-
-class ActivityContent(models.Model):
-    section = models.ForeignKey(ActivitySection, on_delete=models.CASCADE, related_name='contents')
-    heading = models.CharField(max_length=200)
-    content = models.TextField(blank=True)
-    block = models.TextField(blank=True) 
+class ExtensionContent(models.Model):
+    extension = models.ForeignKey(ExtensionCategory, on_delete=models.CASCADE)
+    section = models.CharField(max_length=100)  # like 'about', 'vision mission', etc.
+    heading = models.CharField(max_length=200, blank=True)
+    description = models.TextField(blank=True)
     table_html = models.TextField(blank=True, null=True)
-    image = models.ImageField(upload_to='activity_images/', blank=True, null=True)
-    pdf = models.FileField(upload_to='activity_pdfs/', blank=True, null=True)
+    image = models.ImageField(upload_to='extension/images/', blank=True, null=True)
+    file = models.FileField(upload_to='extension/files/', blank=True, null=True)
 
     def __str__(self):
-        return f"{self.section.name} - {self.heading}"
-
+        return f"{self.extension.name} - {self.section} - {self.heading}"

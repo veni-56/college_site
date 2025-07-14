@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404,redirect
-from .models import HomePageContent,SliderImage,HomeQuickLink,HomepageCounter,Form,AboutSubmenu,AcademicSubMenu,Programme, AcademicContentBlock,Department,Department, DepartmentContent,FacultyMember,StudentDeskMenu,RankHolder,EndowmentPrize,NAACSubmenu,NAACContentBlock,ActivitySection,StaffProfile
+from .models import HomePageContent,SliderImage,HomeQuickLink,HomepageCounter,Form,AboutSubmenu,AcademicSubMenu,Programme,Department,Department, DepartmentContent,FacultyMember,StudentDeskMenu,RankHolder,EndowmentPrize,NAACSubmenu,NAACContentBlock,ActivitySubMenu,AlumniSubMenu, ExtensionCategory, ExtensionContent,StaffProfile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -168,12 +168,30 @@ def naac_detail_view(request, submenu_id):
     })
 
 
-#activitys
 def activity_detail(request, slug):
-    section = get_object_or_404(ActivitySection, slug=slug)
-    contents = section.contents.all()
+    submenu = get_object_or_404(ActivitySubMenu, slug=slug)
+    content_blocks = submenu.content_blocks.all().order_by('id')
     return render(request, 'activities/activity_detail.html', {
-        'section': section,
-        'contents': contents
+        'submenu': submenu,
+        'content_blocks': content_blocks,
     })
 
+def alumni_detail(request, slug):
+    submenu = get_object_or_404(AlumniSubMenu, slug=slug)
+    content_blocks = submenu.content_blocks.all().order_by('id')
+    return render(request, 'alumni/alumni_detail.html', {
+        'submenu': submenu,
+        'content_blocks': content_blocks,
+    })
+
+def extension_detail(request, slug):
+    extension = get_object_or_404(ExtensionCategory, slug=slug)
+    sections = ['about', 'vision mission', 'faculty', 'activities', 'gallery']
+    content = {
+        section: ExtensionContent.objects.filter(extension=extension, section=section)
+        for section in sections
+    }
+    return render(request, 'activities/extension_detail.html', {
+        'extension': extension,
+        'content': content,
+    })
