@@ -25,7 +25,7 @@ urlpatterns = [
 
 #studentdesk
     path('students-desk/rank-holders/', views.rank_holders, name='rank_holders'),
-    path('student-desk/endowment-prizes/', views.endowment_prizes, name='endowment_prizes'),
+    path('students-desk/endowment-prizes/', views.endowment_prizes, name='endowment_prizes'),
     path('students-desk/<slug:slug>/', views.studentdesk_detail, name='student_desk_detail'),
 
     # NAAC

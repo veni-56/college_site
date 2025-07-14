@@ -148,6 +148,7 @@ def rank_holders(request):
     grouped_data = {year: RankHolder.objects.filter(academic_year=year) for year in years}
     return render(request, 'studentdesk/rank_holders.html', {'grouped_data': grouped_data})
 
+
 def endowment_prizes(request):
     prizes = EndowmentPrize.objects.all().order_by('sno')
     return render(request, 'studentdesk/endowment_prizes.html', {'prizes': prizes})
