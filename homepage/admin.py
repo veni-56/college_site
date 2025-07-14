@@ -128,14 +128,3 @@ class ActivitySubsectionInline(admin.StackedInline):
     fields = ['title', 'slug', 'order']
     ordering = ['order']
 
-@admin.register(ActivityCategory)
-class ActivityCategoryAdmin(admin.ModelAdmin):
-    list_display        = ('name', 'order')
-    prepopulated_fields = {'slug': ('name',)}
-    inlines            = [ActivitySubsectionInline]
-
-@admin.register(ActivitySubsection)
-class ActivitySubsectionAdmin(admin.ModelAdmin):
-    list_display        = ('title', 'category', 'order')
-    prepopulated_fields = {'slug': ('title',)}
-    inlines            = [ActivityContentBlockInline]
