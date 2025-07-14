@@ -188,6 +188,19 @@ class StudentDeskContentBlock(models.Model):
     def __str__(self):
         return f"{self.menu.title} - {self.heading}"
 
+# models.py
+from django.db import models
+
+class RankHolder(models.Model):
+    academic_year = models.CharField(max_length=20)  # Example: "2019-2020"
+    department = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
+    paper = models.CharField(max_length=100, default="Part III (Major)")
+    rank = models.CharField(max_length=10)
+    photo = models.ImageField(upload_to='rankholders/')
+
+    def __str__(self):
+        return f"{self.name} - {self.department}"
 
 class NAACSubmenu(models.Model):
     title = models.CharField(max_length=200)

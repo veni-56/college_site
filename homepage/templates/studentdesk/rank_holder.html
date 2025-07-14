@@ -1,0 +1,42 @@
+{% extends "homepage/base.html" %}
+{% load static %}
+
+{% block content %}
+<h2 class="text-center mt-4">Rank Holders</h2>
+
+{% for year, holders in grouped_data.items %}
+  <h4 class="mt-4 text-danger text-center">{{ year }}</h4>
+  <div class="table-responsive">
+    <table class="table table-bordered table-striped">
+      <thead class="thead-dark">
+        <tr>
+          <th>S.No</th>
+          <th>Department</th>
+          <th>Rankholder Name</th>
+          <th>Paper</th>
+          <th>Rank</th>
+          <th>Rankholder Photo</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for holder in holders %}
+        <tr>
+          <td>{{ forloop.counter }}</td>
+          <td>{{ holder.department }}</td>
+          <td>{{ holder.name }}</td>
+          <td>{{ holder.paper }}</td>
+          <td>{{ holder.rank }}</td>
+          <td>
+            {% if holder.photo %}
+              <img src="{{ holder.photo.url }}" width="100" height="120" class="img-thumbnail">
+            {% else %}
+              No Photo
+            {% endif %}
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+{% endfor %}
+{% endblock %}

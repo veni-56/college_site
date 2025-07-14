@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404,redirect
-from .models import HomePageContent,SliderImage,HomeQuickLink,HomepageCounter,AboutSubmenu,AcademicSubMenu, AcademicContentBlock,Department,Department, DepartmentContent,FacultyMember,StudentDeskMenu,NAACSubmenu,NAACContentBlock,ActivitySection,StaffProfile
+from .models import HomePageContent,SliderImage,HomeQuickLink,HomepageCounter,AboutSubmenu,AcademicSubMenu,Programme, AcademicContentBlock,Department,Department, DepartmentContent,FacultyMember,StudentDeskMenu,RankHolder,NAACSubmenu,NAACContentBlock,ActivitySection,StaffProfile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -129,11 +129,24 @@ def faculty_view(request, dept_slug=None):
         'selected_dept': selected_dept,
     })
 
+
+def programmes_offered(request):
+    ug_programmes = Programme.objects.filter(level='UG')
+    pg_programmes = Programme.objects.filter(level='PG')
+    return render(request, 'academic/programmes_offered.html', {
+        'ug_programmes': ug_programmes,
+        'pg_programmes': pg_programmes,
+    })
+
 def studentdesk_detail(request, slug):
     menu = get_object_or_404(StudentDeskMenu, slug=slug)
     return render(request, 'studentdesk/studentdesk_detail.html', {
         'menu': menu,
     })
+def rank_holders(request):
+    years = RankHolder.objects.values_list('academic_year', flat=True).distinct()
+    grouped_data = {year: RankHolder.objects.filter(academic_year=year) for year in years}
+    return render(request, 'studentdesk/rank_holders.html', {'grouped_data': grouped_data})
 
 #naac
 def naac_detail_view(request, submenu_id):

@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import HomePageContent,StaffProfile,SliderImage,HomepageCounter,HomeQuickLink,AboutSubmenu, AboutContentBlock,AcademicSubMenu,AcademicContentBlock,Department,DepartmentContent,FacultyMember,Programme,StudentDeskMenu,StudentDeskContentBlock,NAACSubmenu,NAACContentBlock,ActivitySection, ActivityContent,ActivityCategory, ActivitySubsection, ActivityContentBlock
+from .models import HomePageContent,StaffProfile,SliderImage,HomepageCounter,HomeQuickLink,AboutSubmenu, AboutContentBlock,AcademicSubMenu,AcademicContentBlock,Department,DepartmentContent,FacultyMember,Programme,StudentDeskMenu,StudentDeskContentBlock,RankHolder,NAACSubmenu,NAACContentBlock,ActivitySection, ActivityContent,ActivityCategory, ActivitySubsection, ActivityContentBlock
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
@@ -76,6 +76,10 @@ class StudentDeskMenuAdmin(admin.ModelAdmin):
     inlines = [StudentDeskContentBlockInline]
 
 admin.site.register(StudentDeskMenu, StudentDeskMenuAdmin)
+
+@admin.register(RankHolder)
+class RankHolderAdmin(admin.ModelAdmin):
+    list_display = ['academic_year', 'department', 'name', 'rank']
 
 class NAACContentBlockInline(admin.StackedInline):
     model = NAACContentBlock

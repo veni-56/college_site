@@ -1,40 +1,118 @@
-{% extends 'homepage/base.html' %}
-{% block content %}
-<div class="container mt-4">
-    <h2 class="text-success fw-bold text-uppercase">{{ menu.title }}</h2>
-    <hr>
+{% extends "homepage/base.html" %}
+{% load static %}
+{% block fullwidth %}
 
+<style>
+  .studentdesk-block {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin-bottom: -1px;
+  }
+
+  .studentdesk-text {
+    flex: 1 1 60%;
+    padding: 10px;
+    color: black;
+    font-size: 18px;
+    line-height: 1.8;
+    text-align: justify;
+  }
+
+  .studentdesk-image {
+    flex: 1 1 40%;
+    padding: 10px;
+    text-align: center;
+    margin-top: 90px;
+  }
+
+  .studentdesk-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+
+  .studentdesk-image img:hover {
+    transform: scale(1.03);
+  }
+
+  .studentdesk-heading {
+    font-weight: bold;
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #004080;
+  }
+
+  .studentdesk-divider {
+    width: 70px;
+    height: 4px;
+    background-color: #006400;
+    margin-bottom: 20px;
+    border: none;
+  }
+
+  .studentdesk-content {
+    font-size: 17px;
+    font-weight: bold;
+    color: #111;
+    line-height: 1.8;
+    text-align: justify;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 768px) {
+    .studentdesk-block {
+      flex-direction: column;
+    }
+
+    .studentdesk-text,
+    .studentdesk-image {
+      flex: 1 1 100%;
+    }
+
+    .studentdesk-image {
+      margin-top: 20px;
+    }
+  }
+</style>
+
+<div class="container my-5">
+  {% if menu.blocks.all %}
     {% for block in menu.blocks.all %}
-        {% if block.heading %}
-            <h5 class="fw-bold">{{ block.heading }}</h5>
-        {% endif %}
+      <div class="studentdesk-block">
+        <div class="studentdesk-text">
+          {% if block.heading %}
+            <div class="studentdesk-heading">{{ block.heading }}</div>
+            <hr class="studentdesk-divider">
+          {% endif %}
 
-        {% if block.description %}
-            <p>{{ block.description|linebreaks }}</p>
-        {% endif %}
+          {% if block.description %}
+            <div class="studentdesk-content">
+              {{ block.description|linebreaks }}
+            </div>
+          {% endif %}
 
-        {% if block.file %}
-            <p class="ms-3">
-                – <a href="{{ block.file.url }}" target="_blank">Click Here</a>
-            </p>
-        {% endif %}
+          {% if block.table_html %}
+            <div class="table-responsive mt-3">{{ block.table_html|safe }}</div>
+          {% endif %}
+
+          {% if block.file %}
+            <a href="{{ block.file.url }}" target="_blank" class="btn btn-outline-primary btn-sm mt-3">Download PDF</a>
+          {% endif %}
+        </div>
 
         {% if block.image %}
-            <img src="{{ block.image.url }}" class="img-fluid mb-3" alt="">
+          <div class="studentdesk-image">
+            <img src="{{ block.image.url }}" alt="{{ block.heading }}">
+          </div>
         {% endif %}
-
-        {% if block.video %}
-            <video controls width="100%" class="mb-3">
-                <source src="{{ block.video.url }}" type="video/mp4">
-                Your browser does not support the video tag.
-            </video>
-        {% endif %}
-
-        {% if block.table_html %}
-            <div class="table-responsive">{{ block.table_html|safe }}</div>
-        {% endif %}
-
-        <hr>
+      </div>
     {% endfor %}
+  {% else %}
+    <p class="text-muted">No content available.</p>
+  {% endif %}
 </div>
+
 {% endblock %}
