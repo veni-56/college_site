@@ -79,7 +79,8 @@ TEMPLATES = [
                 'homepage.context_processors.academic_menu_processor',
                 'homepage.context_processors.department_list',
                 'homepage.context_processors.homepage_counters',
-                'homepage.context_processors.activity_menus',
+                'homepage.context_processors.activity_submenus',  
+
         
 
 

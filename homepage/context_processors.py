@@ -5,54 +5,40 @@ from .models import (
     AboutSubmenu,
     StudentDeskMenu,
     NAACSubmenu,
-    ActivitySection,
     HomepageCounter,
-    ActivityCategory,
-
+    ActivitySubMenu,
+    AcademicSubMenu,
+    Department,
 )
 from django.db.models import Prefetch
 
-# Updated for submenu fix
 def basic_info(request):
-    parents = ActivitySection.objects.filter(parent__isnull=True).prefetch_related(
-    Prefetch('children', queryset=ActivitySection.objects.filter(parent__isnull=False))
-    )
-
-
     return {
-        "college_info" : HomePageContent.objects.first(),
+        "college_info": HomePageContent.objects.first(),
         'slider_images': SliderImage.objects.all(),
         'quick_links': HomeQuickLink.objects.all(),
         "about_menus": AboutSubmenu.objects.all(),
         "student_desk_menus": StudentDeskMenu.objects.all(),
         "submenus": NAACSubmenu.objects.all(),
-        "nav_sections":parents,
-
+        
     }
-
-from homepage.models import AcademicSubMenu
 
 def academic_menu_processor(request):
     return {
         'academic_submenus': AcademicSubMenu.objects.all().order_by('order')
-
     }
-
-from .models import Department
 
 def department_list(request):
-    departments = Department.objects.all()
     return {
-        'departments': departments
+        'departments': Department.objects.all()
     }
 
-
 def homepage_counters(request):
-    counters = HomepageCounter.objects.all().order_by('order')
-    return {'homepage_counters': counters}
-from .models import ActivityCategory
-
-def activity_menus(request):
     return {
-        'activity_categories': ActivityCategory.objects.all().order_by('order'),
+        'homepage_counters': HomepageCounter.objects.all().order_by('order')
+    }
+
+def activity_submenus(request):
+    return {
+        'activity_submenus': ActivitySubMenu.objects.all().order_by('id')
     }
