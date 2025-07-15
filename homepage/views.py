@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404,redirect
-from .models import HomePageContent,SliderImage,HomeQuickLink,HomepageCounter,Form,AboutSubmenu,AcademicSubMenu,Programme,Department,Department, DepartmentContent,FacultyMember,StudentDeskMenu,RankHolder,EndowmentPrize,NAACSubmenu,NAACContentBlock,ActivitySubMenu,AlumniSubMenu,ActivityContentBlock,ExtensionCategory, ExtensionContent, SportsSection,ExtensionCategory, ExtensionContent,StaffProfile
+from .models import HomePageContent,SliderImage,HomeQuickLink,HomepageCounter,Form,AboutSubmenu,AcademicSubMenu,Programme,Department,Department, DepartmentContent,FacultyMember,StudentDeskMenu,RankHolder,EndowmentPrize,NAACSubmenu,NAACContentBlock,StaffProfile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -169,66 +169,86 @@ def naac_detail_view(request, submenu_id):
     })
 
 
-def activity_detail(request, slug):
-    submenu = get_object_or_404(ActivitySubMenu, slug=slug)
-    content_blocks = submenu.content_blocks.all().order_by('id')
-    return render(request, 'activities/activity_detail.html', {
-        'submenu': submenu,
-        'content_blocks': content_blocks,
-    })
 from django.shortcuts import render, get_object_or_404
-from .models import (
-    ActivitySubMenu, ActivityContentBlock,
-    ExtensionCategory, ExtensionContent,
-    SportsSection
-)
+from .models import ActivitySubmenu
 
-# Activities: detail view
-def activity_detail(request, slug):
-    submenu = get_object_or_404(ActivitySubMenu, slug=slug)
-    content_blocks = submenu.content_blocks.all()
-    return render(request, "homepage/activity_detail.html", {
-        'submenu': submenu,
-        'content_blocks': content_blocks
+def activity_detail(request, submenu_id):
+    submenu = get_object_or_404(ActivitySubmenu, id=submenu_id)
+    return render(request, 'activities/activity_detail.html', {'submenu': submenu})
+
+
+from .models import Event
+from django.shortcuts import render, get_object_or_404
+
+def event_list(request):
+    events = Event.objects.order_by('-date_from')
+    return render(request, 'activities/event_list.html', {'events': events})
+
+def event_detail(request, pk):
+    event = get_object_or_404(Event, pk=pk)
+    return render(request, 'activities/event_detail.html', {'event': event})
+# activities/views.py
+from .models import SportsSection
+
+def sports_home(request):
+    """Default to first tab (About)."""
+    first_section = SportsSection.objects.order_by('order').first()
+    return sports_section(request, first_section.id if first_section else None)
+
+def sports_section(request, section_id):
+    sections = SportsSection.objects.order_by('order')
+    section  = get_object_or_404(SportsSection, id=section_id)
+    context = {
+        'sections': sections,      # for tab bar
+        'active_section': section, # which tab is open
+    }
+    return render(request, 'activities/sports_detail.html', context)
+# activities/views.py
+from .models import ExtensionUnit, ExtensionSection
+from django.shortcuts import render, get_object_or_404
+
+def extension_list(request):
+    units = ExtensionUnit.objects.order_by('order')
+    return render(request, 'activities/extension_list.html', {'units': units})
+
+
+def extension_detail(request, unit_id, section_id=None):
+    unit = get_object_or_404(ExtensionUnit, id=unit_id)
+    sections = unit.sections.order_by('order')
+    if section_id:
+        active_section = get_object_or_404(ExtensionSection, id=section_id, unit=unit)
+    else:
+        active_section = sections.first()
+    
+    context = {
+        'unit': unit,
+        'sections': sections,
+        'active_section': active_section,
+    }
+    return render(request, 'activities/extension_detail.html', context)
+# activities/views.py
+
+from .models import ICCInfo
+from .forms import ICCForm
+from django.shortcuts import render, redirect
+
+def icc_view(request):
+    iccinfo = ICCInfo.objects.first()
+    form = ICCForm(request.POST or None)
+    submitted = False
+
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        submitted = True
+        form = ICCForm()  # reset form
+
+    return render(request, 'activities/icc.html', {
+        'iccinfo': iccinfo,
+        'form': form,
+        'submitted': submitted,
     })
+from .models import IICSection
 
-
-# Alumni: detail view
-def alumni_detail(request, slug):
-    submenu = get_object_or_404(AlumniSubMenu, slug=slug)
-    content_blocks = submenu.content_blocks.all()
-    return render(request, "homepage/alumni_detail.html", {
-        'submenu': submenu,
-        'content_blocks': content_blocks
-    })
-
-
-# Extension: tabbed detail view
-def extension_detail(request, slug):
-    extension = get_object_or_404(ExtensionCategory, slug=slug)
-    blocks = ExtensionContent.objects.filter(extension=extension)
-
-    # Organize blocks by 'section' field for tabs
-    content = {}
-    for block in blocks:
-        content.setdefault(block.section, []).append(block)
-
-    return render(request, "homepage/extension_detail.html", {
-        'extension': extension,
-        'content': content
-    })
-
-
-# Sports: tabbed view by section
-def sports_section(request, section):
-    section_title = section.replace("-", " ").title()
-    section_blocks = ExtensionContent.objects.filter(
-        extension__slug="sports", section=section
-    )
-
-    return render(request, "homepage/sports_section.html", {
-        'section': section,
-        'section_title': section_title,
-        'blocks': section_blocks
-    })
-
+def iic_view(request):
+    iic_sections = IICSection.objects.all()
+    return render(request, 'activities/iic.html', {'iic_sections': iic_sections})

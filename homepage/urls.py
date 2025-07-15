@@ -31,12 +31,19 @@ urlpatterns = [
 
     # NAAC
     path('naac/<int:submenu_id>/', views.naac_detail_view, name='naac_detail'),
-    path('activities/<slug:slug>/', views.activity_detail, name='activity_detail'),
+#Activity
+path('sports/', views.sports_home, name='sports_home'),
+path('sports/<int:section_id>/', views.sports_section, name='sports_section'),
 
-    # Alumni
-    path('alumni/<slug:slug>/', views.alumni_detail, name='alumni_detail'),
+path('events/', views.event_list, name='event_list'),
+path('events/<int:pk>/', views.event_detail, name='event_detail'),
 
-    # Extension (tabbed)
-    path('activities/extension/<slug:slug>/', views.extension_detail, name='extension_detail'),
+path('extension/', views.extension_list, name='extension_list'),
+path('extension/<int:unit_id>/', views.extension_detail, name='extension_detail'),
+path('extension/<int:unit_id>/<int:section_id>/', views.extension_detail, name='extension_section'),
 
+path('icc/', views.icc_view, name='icc_view'),
+path('iic/', views.iic_view, name='iic_view'), 
+
+path('activities/<int:submenu_id>/', views.activity_detail, name='activity_detail'),  # updated generic path
 ]

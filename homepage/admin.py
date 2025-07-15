@@ -105,42 +105,69 @@ class NAACSubmenuAdmin(admin.ModelAdmin):
 admin.site.register(NAACSubmenu, NAACSubmenuAdmin)
 
 from django.contrib import admin
-from .models import (
-    ActivitySubMenu, ActivityContentBlock,
-    ExtensionCategory, ExtensionContent,
-    SportsSection
-)
+from .models import ActivitySubmenu, ActivityContentBlock
 
-# Activity Content Inline
-class ActivityContentInline(admin.StackedInline):
+class ActivityContentBlockInline(admin.TabularInline):
     model = ActivityContentBlock
     extra = 1
 
-# Activity SubMenu Admin
-@admin.register(ActivitySubMenu)
-class ActivitySubMenuAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug')
-    prepopulated_fields = {'slug': ('title',)}
-    inlines = [ActivityContentInline]
-    ordering = ['title']
+@admin.register(ActivitySubmenu)
+class ActivitySubmenuAdmin(admin.ModelAdmin):
+    inlines = [ActivityContentBlockInline]
 
-# Extension Category Admin
-@admin.register(ExtensionCategory)
-class ExtensionCategoryAdmin(admin.ModelAdmin):
-    list_display = ('name', 'slug')
-    prepopulated_fields = {'slug': ('name',)}
-    ordering = ['name']
+admin.site.register(ActivityContentBlock)
+from .models import Event
 
-# Extension Content Admin
-@admin.register(ExtensionContent)
-class ExtensionContentAdmin(admin.ModelAdmin):
-    list_display = ('extension', 'section', 'heading')
-    list_filter = ('extension', 'section')
-    search_fields = ('heading', 'description')
+@admin.register(Event)
+class EventAdmin(admin.ModelAdmin):
+    list_display = ['title', 'date_from', 'venue']
+# activities/admin.py
+from .models import SportsSection, SportsContentBlock
 
-# Sports Section Admin
+class SportsContentInline(admin.TabularInline):
+    model = SportsContentBlock
+    extra = 1
+
 @admin.register(SportsSection)
 class SportsSectionAdmin(admin.ModelAdmin):
-    list_display = ('title', 'slug')
-    prepopulated_fields = {'slug': ('title',)}
+    list_display = ['title', 'order']
     ordering = ['order']
+    inlines = [SportsContentInline]
+# activities/admin.py
+from .models import ExtensionUnit, ExtensionSection, ExtensionContentBlock
+
+class ExtensionContentInline(admin.TabularInline):
+    model = ExtensionContentBlock
+    extra = 1
+
+class ExtensionSectionInline(admin.TabularInline):
+    model = ExtensionSection
+    extra = 1
+
+@admin.register(ExtensionUnit)
+class ExtensionUnitAdmin(admin.ModelAdmin):
+    list_display = ['title', 'order']
+    inlines = [ExtensionSectionInline]
+    ordering = ['order']
+
+@admin.register(ExtensionSection)
+class ExtensionSectionAdmin(admin.ModelAdmin):
+    list_display = ['unit', 'title', 'order']
+    ordering = ['unit', 'order']
+    inlines = [ExtensionContentInline]
+# activities/admin.py
+from .models import ICCInfo, ICCFormSubmission
+
+@admin.register(ICCInfo)
+class ICCInfoAdmin(admin.ModelAdmin):
+    list_display = ['title']
+
+
+@admin.register(ICCFormSubmission)
+class ICCFormSubmissionAdmin(admin.ModelAdmin):
+    list_display = ['name', 'class_or_dept', 'roll_or_designation', 'submitted_at']
+from .models import IICSection
+
+@admin.register(IICSection)
+class IICSectionAdmin(admin.ModelAdmin):
+    list_display = ['title', 'subtitle']

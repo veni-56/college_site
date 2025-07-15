@@ -1,0 +1,35 @@
+{% extends "homepage/base.html" %}
+{% load static %}
+
+{% block fullwidth %}
+<div class="container my-4">
+  <div class="row">
+
+    <!-- Left Side: PDF or Link -->
+    <div class="col-md-6">
+      <h5>{{ iccinfo.title }}</h5>
+      {% if iccinfo.pdf %}
+        <p><a href="{{ iccinfo.pdf.url }}" target="_blank" class="text-success">Click to view PDF</a></p>
+      {% elif iccinfo.content %}
+        <p>{{ iccinfo.content|linebreaks }}</p>
+      {% else %}
+        <p>No content available.</p>
+      {% endif %}
+    </div>
+
+    <!-- Right Side: Form -->
+    <div class="col-md-6">
+      <h5 class="text-uppercase">SHE FORM</h5>
+      {% if submitted %}
+        <div class="alert alert-success">Form submitted successfully.</div>
+      {% endif %}
+      <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-success">Submit</button>
+      </form>
+    </div>
+    
+  </div>
+</div>
+{% endblock %}

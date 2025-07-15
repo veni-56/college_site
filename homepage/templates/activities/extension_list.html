@@ -1,0 +1,22 @@
+{% extends 'homepage/base.html' %}
+{% load static %}
+
+{% block fullwidth %}
+<div class="container my-4">
+  <h2 class="mb-4">Extension Activities</h2>
+  <div class="row">
+    {% for unit in units %}
+      <div class="col-md-3 mb-4">
+        <a href="{% url 'extension_detail' unit.id %}">
+          <div class="card shadow-sm text-center">
+            <img src="{{ unit.image.url }}" class="card-img-top" style="height:180px; object-fit:cover;">
+            <div class="card-body">
+              <h5 class="card-title">{{ unit.title }}</h5>
+            </div>
+          </div>
+        </a>
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

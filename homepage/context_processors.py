@@ -7,7 +7,7 @@ from .models import (
     NAACSubmenu,
     HomepageCounter,
     AcademicSubMenu,
-    Department,ActivitySubMenu, AlumniSubMenu, ExtensionCategory
+    Department,ActivitySubmenu
 
 )
 from django.db.models import Prefetch
@@ -20,10 +20,8 @@ def basic_info(request):
         "about_menus": AboutSubmenu.objects.all(),
         "student_desk_menus": StudentDeskMenu.objects.all(),
         "submenus": NAACSubmenu.objects.all(),
-        'activity_submenus': ActivitySubMenu.objects.all(),
-        'alumni_submenus': AlumniSubMenu.objects.all(),
-        'extension_categories': ExtensionCategory.objects.exclude(name__icontains="sports"),
-        'sports_categories': ExtensionCategory.objects.filter(name__icontains="sports"),
+        'activity_menus': ActivitySubmenu.objects.all(),
+
     }
 
     

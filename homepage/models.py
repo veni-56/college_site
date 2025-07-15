@@ -236,113 +236,118 @@ class NAACContentBlock(models.Model):
     def __str__(self):
         return f"{self.submenu.title} - {self.heading}"
     
+# activities/models.py
+from django.db import models
 
-# Activity Submenus (Latest News, Gallery, etc.)
-class ActivitySubMenu(models.Model):
+class ActivitySubmenu(models.Model):
     title = models.CharField(max_length=200)
-    slug = models.SlugField(unique=True, blank=True)
-    order = models.PositiveIntegerField(default=0)
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)
-        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.title
 
-    class Meta:
-        ordering = ['order']
-
-
-# Content blocks for each Activity submenu
 class ActivityContentBlock(models.Model):
-    submenu = models.ForeignKey(ActivitySubMenu, on_delete=models.CASCADE, related_name='content_blocks')
-    heading = models.CharField(max_length=200, blank=True)
+    submenu = models.ForeignKey(ActivitySubmenu, on_delete=models.CASCADE, related_name='content_blocks')
+    heading = models.CharField(max_length=200, blank=True, null=True)
     content = models.TextField(blank=True, null=True)
+    image = models.ImageField(upload_to='activities/', blank=True, null=True)
+    pdf = models.FileField(upload_to='activities_pdfs/', blank=True, null=True)
     table_html = models.TextField(blank=True, null=True)
-    file = models.FileField(upload_to='activities/files/', blank=True, null=True)
-    image = models.ImageField(upload_to='activities/images/', blank=True, null=True)
 
     def __str__(self):
-        return f"{self.submenu.title} - {self.heading}"
+        return self.heading or "Content Block"
+# activities/models.py
 
+class Event(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField(blank=True, null=True)
+    date_from = models.DateField()
+    date_to = models.DateField()
+    time_from = models.TimeField()
+    time_to = models.TimeField()
+    venue = models.CharField(max_length=255)
+    image = models.ImageField(upload_to='event_images/', blank=True, null=True)
 
-# Extension categories (Club, Cells, NSS, RRC, YRC)
-class ExtensionCategory(models.Model):
-    name = models.CharField(max_length=200)
-    slug = models.SlugField(unique=True, blank=True)
+    def __str__(self):
+        return self.title
+# activities/models.py
+class SportsSection(models.Model):
+    """Second-level tab headings for Sports page"""
+    title = models.CharField(max_length=120)          # e.g. About, Vision & Mission …
+    order = models.PositiveIntegerField(default=0)    # manual ordering
+    def __str__(self):
+        return self.title
+
+class SportsContentBlock(models.Model):
+    """Content under each tab (multiple blocks allowed)"""
+    section = models.ForeignKey(
+        SportsSection, on_delete=models.CASCADE, related_name='content_blocks'
+    )
+    heading = models.CharField(max_length=200, blank=True, null=True)
+    content = models.TextField(blank=True, null=True)
+    image = models.ImageField(upload_to='sports/', blank=True, null=True)
+    pdf   = models.FileField(upload_to='sports_pdfs/', blank=True, null=True)
+    table_html = models.TextField(blank=True, null=True)
     order = models.PositiveIntegerField(default=0)
 
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
+    class Meta:
+        ordering = ['order']
+# activities/models.py
+
+class ExtensionUnit(models.Model):
+    title = models.CharField(max_length=200)
+    image = models.ImageField(upload_to="extension_units/")
+    order = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.title
+
+
+class ExtensionSection(models.Model):
+    unit = models.ForeignKey(ExtensionUnit, on_delete=models.CASCADE, related_name='sections')
+    title = models.CharField(max_length=200)  # About, Vision & Mission etc.
+    order = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.unit.title} - {self.title}"
+
+
+class ExtensionContentBlock(models.Model):
+    section = models.ForeignKey(ExtensionSection, on_delete=models.CASCADE, related_name='content_blocks')
+    heading = models.CharField(max_length=200, blank=True, null=True)
+    content = models.TextField(blank=True, null=True)
+    image = models.ImageField(upload_to='extension_content/', blank=True, null=True)
+    pdf = models.FileField(upload_to='extension_pdfs/', blank=True, null=True)
+    table_html = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.heading or "Content Block"
+# activities/models.py
+
+class ICCInfo(models.Model):
+    title = models.CharField(max_length=200, default="ICC - click here")
+    content = models.TextField(blank=True, null=True)
+    pdf = models.FileField(upload_to="icc_pdfs/", blank=True, null=True)
+    
+    def __str__(self):
+        return self.title
+
+
+class ICCFormSubmission(models.Model):
+    name = models.CharField(max_length=100)
+    class_or_dept = models.CharField(max_length=100)
+    roll_or_designation = models.CharField(max_length=100)
+    submitted_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.name
+# activities/models.py
 
-    class Meta:
-        ordering = ['order']
-
-
-# Content for Extension tabs
-class ExtensionContent(models.Model):
-    extension = models.ForeignKey(ExtensionCategory, on_delete=models.CASCADE)
-    section = models.CharField(max_length=100)  # e.g. 'about', 'vision', etc.
-    heading = models.CharField(max_length=200, blank=True)
-    description = models.TextField(blank=True)
-    table_html = models.TextField(blank=True, null=True)
-    image = models.ImageField(upload_to='extension/images/', blank=True, null=True)
-    file = models.FileField(upload_to='extension/files/', blank=True, null=True)
-
-    def __str__(self):
-        return f"{self.extension.name} - {self.section} - {self.heading}"
-
-
-# Sports section sub-tabs (About, Vision & Mission, etc.)
-class SportsSection(models.Model):
-    title = models.CharField(max_length=100)
-    slug = models.SlugField(unique=True, blank=True)
-    order = models.PositiveIntegerField(default=0)
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return self.title
-
-    class Meta:
-        ordering = ['order']
-
-
-from django.db import models
-from django.utils.text import slugify
-
-# Alumni submenus
-class AlumniSubMenu(models.Model):
+class IICSection(models.Model):
     title = models.CharField(max_length=200)
-    slug = models.SlugField(unique=True, blank=True)
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.title)
-        super().save(*args, **kwargs)
+    subtitle = models.CharField(max_length=200, blank=True, null=True)
+    image = models.ImageField(upload_to='iic_images/', blank=True, null=True)
+    pdf = models.FileField(upload_to='iic_pdfs/', blank=True, null=True)
+    button_text = models.CharField(max_length=100, default="Download")
 
     def __str__(self):
         return self.title
-
-
-# Content for each submenu
-class AlumniContentBlock(models.Model):
-    submenu = models.ForeignKey(AlumniSubMenu, on_delete=models.CASCADE, related_name='content_blocks')
-    heading = models.CharField(max_length=200)
-    content = models.TextField(blank=True, null=True)
-    table_html = models.TextField(blank=True, null=True)
-    file = models.FileField(upload_to='alumni/files/', blank=True, null=True)
-    image = models.ImageField(upload_to='alumni/images/', blank=True, null=True)
-
-    def __str__(self):
-        return f"{self.submenu.title} - {self.heading}"

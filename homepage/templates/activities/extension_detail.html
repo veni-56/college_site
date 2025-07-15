@@ -1,0 +1,34 @@
+{% extends 'homepage/base.html' %}
+{% load static %}
+
+{% block fullwidth %}
+<div class="container my-4">
+  <h2 class="mb-4">{{ unit.title }}</h2>
+
+  <!-- Tab bar -->
+  <ul class="nav nav-tabs mb-3">
+    {% for sec in sections %}
+      <li class="nav-item">
+        <a class="nav-link {% if sec.id == active_section.id %}active{% endif %}"
+           href="{% url 'extension_section' unit.id sec.id %}">
+          {{ sec.title }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <!-- Tab content -->
+  {% for block in active_section.content_blocks.all %}
+    <div class="mb-4">
+      {% if block.heading %}<h4>{{ block.heading }}</h4>{% endif %}
+      {% if block.content %}<p>{{ block.content|linebreaks }}</p>{% endif %}
+      {% if block.image %}<img src="{{ block.image.url }}" class="img-fluid my-2">{% endif %}
+      {% if block.pdf %}<p><a href="{{ block.pdf.url }}" target="_blank">Download PDF</a></p>{% endif %}
+      {% if block.table_html %}{{ block.table_html|safe }}{% endif %}
+    </div>
+    <hr>
+  {% empty %}
+    <p>No content available.</p>
+  {% endfor %}
+</div>
+{% endblock %}

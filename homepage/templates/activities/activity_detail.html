@@ -1,0 +1,15 @@
+{% extends 'homepage/base.html' %}
+{% block fullwidth %}
+<div class="container mt-4">
+  <h2>{{ submenu.title }}</h2>
+  {% for block in submenu.content_blocks.all %}
+    <div class="mb-4">
+      {% if block.heading %}<h4>{{ block.heading }}</h4>{% endif %}
+      {% if block.content %}<p>{{ block.content }}</p>{% endif %}
+      {% if block.image %}<img src="{{ block.image.url }}" class="img-fluid">{% endif %}
+      {% if block.pdf %}<a href="{{ block.pdf.url }}" target="_blank">Download PDF</a>{% endif %}
+      {% if block.table_html %}{{ block.table_html|safe }}{% endif %}
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

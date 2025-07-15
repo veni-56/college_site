@@ -41,3 +41,17 @@ class LeaveRequestForm(forms.ModelForm):
             'start_date': forms.DateInput(attrs={'type':'date'}),
             'end_date':   forms.DateInput(attrs={'type':'date'}),
         }
+# activities/forms.py
+
+from django import forms
+from .models import ICCFormSubmission
+
+class ICCForm(forms.ModelForm):
+    class Meta:
+        model = ICCFormSubmission
+        fields = ['name', 'class_or_dept', 'roll_or_designation']
+        widgets = {
+            'name': forms.TextInput(attrs={'placeholder': 'Enter Your Name', 'class': 'form-control'}),
+            'class_or_dept': forms.TextInput(attrs={'placeholder': 'Enter Class/Department', 'class': 'form-control'}),
+            'roll_or_designation': forms.TextInput(attrs={'placeholder': 'Enter Roll No/ Designation', 'class': 'form-control'}),
+        }
