@@ -70,21 +70,18 @@ TEMPLATES = [
         'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
-            'debug' : True,
+            'debug': True,
             'context_processors': [
+                'django.template.context_processors.debug',  # ← You missed this default one
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+
+                # Your custom context processors
                 'homepage.context_processors.basic_info',
                 'homepage.context_processors.academic_menu_processor',
                 'homepage.context_processors.department_list',
                 'homepage.context_processors.homepage_counters',
-                'homepage.context_processors.activity_submenus',  
-
-        
-
-
-
             ],
         },
     },

@@ -100,40 +100,45 @@
             {% endfor %}
           </ul>
         </li>
+<li class="nav-item dropdown">
+  <a class="nav-link dropdown-toggle" href="#" id="activityAlumniDropdown" role="button" data-bs-toggle="dropdown">
+    Activities & Alumni
+  </a>
+  <ul class="dropdown-menu dropdown-large p-2" aria-labelledby="activityAlumniDropdown" style="min-width: 300px;">
 
-        <!-- Activities & Alumni with Nested Submenu -->
-        <li class="nav-item dropdown">
-          <a class="nav-link dropdown-toggle" href="#" id="activitiesDropdown" role="button" data-bs-toggle="dropdown">
-            ACTIVITIES & ALUMNI
-          </a>
-          <ul class="dropdown-menu" aria-labelledby="activitiesDropdown" data-bs-auto-close="outside">
-            {% for section in nav_sections %}
-              {% if section.children.all %}
-                <li class="dropdown-submenu">
-                  <a class="dropdown-item dropdown-toggle" href="#">{{ section.name }}</a>
-                  <ul class="dropdown-menu">
-                    {% for child in section.children.all %}
-                      <li><a class="dropdown-item" href="{% url 'activity_detail' child.slug %}">{{ child.name }}</a></li>
-                    {% endfor %}
-                  </ul>
-                </li>
-              {% else %}
-                <li><a class="dropdown-item" href="{% url 'activity_detail' section.slug %}">{{ section.name }}</a></li>
-              {% endif %}
-            {% endfor %}
-          </ul>
-        </li>
-
-     <li class="nav-item dropdown">
-  <a class="nav-link dropdown-toggle" href="#" id="actDrop" data-bs-toggle="dropdown">Activities</a>
-  <ul class="dropdown-menu">
-    {% for cat in activity_categories %}
-      <li><a class="dropdown-item" href="{% url 'activity_subsection_list' cat.slug %}">{{ cat.name }}</a></li>
+    <!-- Activities -->
+    <li><h6 class="dropdown-header">Activities</h6></li>
+    {% for submenu in activity_submenus %}
+      <li><a class="dropdown-item" href="{% url 'activity_detail' submenu.slug %}">{{ submenu.title }}</a></li>
     {% endfor %}
+
+    <li><hr class="dropdown-divider"></li>
+
+    <!-- Alumni -->
+    <li><h6 class="dropdown-header">Alumni</h6></li>
+    {% for submenu in alumni_submenus %}
+      <li><a class="dropdown-item" href="{% url 'alumni_detail' submenu.slug %}">{{ submenu.title }}</a></li>
+    {% endfor %}
+
+    <li><hr class="dropdown-divider"></li>
+
+    <!-- Extension -->
+    <li><h6 class="dropdown-header">Extension</h6></li>
+    {% for ext in extension_categories %}
+      <li><a class="dropdown-item" href="{% url 'extension_detail' ext.slug %}">{{ ext.name }}</a></li>
+    {% endfor %}
+
+    <li><hr class="dropdown-divider"></li>
+
+    <!-- Sports -->
+    <li><h6 class="dropdown-header">Sports</h6></li>
+    {% for sport in sports_categories %}
+      <li><a class="dropdown-item" href="{% url 'extension_detail' sport.slug %}">{{ sport.name }}</a></li>
+    {% endfor %}
+
   </ul>
 </li>
 
-   
 
         <!-- Staff Login -->
         <li class="nav-item">

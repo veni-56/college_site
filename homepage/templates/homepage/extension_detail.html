@@ -1,0 +1,138 @@
+{% extends "homepage/base.html" %}
+{% load static %}
+{% block fullwidth %}
+
+<!-- 🟣 Extension Custom CSS -->
+<style>
+  .extension-block {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin-bottom: -1px;
+  }
+
+  .extension-text {
+    flex: 1 1 60%;
+    padding: 10px;
+    color: black;
+    font-size: 18px;
+    line-height: 1.8;
+    text-align: justify;
+  }
+
+  .extension-image {
+    flex: 1 1 40%;
+    padding: 10px;
+    text-align: center;
+    margin-top: 90px;
+  }
+
+  .extension-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+
+  .extension-image img:hover {
+    transform: scale(1.03);
+  }
+
+  .extension-heading {
+    font-weight: bold;
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #660066;
+  }
+
+  .extension-divider {
+    width: 70px;
+    height: 4px;
+    background-color: #990099;
+    margin-bottom: 20px;
+    border: none;
+  }
+
+  .extension-content {
+    font-size: 17px;
+    font-weight: bold;
+    color: #111;
+    line-height: 1.8;
+    text-align: justify;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 768px) {
+    .extension-block {
+      flex-direction: column;
+    }
+
+    .extension-text,
+    .extension-image {
+      flex: 1 1 100%;
+    }
+
+    .extension-image {
+      margin-top: 20px;
+    }
+  }
+</style>
+
+<!-- 🟪 Extension Tab Content -->
+<div class="container py-4">
+  <h2 class="text-center mb-4">{{ extension.name }}</h2>
+
+  <!-- Tabs -->
+  <ul class="nav nav-tabs mb-3" id="extensionTab" role="tablist">
+    {% for section in content %}
+      <li class="nav-item" role="presentation">
+        <button class="nav-link {% if forloop.first %}active{% endif %}" id="{{ section|slugify }}-tab"
+                data-bs-toggle="tab" data-bs-target="#{{ section|slugify }}" type="button" role="tab">
+          {{ section|title }}
+        </button>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <!-- Tab Contents -->
+  <div class="tab-content" id="extensionTabContent">
+    {% for section, blocks in content.items %}
+      <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="{{ section|slugify }}" role="tabpanel">
+        {% for block in blocks %}
+          <div class="extension-block">
+            <div class="extension-text">
+              {% if block.heading %}
+                <h4 class="extension-heading">{{ block.heading }}</h4>
+                <hr class="extension-divider">
+              {% endif %}
+
+              {% if block.description %}
+                <p class="extension-content">{{ block.description|linebreaks }}</p>
+              {% endif %}
+
+              {% if block.table_html %}
+                <div class="table-responsive my-3">
+                  {{ block.table_html|safe }}
+                </div>
+              {% endif %}
+
+              {% if block.file %}
+                <a href="{{ block.file.url }}" class="btn btn-outline-dark btn-sm" download>📄 Download File</a>
+              {% endif %}
+            </div>
+
+            {% if block.image %}
+              <div class="extension-image">
+                <img src="{{ block.image.url }}" alt="Extension Image">
+              </div>
+            {% endif %}
+          </div>
+          <hr>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endblock %}

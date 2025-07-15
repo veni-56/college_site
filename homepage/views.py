@@ -1,9 +1,10 @@
 from django.shortcuts import render, get_object_or_404,redirect
-from .models import HomePageContent,SliderImage,HomeQuickLink,HomepageCounter,Form,AboutSubmenu,AcademicSubMenu,Programme,Department,Department, DepartmentContent,FacultyMember,StudentDeskMenu,RankHolder,EndowmentPrize,NAACSubmenu,NAACContentBlock,ActivitySubMenu,AlumniSubMenu, ExtensionCategory, ExtensionContent,StaffProfile
+from .models import HomePageContent,SliderImage,HomeQuickLink,HomepageCounter,Form,AboutSubmenu,AcademicSubMenu,Programme,Department,Department, DepartmentContent,FacultyMember,StudentDeskMenu,RankHolder,EndowmentPrize,NAACSubmenu,NAACContentBlock,ActivitySubMenu,AlumniSubMenu,ActivityContentBlock,ExtensionCategory, ExtensionContent, SportsSection,ExtensionCategory, ExtensionContent,StaffProfile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from .forms  import StaffProfileForm, LeaveRequestForm   
+
 
 
 def staff_login(request):
@@ -175,23 +176,59 @@ def activity_detail(request, slug):
         'submenu': submenu,
         'content_blocks': content_blocks,
     })
+from django.shortcuts import render, get_object_or_404
+from .models import (
+    ActivitySubMenu, ActivityContentBlock,
+    ExtensionCategory, ExtensionContent,
+    SportsSection
+)
 
+# Activities: detail view
+def activity_detail(request, slug):
+    submenu = get_object_or_404(ActivitySubMenu, slug=slug)
+    content_blocks = submenu.content_blocks.all()
+    return render(request, "homepage/activity_detail.html", {
+        'submenu': submenu,
+        'content_blocks': content_blocks
+    })
+
+
+# Alumni: detail view
 def alumni_detail(request, slug):
     submenu = get_object_or_404(AlumniSubMenu, slug=slug)
-    content_blocks = submenu.content_blocks.all().order_by('id')
-    return render(request, 'alumni/alumni_detail.html', {
+    content_blocks = submenu.content_blocks.all()
+    return render(request, "homepage/alumni_detail.html", {
         'submenu': submenu,
-        'content_blocks': content_blocks,
+        'content_blocks': content_blocks
     })
 
+
+# Extension: tabbed detail view
 def extension_detail(request, slug):
     extension = get_object_or_404(ExtensionCategory, slug=slug)
-    sections = ['about', 'vision mission', 'faculty', 'activities', 'gallery']
-    content = {
-        section: ExtensionContent.objects.filter(extension=extension, section=section)
-        for section in sections
-    }
-    return render(request, 'activities/extension_detail.html', {
+    blocks = ExtensionContent.objects.filter(extension=extension)
+
+    # Organize blocks by 'section' field for tabs
+    content = {}
+    for block in blocks:
+        content.setdefault(block.section, []).append(block)
+
+    return render(request, "homepage/extension_detail.html", {
         'extension': extension,
-        'content': content,
+        'content': content
     })
+
+
+# Sports: tabbed view by section
+def sports_section(request, section):
+    section_title = section.replace("-", " ").title()
+    section_blocks = ExtensionContent.objects.filter(
+        extension__slug="sports", section=section
+    )
+
+    return render(request, "homepage/sports_section.html", {
+        'section': section,
+        'section_title': section_title,
+        'blocks': section_blocks
+    })
+

@@ -31,13 +31,12 @@ urlpatterns = [
 
     # NAAC
     path('naac/<int:submenu_id>/', views.naac_detail_view, name='naac_detail'),
-    # Activities
     path('activities/<slug:slug>/', views.activity_detail, name='activity_detail'),
 
     # Alumni
     path('alumni/<slug:slug>/', views.alumni_detail, name='alumni_detail'),
 
-    # Extension
+    # Extension (tabbed)
     path('activities/extension/<slug:slug>/', views.extension_detail, name='extension_detail'),
 
 ]

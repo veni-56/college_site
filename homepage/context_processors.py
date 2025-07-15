@@ -6,9 +6,9 @@ from .models import (
     StudentDeskMenu,
     NAACSubmenu,
     HomepageCounter,
-    ActivitySubMenu,
     AcademicSubMenu,
-    Department,
+    Department,ActivitySubMenu, AlumniSubMenu, ExtensionCategory
+
 )
 from django.db.models import Prefetch
 
@@ -20,8 +20,13 @@ def basic_info(request):
         "about_menus": AboutSubmenu.objects.all(),
         "student_desk_menus": StudentDeskMenu.objects.all(),
         "submenus": NAACSubmenu.objects.all(),
-        
+        'activity_submenus': ActivitySubMenu.objects.all(),
+        'alumni_submenus': AlumniSubMenu.objects.all(),
+        'extension_categories': ExtensionCategory.objects.exclude(name__icontains="sports"),
+        'sports_categories': ExtensionCategory.objects.filter(name__icontains="sports"),
     }
+
+    
 
 def academic_menu_processor(request):
     return {
@@ -38,7 +43,3 @@ def homepage_counters(request):
         'homepage_counters': HomepageCounter.objects.all().order_by('order')
     }
 
-def activity_submenus(request):
-    return {
-        'activity_submenus': ActivitySubMenu.objects.all().order_by('id')
-    }

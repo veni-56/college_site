@@ -236,9 +236,12 @@ class NAACContentBlock(models.Model):
     def __str__(self):
         return f"{self.submenu.title} - {self.heading}"
     
+
+# Activity Submenus (Latest News, Gallery, etc.)
 class ActivitySubMenu(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=True)
+    order = models.PositiveIntegerField(default=0)
 
     def save(self, *args, **kwargs):
         if not self.slug:
@@ -248,9 +251,14 @@ class ActivitySubMenu(models.Model):
     def __str__(self):
         return self.title
 
+    class Meta:
+        ordering = ['order']
+
+
+# Content blocks for each Activity submenu
 class ActivityContentBlock(models.Model):
     submenu = models.ForeignKey(ActivitySubMenu, on_delete=models.CASCADE, related_name='content_blocks')
-    heading = models.CharField(max_length=200)
+    heading = models.CharField(max_length=200, blank=True)
     content = models.TextField(blank=True, null=True)
     table_html = models.TextField(blank=True, null=True)
     file = models.FileField(upload_to='activities/files/', blank=True, null=True)
@@ -258,6 +266,62 @@ class ActivityContentBlock(models.Model):
 
     def __str__(self):
         return f"{self.submenu.title} - {self.heading}"
+
+
+# Extension categories (Club, Cells, NSS, RRC, YRC)
+class ExtensionCategory(models.Model):
+    name = models.CharField(max_length=200)
+    slug = models.SlugField(unique=True, blank=True)
+    order = models.PositiveIntegerField(default=0)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.name)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.name
+
+    class Meta:
+        ordering = ['order']
+
+
+# Content for Extension tabs
+class ExtensionContent(models.Model):
+    extension = models.ForeignKey(ExtensionCategory, on_delete=models.CASCADE)
+    section = models.CharField(max_length=100)  # e.g. 'about', 'vision', etc.
+    heading = models.CharField(max_length=200, blank=True)
+    description = models.TextField(blank=True)
+    table_html = models.TextField(blank=True, null=True)
+    image = models.ImageField(upload_to='extension/images/', blank=True, null=True)
+    file = models.FileField(upload_to='extension/files/', blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.extension.name} - {self.section} - {self.heading}"
+
+
+# Sports section sub-tabs (About, Vision & Mission, etc.)
+class SportsSection(models.Model):
+    title = models.CharField(max_length=100)
+    slug = models.SlugField(unique=True, blank=True)
+    order = models.PositiveIntegerField(default=0)
+
+    def save(self, *args, **kwargs):
+        if not self.slug:
+            self.slug = slugify(self.title)
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.title
+
+    class Meta:
+        ordering = ['order']
+
+
+from django.db import models
+from django.utils.text import slugify
+
+# Alumni submenus
 class AlumniSubMenu(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(unique=True, blank=True)
@@ -270,6 +334,8 @@ class AlumniSubMenu(models.Model):
     def __str__(self):
         return self.title
 
+
+# Content for each submenu
 class AlumniContentBlock(models.Model):
     submenu = models.ForeignKey(AlumniSubMenu, on_delete=models.CASCADE, related_name='content_blocks')
     heading = models.CharField(max_length=200)
@@ -280,26 +346,3 @@ class AlumniContentBlock(models.Model):
 
     def __str__(self):
         return f"{self.submenu.title} - {self.heading}"
-class ExtensionCategory(models.Model):
-    name = models.CharField(max_length=200)
-    slug = models.SlugField(unique=True, blank=True)
-
-    def save(self, *args, **kwargs):
-        if not self.slug:
-            self.slug = slugify(self.name)
-        super().save(*args, **kwargs)
-
-    def __str__(self):
-        return self.name
-
-class ExtensionContent(models.Model):
-    extension = models.ForeignKey(ExtensionCategory, on_delete=models.CASCADE)
-    section = models.CharField(max_length=100)  # like 'about', 'vision mission', etc.
-    heading = models.CharField(max_length=200, blank=True)
-    description = models.TextField(blank=True)
-    table_html = models.TextField(blank=True, null=True)
-    image = models.ImageField(upload_to='extension/images/', blank=True, null=True)
-    file = models.FileField(upload_to='extension/files/', blank=True, null=True)
-
-    def __str__(self):
-        return f"{self.extension.name} - {self.section} - {self.heading}"

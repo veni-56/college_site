@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import HomePageContent,StaffProfile,SliderImage,HomepageCounter,HomeQuickLink,AboutSubmenu, AboutContentBlock,AcademicSubMenu,AcademicContentBlock,Department,DepartmentContent,FacultyMember,Programme,StudentDeskMenu,StudentDeskContentBlock,RankHolder,EndowmentPrize,Form,NAACSubmenu,NAACContentBlock, ActivitySubMenu, ActivityContentBlock, AlumniSubMenu, AlumniContentBlock, ExtensionCategory, ExtensionContent
+from .models import HomePageContent,StaffProfile,SliderImage,HomepageCounter,HomeQuickLink,AboutSubmenu, AboutContentBlock,AcademicSubMenu,AcademicContentBlock,Department,DepartmentContent,FacultyMember,Programme,StudentDeskMenu,StudentDeskContentBlock,RankHolder,EndowmentPrize,Form,NAACSubmenu,NAACContentBlock 
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
@@ -104,26 +104,43 @@ class NAACSubmenuAdmin(admin.ModelAdmin):
 
 admin.site.register(NAACSubmenu, NAACSubmenuAdmin)
 
+from django.contrib import admin
+from .models import (
+    ActivitySubMenu, ActivityContentBlock,
+    ExtensionCategory, ExtensionContent,
+    SportsSection
+)
+
+# Activity Content Inline
 class ActivityContentInline(admin.StackedInline):
     model = ActivityContentBlock
     extra = 1
 
+# Activity SubMenu Admin
 @admin.register(ActivitySubMenu)
 class ActivitySubMenuAdmin(admin.ModelAdmin):
+    list_display = ('title', 'slug')
+    prepopulated_fields = {'slug': ('title',)}
     inlines = [ActivityContentInline]
+    ordering = ['title']
 
-class AlumniContentInline(admin.StackedInline):
-    model = AlumniContentBlock
-    extra = 1
-
-@admin.register(AlumniSubMenu)
-class AlumniSubMenuAdmin(admin.ModelAdmin):
-    inlines = [AlumniContentInline]
-
+# Extension Category Admin
 @admin.register(ExtensionCategory)
 class ExtensionCategoryAdmin(admin.ModelAdmin):
-    list_display = ('name',)
+    list_display = ('name', 'slug')
+    prepopulated_fields = {'slug': ('name',)}
+    ordering = ['name']
 
+# Extension Content Admin
 @admin.register(ExtensionContent)
 class ExtensionContentAdmin(admin.ModelAdmin):
     list_display = ('extension', 'section', 'heading')
+    list_filter = ('extension', 'section')
+    search_fields = ('heading', 'description')
+
+# Sports Section Admin
+@admin.register(SportsSection)
+class SportsSectionAdmin(admin.ModelAdmin):
+    list_display = ('title', 'slug')
+    prepopulated_fields = {'slug': ('title',)}
+    ordering = ['order']
