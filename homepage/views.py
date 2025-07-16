@@ -104,14 +104,32 @@ def department_list(request):
 
 def department_detail(request, slug):
     department = get_object_or_404(Department, slug=slug)
-    sections = ['about','vision  mission', 'faculty', 'association', 'syllabus', 'gallery', 'achievements', 'intercollege']
-    content = {
-        section: DepartmentContent.objects.filter(department=department, section=section)
-        for section in sections
-    }
+    contents = DepartmentContent.objects.filter(department=department)
+    faculty_members = FacultyMember.objects.filter(department=department)
+
+    content_dict = {}
+
+    for item in contents:
+        section = item.section
+        if section not in content_dict:
+            content_dict[section] = []
+        content_dict[section].append({
+            'type': 'content',
+            'data': item
+        })
+
+    # Add faculty under 'faculty'
+    for member in faculty_members:
+        if 'faculty' not in content_dict:
+            content_dict['faculty'] = []
+        content_dict['faculty'].append({
+            'type': 'faculty',
+            'data': member
+        })
+
     return render(request, 'academic/department_detail.html', {
         'department': department,
-        'content': content,
+        'content': content_dict
     })
 
 

@@ -23,7 +23,7 @@
           <a class="nav-link" href="{% url 'home' %}">HOME</a>
         </li>
 
-        <!-- About-->
+<!-- About -->
 <li class="nav-item dropdown">
   <a class="nav-link dropdown-toggle" href="#" id="aboutDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
     ABOUT
@@ -35,12 +35,12 @@
           {{ menu.title }}
         </a>
       </li>
-      <li><a href="{% url 'administrative' %}">Administrative Staff</a></li>
-      <li><a href="{% url 'magazine' %}">Magazine</a></li>
-
     {% empty %}
       <li><span class="dropdown-item text-muted">No items found</span></li>
     {% endfor %}
+
+    <!-- ✅ Custom Static Items Outside the Loop -->
+    <li><a class="dropdown-item" href="{% url 'magazine' %}">Magazine</a></li>
   </ul>
 </li>
 
@@ -65,9 +65,11 @@
           </a>
         </li>
       {% endif %}
-    {% endfor %}
+    {% endfor %}    
+
 
     <!-- If Programmes Offered is NOT part of academic_submenus and has separate view -->
+    <li><a class="dropdown-item" href="{% url 'administrative' %}">Administrative </a></li>
     <li><a class="dropdown-item" href="{% url 'programmes_offered' %}">Programmes Offered</a></li>
 
   </ul>
