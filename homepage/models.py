@@ -351,3 +351,36 @@ class IICSection(models.Model):
 
     def __str__(self):
         return self.title
+from django.db import models
+
+class Magazine(models.Model):
+    year = models.CharField(max_length=20)
+    title = models.CharField(max_length=255)
+    pdf = models.FileField(upload_to='magazines/pdfs/')
+    cover_image = models.ImageField(upload_to='magazines/covers/', blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.year} – {self.title}"
+
+    class Meta:
+        verbose_name = "Magazine"
+        verbose_name_plural = "Magazines"
+from django.db import models
+
+class Administrative(models.Model):
+    CATEGORY_CHOICES = [
+        ('administrative', 'Administrative Staff'),
+        ('menial', 'Menials'),
+    ]
+
+    name = models.CharField(max_length=255)
+    qualification = models.CharField(max_length=255, blank=True, null=True)
+    designation = models.CharField(max_length=255)
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES)
+
+    def __str__(self):
+        return f"{self.name} - {self.designation}"
+
+    class Meta:
+        verbose_name = "Administrative"
+        verbose_name_plural = "Administrative"  # ✅ shows "Administrative" in admin panel

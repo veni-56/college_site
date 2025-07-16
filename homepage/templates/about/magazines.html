@@ -1,0 +1,44 @@
+{% extends "homepage/base.html" %}
+{% load static %}
+
+{% block fullwidth %}
+<h2 style="text-align: center;">Magazines</h2>
+<h4 style="margin-left: 30px;">Magazines – Last 5 Years</h4>
+
+<div style="overflow-x: auto; margin: 20px;">
+  <table style="width: 100%; border-collapse: collapse; font-size: 16px;">
+    <thead style="background-color: black; color: white;">
+      <tr>
+        <th style="padding: 10px;">S.No</th>
+        <th style="padding: 10px;">Year</th>
+        <th style="padding: 10px;">Title</th>
+        <th style="padding: 10px;">PDF Link</th>
+        <th style="padding: 10px;">Cover Image</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for mag in magazines %}
+      <tr style="text-align: center;">
+        <td style="padding: 10px;">{{ forloop.counter }}</td>
+        <td style="padding: 10px;">{{ mag.year }}</td>
+        <td style="padding: 10px;">{{ mag.title }}</td>
+        <td style="padding: 10px;">
+          {% if mag.pdf %}
+            <a href="{{ mag.pdf.url }}" target="_blank" class="btn btn-outline-primary btn-sm">View PDF</a>
+          {% else %}
+            Not available
+          {% endif %}
+        </td>
+        <td style="padding: 10px;">
+          {% if mag.cover_image %}
+            <img src="{{ mag.cover_image.url }}" alt="Cover" style="height: 60px;">
+          {% else %}
+            Not uploaded
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

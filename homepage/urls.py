@@ -13,6 +13,8 @@ urlpatterns = [
     path('staff/leave/apply/', views.leave_apply, name='leave_apply'),
 
     # About
+    path('about/magazine/', views.magazines_view, name='magazine'),  
+    path('about/administrative-staff/', views.administrative_staff_view, name='administrative_staff'),
     path('about/<int:submenu_id>/', views.about_submenu_detail, name='about_detail'),
 
     # Academic
