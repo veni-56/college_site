@@ -170,12 +170,7 @@ from .models import IICSection
 @admin.register(IICSection)
 class IICSectionAdmin(admin.ModelAdmin):
     list_display = ['title', 'subtitle']
-from django.contrib import admin
-from .models import Magazine
 
-@admin.register(Magazine)
-class MagazineAdmin(admin.ModelAdmin):
-    list_display = ('year', 'title')
 from django.contrib import admin
 from .models import Administrative
 
@@ -183,4 +178,8 @@ from .models import Administrative
 class AdministrativeAdmin(admin.ModelAdmin):
     list_display = ('name', 'designation', 'category')
     list_filter = ('category',)
+from .models import Magazine
 
+@admin.register(Magazine)
+class MagazineAdmin(admin.ModelAdmin):
+    list_display = ('year', 'title')

@@ -1,0 +1,50 @@
+{% extends "homepage/base.html" %}
+{% block fullwidth %}
+<h2 style="text-align: center;">A.K.D. DHARMARAJA WOMEN’S COLLEGE, RAJAPALAIYAM</h2>
+<h3 style="text-align: center;">Administrative Staff</h3>
+
+<div style="margin: 20px;">
+  <table border="1" style="width: 100%; border-collapse: collapse; font-size: 16px;">
+    <thead style="background-color: #343a40; color: white;">
+      <tr>
+        <th style="padding: 10px;">S.No</th>
+        <th style="padding: 10px;">Name</th>
+        <th style="padding: 10px;">Qualification</th>
+        <th style="padding: 10px;">Designation</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for staff in admin_staff %}
+      <tr>
+        <td style="text-align: center;">{{ forloop.counter }}</td>
+        <td>{{ staff.name }}</td>
+        <td>{{ staff.qualification|default:"-" }}</td>
+        <td>{{ staff.designation }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<h3 style="text-align: center;">Menials</h3>
+<div style="margin: 20px;">
+  <table border="1" style="width: 100%; border-collapse: collapse; font-size: 16px;">
+    <thead style="background-color: #343a40; color: white;">
+      <tr>
+        <th style="padding: 10px;">S.No</th>
+        <th style="padding: 10px;">Name</th>
+        <th style="padding: 10px;">Designation</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for staff in menials %}
+      <tr>
+        <td style="text-align: center;">{{ forloop.counter }}</td>
+        <td>{{ staff.name }}</td>
+        <td>{{ staff.designation }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

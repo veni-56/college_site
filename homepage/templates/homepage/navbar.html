@@ -35,6 +35,9 @@
           {{ menu.title }}
         </a>
       </li>
+      <li><a href="{% url 'administrative' %}">Administrative Staff</a></li>
+      <li><a href="{% url 'magazine' %}">Magazine</a></li>
+
     {% empty %}
       <li><span class="dropdown-item text-muted">No items found</span></li>
     {% endfor %}

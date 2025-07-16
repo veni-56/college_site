@@ -237,20 +237,21 @@ from .models import IICSection
 def iic_view(request):
     iic_sections = IICSection.objects.all()
     return render(request, 'activities/iic.html', {'iic_sections': iic_sections})
-from django.shortcuts import render
+
 from .models import Magazine
 
 def magazines_view(request):
     magazines = Magazine.objects.all().order_by('-year')
     return render(request, 'about/magazines.html', {'magazines': magazines})
+from django.shortcuts import render
 from .models import Administrative
 
 def administrative_view(request):
     admin_staff = Administrative.objects.filter(category='administrative')
     menials = Administrative.objects.filter(category='menial')
-    return render(request, 'activities/administrative.html', {
+    return render(request, 'about/administrative.html', {
         'admin_staff': admin_staff,
-        'menials': menials
+        'menials': menials,
     })
 # activities/views.py
 from .models import SportsSection

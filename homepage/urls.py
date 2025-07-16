@@ -13,7 +13,7 @@ urlpatterns = [
     path('staff/leave/apply/', views.leave_apply, name='leave_apply'),
 
     # About
-    path('about/magazine/', views.magazines_view, name='magazine'),  
+    path('about/magazine/', views.magazines_view, name='magazine'),
     path('about/administrative/', views.administrative_view, name='administrative'),
     path('about/<int:submenu_id>/', views.about_submenu_detail, name='about_detail'),
 
