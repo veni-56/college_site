@@ -14,7 +14,7 @@ urlpatterns = [
 
     # About
     path('about/magazine/', views.magazines_view, name='magazine'),  
-    path('about/administrative-staff/', views.administrative_staff_view, name='administrative_staff'),
+    path('about/administrative/', views.administrative_view, name='administrative'),
     path('about/<int:submenu_id>/', views.about_submenu_detail, name='about_detail'),
 
     # Academic

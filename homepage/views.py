@@ -260,10 +260,10 @@ def magazines_view(request):
     return render(request, 'about/magazines.html', {'magazines': magazines})
 from .models import Administrative
 
-def administrative_staff_view(request):
+def administrative_view(request):
     admin_staff = Administrative.objects.filter(category='administrative')
     menials = Administrative.objects.filter(category='menial')
-    return render(request, 'homepage/administrative_staff.html', {
+    return render(request, 'activities/administrative.html', {
         'admin_staff': admin_staff,
         'menials': menials
     })
