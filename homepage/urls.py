@@ -34,8 +34,10 @@ urlpatterns = [
     # NAAC
     path('naac/<int:submenu_id>/', views.naac_detail_view, name='naac_detail'),
 #Activity
-path('sports/', views.sports_home, name='sports_home'),
-path('sports/<int:section_id>/', views.sports_section, name='sports_section'),
+    path('sports/', views.sports_home, name='sports_home'),
+    path('sports/<int:section_id>/', views.sports_section, name='sports_section'),
+    path('sports/facilities/',views.facilities_list,  name='facilities_list'),
+    path('sports/facilities/<int:pk>/',views.facility_detail,  name='facility_detail'),
 
 path('events/', views.event_list, name='event_list'),
 path('events/<int:pk>/', views.event_detail, name='event_detail'),

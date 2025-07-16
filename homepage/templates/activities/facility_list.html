@@ -1,0 +1,13 @@
+{% extends "homepage/base.html" %}
+{% block fullwidth %}
+<div class="container my-4">
+  <h2 class="mb-3">{{ section.title }}</h2>
+  <ul class="list-group">
+    {% for f in facilities %}
+      <li class="list-group-item">
+        <a href="{% url 'facility_detail' f.id %}">{{ f.name }}</a>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+{% endblock %}

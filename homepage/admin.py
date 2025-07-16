@@ -184,3 +184,17 @@ from .models import Administrative
 class AdministrativeAdmin(admin.ModelAdmin):
     list_display = ('name', 'designation', 'category')
     list_filter = ('category',)
+# activities/admin.py
+from .models import (SportsSection, SportsContentBlock,
+                     SportsFacility, SportsFacilityContent)
+
+class SportsFacilityContentInline(admin.TabularInline):
+    model  = SportsFacilityContent
+    extra  = 1
+
+@admin.register(SportsFacility)
+class SportsFacilityAdmin(admin.ModelAdmin):
+    list_display = ('name', 'section', 'order')
+    list_filter  = ('section',)
+    ordering     = ('section', 'order')
+    inlines      = [SportsFacilityContentInline]

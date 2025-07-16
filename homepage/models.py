@@ -291,6 +291,53 @@ class SportsContentBlock(models.Model):
 
     class Meta:
         ordering = ['order']
+
+# activities/models.py  (or wherever your Sports models live)
+
+class SportsFacility(models.Model):
+    """
+    A single facility (Athletics, Chess, …) that belongs to the *Facilities*
+    SportsSection.  You can reuse the same list component for any other section
+    later if you like.
+    """
+    section = models.ForeignKey(
+        SportsSection,
+        on_delete=models.CASCADE,
+        related_name='facilities'
+    )                              # should point to the section whose title is 'Facilities'
+    name   = models.CharField(max_length=120)
+    order  = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return self.name
+
+
+class SportsFacilityContent(models.Model):
+    """
+    Content blocks that live under a single facility – exactly the same idea
+    as SportsContentBlock, but one level deeper.
+    """
+    facility = models.ForeignKey(
+        SportsFacility,
+        on_delete=models.CASCADE,
+        related_name='content_blocks'
+    )
+    heading     = models.CharField(max_length=200, blank=True, null=True)
+    content     = models.TextField(blank=True, null=True)
+    image       = models.ImageField(upload_to='sports/facilities/', blank=True, null=True)
+    pdf         = models.FileField(upload_to='sports/facilities_pdfs/', blank=True, null=True)
+    table_html  = models.TextField(blank=True, null=True)
+    order       = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order']
+
+    def __str__(self):
+        return f'{self.facility.name} – {self.heading or "block"}'
+
 # activities/models.py
 
 class ExtensionUnit(models.Model):

@@ -267,3 +267,25 @@ def administrative_view(request):
         'admin_staff': admin_staff,
         'menials': menials
     })
+# activities/views.py
+from django.shortcuts import render, get_object_or_404
+from .models import SportsSection, SportsFacility
+
+def facilities_list(request):
+    """
+    Show the list of facilities that belong to the SportsSection
+    whose title (or slug) is 'Facilities'.
+    """
+    facilities_section = get_object_or_404(SportsSection, title__iexact='Facilities')
+    facilities = facilities_section.facilities.all()
+    return render(request, 'sports/facilities_list.html', {
+        'section': facilities_section,
+        'facilities': facilities,
+    })
+
+def facility_detail(request, pk):
+    facility = get_object_or_404(SportsFacility, pk=pk)
+    return render(request, 'sports/facility_detail.html', {
+        'facility': facility,
+        'section': facility.section,
+    })

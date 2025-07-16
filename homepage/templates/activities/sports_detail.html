@@ -2,9 +2,84 @@
 {% load static %}
 
 {% block fullwidth %}
-<div class="container my-4">
+<style>
+  .sport-block {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin-bottom: -1px;
+  }
 
-  <!-- 2-level TAB BAR -->
+  .sport-text {
+    flex: 1 1 60%;
+    padding: 10px;
+    color: black;
+    font-size: 18px;
+    line-height: 1.8;
+    text-align: justify;
+  }
+
+  .sport-image {
+    flex: 1 1 40%;
+    padding: 10px;
+    text-align: center;
+    margin-top: 90px;
+  }
+
+  .sport-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+
+  .sport-image img:hover {
+    transform: scale(1.03);
+  }
+
+  .sport-heading {
+    font-weight: bold;
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #004080;
+  }
+
+  .sport-divider {
+    width: 70px;
+    height: 4px;
+    background-color: #006400;
+    margin-bottom: 20px;
+    border: none;
+  }
+
+  .sport-content {
+    font-size: 17px;
+    font-weight: bold;
+    color: #111;
+    line-height: 1.8;
+    text-align: justify;
+    margin-bottom: 20px;
+  }
+
+  @media (max-width: 768px) {
+    .sport-block {
+      flex-direction: column;
+    }
+
+    .sport-text,
+    .sport-image {
+      flex: 1 1 100%;
+    }
+
+    .sport-image {
+      margin-top: 20px;
+    }
+  }
+</style>
+
+<div class="container my-4">
+  <!-- Sports Subsection Tabs -->
   <ul class="nav nav-tabs shadow-sm mb-4" id="sportsTab">
     {% for sec in sections %}
       <li class="nav-item">
@@ -16,19 +91,34 @@
     {% endfor %}
   </ul>
 
-  <!-- TAB CONTENT -->
+  <!-- Section Content -->
   {% for block in active_section.content_blocks.all %}
-    <div class="mb-4">
-      {% if block.heading %}<h4>{{ block.heading }}</h4>{% endif %}
-      {% if block.content %}<p>{{ block.content|linebreaks }}</p>{% endif %}
-      {% if block.image %}<img src="{{ block.image.url }}" class="img-fluid my-2">{% endif %}
-      {% if block.pdf %}<p><a href="{{ block.pdf.url }}" target="_blank">Download PDF</a></p>{% endif %}
-      {% if block.table_html %}{{ block.table_html|safe }}{% endif %}
+    <div class="sport-block mb-4">
+      <div class="sport-text">
+        {% if block.heading %}
+          <h4 class="sport-heading">{{ block.heading }}</h4>
+          <hr class="sport-divider">
+        {% endif %}
+        {% if block.content %}
+          <div class="sport-content">{{ block.content|linebreaks }}</div>
+        {% endif %}
+        {% if block.pdf %}
+          <p><a href="{{ block.pdf.url }}" target="_blank">Download PDF</a></p>
+        {% endif %}
+        {% if block.table_html %}
+          {{ block.table_html|safe }}
+        {% endif %}
+      </div>
+
+      {% if block.image %}
+        <div class="sport-image">
+          <img src="{{ block.image.url }}" alt="Image">
+        </div>
+      {% endif %}
     </div>
     <hr>
   {% empty %}
     <p>No content added yet.</p>
   {% endfor %}
-
 </div>
 {% endblock %}
