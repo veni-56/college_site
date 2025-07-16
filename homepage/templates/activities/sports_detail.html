@@ -1,124 +1,112 @@
-{% extends "homepage/base.html" %}
+{% extends 'homepage/base.html' %}
 {% load static %}
 
 {% block fullwidth %}
 <style>
-  .sport-block {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    margin-bottom: -1px;
+  .custom-heading {
+    color: #004080;
+    font-weight: bold;
+    font-size: 22px;
   }
 
-  .sport-text {
-    flex: 1 1 60%;
-    padding: 10px;
-    color: black;
-    font-size: 18px;
-    line-height: 1.8;
+  .divider-line {
+    width: 80px;
+    height: 4px;
+    background-color: #84e9848e;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border-radius: 2px;
+  }
+
+  .nav-tabs .nav-link {
+    font-weight: 600;
+    color: #004080;
+    border-radius: 0;
+  }
+
+  .nav-tabs .nav-link.active {
+    background-color: #004080;
+    color: white !important;
+    border: none;
+  }
+
+  .content-paragraph {
     text-align: justify;
+    font-size: 30px;  /* Increased from 17px */
+    line-height: 1.9;
+    color: #111;
+    font-weight: bold !important;
+    margin-bottom: 24px;
   }
 
-  .sport-image {
-    flex: 1 1 40%;
-    padding: 10px;
-    text-align: center;
-    margin-top: 90px;
-  }
-
-  .sport-image img {
+  .custom-image {
     max-width: 100%;
     height: auto;
     border-radius: 10px;
+    margin-top: 10px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
   }
 
-  .sport-image img:hover {
+  .custom-image:hover {
     transform: scale(1.03);
   }
 
-  .sport-heading {
-    font-weight: bold;
-    font-size: 22px;
-    margin-bottom: 10px;
-    color: #004080;
+  .tab-pane {
+    animation: fadeIn 0.4s ease-in-out;
   }
 
-  .sport-divider {
-    width: 70px;
-    height: 4px;
-    background-color: #006400;
-    margin-bottom: 20px;
-    border: none;
-  }
-
-  .sport-content {
-    font-size: 17px;
-    font-weight: bold;
-    color: #111;
-    line-height: 1.8;
-    text-align: justify;
-    margin-bottom: 20px;
-  }
-
-  @media (max-width: 768px) {
-    .sport-block {
-      flex-direction: column;
-    }
-
-    .sport-text,
-    .sport-image {
-      flex: 1 1 100%;
-    }
-
-    .sport-image {
-      margin-top: 20px;
-    }
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
   }
 </style>
 
-<div class="container my-4">
-  <!-- Sports Subsection Tabs -->
-  <ul class="nav nav-tabs shadow-sm mb-4" id="sportsTab">
-    {% for sec in sections %}
+<div class="container mt-4">
+  <!-- Sports Tabs -->
+  <ul class="nav nav-tabs mt-4">
+    {% for section in sections %}
       <li class="nav-item">
-        <a class="nav-link {% if sec.id == active_section.id %}active{% endif %}"
-           href="{% url 'sports_section' sec.id %}">
-          {{ sec.title|upper }}
+        <a class="nav-link {% if section.id == active_section.id %}active{% endif %}"
+           href="{% url 'sports_section' section.id %}">
+          {{ section.title }}
         </a>
       </li>
     {% endfor %}
   </ul>
 
   <!-- Section Content -->
-  {% for block in active_section.content_blocks.all %}
-    <div class="sport-block mb-4">
-      <div class="sport-text">
+  <div class="tab-content mt-4">
+    {% for block in active_section.content_blocks.all %}
+      <div class="mb-5">
         {% if block.heading %}
-          <h4 class="sport-heading">{{ block.heading }}</h4>
-          <hr class="sport-divider">
+          <h4 class="custom-heading">{{ block.heading }}</h4>
+          <div class="divider-line"></div>
         {% endif %}
+
         {% if block.content %}
-          <div class="sport-content">{{ block.content|linebreaks }}</div>
+          <p class="content-paragraph"><strong>{{ block.content|linebreaks }}</strong></p>
         {% endif %}
-        {% if block.pdf %}
-          <p><a href="{{ block.pdf.url }}" target="_blank">Download PDF</a></p>
+
+        {% if block.image %}
+          <img src="{{ block.image.url }}" alt="{{ block.heading }}" class="custom-image my-3">
         {% endif %}
+
         {% if block.table_html %}
-          {{ block.table_html|safe }}
+          <div class="table-responsive mt-3">
+            {{ block.table_html|safe }}
+          </div>
+        {% endif %}
+
+        {% if block.pdf %}
+          <a href="{{ block.pdf.url }}" target="_blank" class="btn btn-outline-primary btn-sm mt-3">
+            Download PDF
+          </a>
         {% endif %}
       </div>
-
-      {% if block.image %}
-        <div class="sport-image">
-          <img src="{{ block.image.url }}" alt="Image">
-        </div>
-      {% endif %}
-    </div>
-    <hr>
-  {% empty %}
-    <p>No content added yet.</p>
-  {% endfor %}
+    {% empty %}
+      <p>No content added yet.</p>
+    {% endfor %}
+  </div>
 </div>
 {% endblock %}

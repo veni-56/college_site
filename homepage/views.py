@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404,redirect
-from .models import HomePageContent,SliderImage,HomeQuickLink,HomepageCounter,Form,AboutSubmenu,AcademicSubMenu,Programme,Department,Department, DepartmentContent,FacultyMember,StudentDeskMenu,RankHolder,EndowmentPrize,NAACSubmenu,NAACContentBlock,StaffProfile
+from .models import HomePageContent,SliderImage,HomeQuickLink,HomepageCounter,Form,SportsSection,AboutSubmenu,AcademicSubMenu,Programme,Department,Department, DepartmentContent,FacultyMember,StudentDeskMenu,RankHolder,EndowmentPrize,NAACSubmenu,NAACContentBlock,StaffProfile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -187,22 +187,7 @@ def event_list(request):
 def event_detail(request, pk):
     event = get_object_or_404(Event, pk=pk)
     return render(request, 'activities/event_detail.html', {'event': event})
-# activities/views.py
-from .models import SportsSection
 
-def sports_home(request):
-    """Default to first tab (About)."""
-    first_section = SportsSection.objects.order_by('order').first()
-    return sports_section(request, first_section.id if first_section else None)
-
-def sports_section(request, section_id):
-    sections = SportsSection.objects.order_by('order')
-    section  = get_object_or_404(SportsSection, id=section_id)
-    context = {
-        'sections': sections,      # for tab bar
-        'active_section': section, # which tab is open
-    }
-    return render(request, 'activities/sports_detail.html', context)
 # activities/views.py
 from .models import ExtensionUnit, ExtensionSection
 from django.shortcuts import render, get_object_or_404
@@ -268,24 +253,18 @@ def administrative_view(request):
         'menials': menials
     })
 # activities/views.py
-from django.shortcuts import render, get_object_or_404
-from .models import SportsSection, SportsFacility
+from .models import SportsSection
 
-def facilities_list(request):
-    """
-    Show the list of facilities that belong to the SportsSection
-    whose title (or slug) is 'Facilities'.
-    """
-    facilities_section = get_object_or_404(SportsSection, title__iexact='Facilities')
-    facilities = facilities_section.facilities.all()
-    return render(request, 'sports/facilities_list.html', {
-        'section': facilities_section,
-        'facilities': facilities,
-    })
+def sports_home(request):
+    """Default to first tab (About)."""
+    first_section = SportsSection.objects.order_by('order').first()
+    return sports_section(request, first_section.id if first_section else None)
 
-def facility_detail(request, pk):
-    facility = get_object_or_404(SportsFacility, pk=pk)
-    return render(request, 'sports/facility_detail.html', {
-        'facility': facility,
-        'section': facility.section,
-    })
+def sports_section(request, section_id):
+    sections = SportsSection.objects.order_by('order')
+    section  = get_object_or_404(SportsSection, id=section_id)
+    context = {
+        'sections': sections,      # for tab bar
+        'active_section': section, # which tab is open
+    }
+    return render(request, 'activities/sports_detail.html', context)
