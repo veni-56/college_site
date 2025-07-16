@@ -1,9 +1,9 @@
 {% extends 'homepage/base.html' %}
 
 {% block fullwidth %}
-<!-- ✅ Responsive Bootstrap Carousel -->
+
+<!-- ✅ Carousel -->
 <div id="carouselExampleIndicators" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="3000">
-  <!-- Indicators -->
   <div class="carousel-indicators">
     {% for image in slider_images %}
       <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ forloop.counter0 }}"
@@ -11,12 +11,11 @@
     {% endfor %}
   </div>
 
-  <!-- Slides -->
   <div class="carousel-inner">
     {% for image in slider_images %}
       <div class="carousel-item {% if forloop.first %}active{% endif %}">
-      <img src="{{ image.image.url }}" class="d-block w-100 img-fluid carousel-image" alt="Slide">
-          {% if image.caption %}
+        <img src="{{ image.image.url }}" class="d-block w-100 img-fluid carousel-image" alt="Slide">
+        {% if image.caption %}
           <div class="carousel-caption d-none d-md-block bg-dark bg-opacity-50 p-2 rounded">
             <h5 class="text-white">{{ image.caption }}</h5>
           </div>
@@ -25,18 +24,17 @@
     {% endfor %}
   </div>
 
-  <!-- Controls -->
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Previous</span>
   </button>
-
   <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
     <span class="carousel-control-next-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Next</span>
   </button>
 </div>
 
+<!-- ✅ Quick Links -->
 <div class="container-fluid py-5" style="background-color: #004080;">
   <div class="container">
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
@@ -56,6 +54,89 @@
   </div>
 </div>
 
+<!-- ✅ News & Achievements Section -->
+<style>
+  .news-section {
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 30px;
+    position: relative;
+    height: 160px;
+    overflow: hidden;
+  }
+
+  .news-items {
+    position: absolute;
+    animation: scrollNews 12s linear infinite;
+  }
+
+  @keyframes scrollNews {
+    0% {
+      top: 100%;
+    }
+    100% {
+      top: -100%;
+    }
+  }
+
+  .news-item {
+    margin-bottom: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #000;
+  }
+
+  .news-date {
+    color: #0b6ff3;
+    font-weight: bold;
+    margin-right: 8px;
+  }
+
+  .achievements-section {
+    background-color: #dff0ff;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+  }
+
+  .section-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 15px;
+    color: #004080;
+  }
+
+  .achievement-item {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+  }
+</style>
+
+<div class="container py-3">
+  <h2 class="fw-bold">News & Events</h2>
+  <div class="news-section">
+    <div class="news-items">
+      {% for news in news_list %}
+        <div class="news-item">
+          <span class="news-date">📅 {{ news.date }}</span>
+          {{ news.title }}
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="achievements-section">
+    <div class="section-title">Achievements</div>
+    {% for ach in achievements %}
+      <div class="achievement-item">🏆 {{ ach.title }}</div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- ✅ Statistics Section -->
 <section class="statistics-section text-white py-5" style="background-color: #0f1c2e;">
   <div class="container text-center">
     <div class="row">
@@ -68,7 +149,6 @@
     </div>
   </div>
 </section>
-
 
 <script>
   const counters = document.querySelectorAll('.counter');
@@ -89,6 +169,5 @@
     updateCounter();
   });
 </script>
-
 
 {% endblock %}

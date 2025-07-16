@@ -43,6 +43,11 @@ class AcademicSubMenuAdmin(admin.ModelAdmin):
     inlines = [AcademicContentBlockInline]
 
 admin.site.register(AcademicSubMenu, AcademicSubMenuAdmin)
+from django.contrib import admin
+from .models import News, Achievement
+
+admin.site.register(News)
+admin.site.register(Achievement)
 
 class DepartmentContentInline(admin.StackedInline):
     model = DepartmentContent

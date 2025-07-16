@@ -88,7 +88,12 @@ def about_submenu_detail(request, submenu_id):
         'submenu': submenu,
         'content_blocks': content_blocks,
     })
-#academic_detail
+from django.shortcuts import render, get_object_or_404
+from .models import AcademicSubMenu, AcademicContentBlock
+from .models import Department, DepartmentContent, FacultyMember
+
+
+# Academic submenu detail view (for Faculty, Administrative, etc.)
 def academic_detail(request, slug):
     submenu = get_object_or_404(AcademicSubMenu, slug=slug)
     content_blocks = submenu.academiccontentblock_set.all().order_by('order')
@@ -98,10 +103,14 @@ def academic_detail(request, slug):
         'content_blocks': content_blocks,
     })
 
+
+# Department list page (when clicking "Department" under Academic)
 def department_list(request):
     departments = Department.objects.all()
     return render(request, 'academic/department_list.html', {'departments': departments})
 
+
+# Department detail page with tabbed content (like About, Faculty, Gallery, etc.)
 def department_detail(request, slug):
     department = get_object_or_404(Department, slug=slug)
     contents = DepartmentContent.objects.filter(department=department)
@@ -109,6 +118,7 @@ def department_detail(request, slug):
 
     content_dict = {}
 
+    # Add department content (section-wise)
     for item in contents:
         section = item.section
         if section not in content_dict:
@@ -118,7 +128,7 @@ def department_detail(request, slug):
             'data': item
         })
 
-    # Add faculty under 'faculty'
+    # Add faculty into 'faculty' section of tab
     for member in faculty_members:
         if 'faculty' not in content_dict:
             content_dict['faculty'] = []
@@ -133,6 +143,7 @@ def department_detail(request, slug):
     })
 
 
+# Academic → Faculty (when user clicks Faculty under Academic menu)
 def faculty_view(request, dept_slug=None):
     departments = Department.objects.all()
     faculty_members = FacultyMember.objects.all()
@@ -147,7 +158,16 @@ def faculty_view(request, dept_slug=None):
         'faculty_members': faculty_members,
         'selected_dept': selected_dept,
     })
+from django.shortcuts import render
+from .models import News, Achievement
 
+def homepage(request):
+    news_list = News.objects.order_by('-date')  # Latest news first
+    achievements = Achievement.objects.all()
+    return render(request, 'homepage/index.html', {
+        'news_list': news_list,
+        'achievements': achievements
+    })
 
 def programmes_offered(request):
     ug_programmes = Programme.objects.filter(level='UG')
