@@ -215,8 +215,8 @@ def activity_detail(request, submenu_id):
     return render(request, 'activities/activity_detail.html', {'submenu': submenu})
 
 
-from .models import Event
 from django.shortcuts import render, get_object_or_404
+from .models import Event
 
 def event_list(request):
     events = Event.objects.order_by('-date_from')
@@ -225,7 +225,6 @@ def event_list(request):
 def event_detail(request, pk):
     event = get_object_or_404(Event, pk=pk)
     return render(request, 'activities/event_detail.html', {'event': event})
-
 # activities/views.py
 from .models import ExtensionUnit, ExtensionSection
 from django.shortcuts import render, get_object_or_404

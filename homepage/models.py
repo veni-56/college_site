@@ -256,19 +256,18 @@ class ActivityContentBlock(models.Model):
     def __str__(self):
         return self.heading or "Content Block"
 # activities/models.py
+from django.db import models
 
 class Event(models.Model):
     title = models.CharField(max_length=255)
-    description = models.TextField(blank=True, null=True)
     date_from = models.DateField()
-    date_to = models.DateField()
-    time_from = models.TimeField()
-    time_to = models.TimeField()
     venue = models.CharField(max_length=255)
     image = models.ImageField(upload_to='event_images/', blank=True, null=True)
+    pdf = models.FileField(upload_to='event_pdfs/', blank=True, null=True)
 
     def __str__(self):
         return self.title
+
 # activities/models.py
 class SportsSection(models.Model):
     """Second-level tab headings for Sports page"""

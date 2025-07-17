@@ -1,13 +1,26 @@
 {% extends 'homepage/base.html' %}
 {% block fullwidth %}
-<div class="container my-5">
-  <h2>{{ event.title }}</h2>
-  <p><strong>Date:</strong> {{ event.date_from }} to {{ event.date_to }}</p>
-  <p><strong>Time:</strong> {{ event.time_from }} - {{ event.time_to }}</p>
-  <p><strong>Venue:</strong> {{ event.venue }}</p>
-  {% if event.image %}
-    <img src="{{ event.image.url }}" class="img-fluid my-3">
+<div class="container mt-5">
+  <h2 class="text-primary fw-bold mb-3">{{ event.title }}</h2>
+
+  {% if event.date_from %}
+    <p class="text-muted">Date: {{ event.date_from|date:"d-m-Y" }}</p>
   {% endif %}
-  <p>{{ event.description }}</p>
+
+  {% if event.venue %}
+    <p><strong>Venue:</strong> {{ event.venue }}</p>
+  {% endif %}
+
+  {% if event.image %}
+    <img src="{{ event.image.url }}" class="img-fluid mb-3" alt="Event Image" style="max-height: 400px;">
+  {% endif %}
+
+  {% if event.pdf %}
+    <p>
+      <a href="{{ event.pdf.url }}" target="_blank" class="btn btn-outline-primary">
+        View PDF
+      </a>
+    </p>
+  {% endif %}
 </div>
 {% endblock %}
