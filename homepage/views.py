@@ -78,6 +78,16 @@ def home_view(request):
 def home(request):
     counters = HomepageCounter.objects.all().order_by('order')
     return render(request, 'homepage/index.html', {'homepage_counters': counters})
+from .models import HomeQuickLink, CollegeVideo
+
+def homepage(request):
+    quick_links = HomeQuickLink.objects.all()
+    college_video = CollegeVideo.objects.first()  # only 1 video
+
+    return render(request, 'homepage/index.html', {
+        'quick_links': quick_links,
+        'college_video': college_video,
+    })
 
 #about
 

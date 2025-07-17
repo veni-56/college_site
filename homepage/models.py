@@ -50,6 +50,11 @@ class HomeQuickLink(models.Model):
 
     def __str__(self):
         return self.title
+class CollegeVideo(models.Model):
+    title = models.CharField(max_length=100)
+    video_file = models.FileField(upload_to='college_videos/', blank=True, null=True)
+    video_link = models.URLField(blank=True, null=True)  # if YouTube
+    description = models.TextField(blank=True)
 
 
 class HomepageCounter(models.Model):

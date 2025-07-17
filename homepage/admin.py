@@ -5,8 +5,28 @@ from django.contrib.auth.models import User
 
 admin.site.register(HomePageContent)
 admin.site.register(SliderImage)
-admin.site.register(HomeQuickLink)
+from django.contrib import admin
+from .models import HomeQuickLink, CollegeVideo
 
+@admin.register(HomeQuickLink)
+class HomeQuickLinkAdmin(admin.ModelAdmin):
+    list_display = ('title', 'icon', 'link')
+
+
+@admin.register(CollegeVideo)
+class CollegeVideoAdmin(admin.ModelAdmin):
+    list_display = ('title', 'has_file', 'has_link')
+    search_fields = ('title',)
+
+    def has_file(self, obj):
+        return bool(obj.video_file)
+    has_file.boolean = True
+    has_file.short_description = 'File?'
+
+    def has_link(self, obj):
+        return bool(obj.video_link)
+    has_link.boolean = True
+    has_link.short_description = 'YouTube Link?'
 @admin.register(HomepageCounter)
 class HomepageCounterAdmin(admin.ModelAdmin):
     list_display = ('label', 'value', 'order')
