@@ -1,0 +1,78 @@
+{% extends "homepage/base.html" %}
+{% load static %}
+
+{% block fullwidth %}
+<div class="container my-4">
+  <h2 class="text-center mb-2">Rank Holders</h2>
+
+  {% for year, holders in grouped_data.items %}
+    <h4 class="text-center text-danger mt-4">{{ year }}</h4>
+
+    <div class="table-responsive">
+      <table class="table table-bordered rank-table">
+        <thead class="table-dark">
+          <tr>
+            <th>S.No</th>
+            <th>Department</th>
+            <th>Rankholder Name</th>
+            <th>Paper</th>
+            <th>Rank</th>
+            <th>Rankholder Photo</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for holder in holders %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ holder.department }}</td>
+            <td>{{ holder.name }}</td>
+            <td>{{ holder.paper }}</td>
+            <td>{{ holder.rank }}</td>
+            <td>
+              {% if holder.photo %}
+                <img src="{{ holder.photo.url }}" alt="{{ holder.name }}" class="rank-img">
+              {% else %}
+                No Photo
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  {% endfor %}
+</div>
+
+<style>
+  .rank-table thead {
+  background-color :#004000;; /* Header Background */
+  }
+
+  .rank-table th {
+    color:white;
+    background-color: #004080;
+    font-weight: bold;
+    text-align: center;
+    vertical-align: middle;
+  }
+
+  .rank-table td {
+    text-align: center;
+    vertical-align: middle;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
+  .rank-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9; /* Zebra stripe for even rows */
+  }
+
+  .rank-img {
+    width: 80px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+  }
+</style>
+{% endblock %}

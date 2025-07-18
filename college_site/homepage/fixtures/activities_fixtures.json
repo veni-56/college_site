@@ -1,0 +1,72 @@
+[
+  {
+    "model": "homepage.sportssection",
+    "pk": 1,
+    "fields": {
+      "title": "About Sports",
+      "slug": "about-sports",
+      "content": "This is the about sports section content.",
+      "image": ""
+    }
+  },
+  {
+    "model": "homepage.sportssection",
+    "pk": 2,
+    "fields": {
+      "title": "Sports Vision and Mission",
+      "slug": "sports-vision-mission",
+      "content": "Our vision and mission for sports.",
+      "image": ""
+    }
+  },
+  {
+    "model": "homepage.extensionactivity",
+    "pk": 1,
+    "fields": {
+      "title": "NSS",
+      "slug": "nss",
+      "content": "NSS details go here.",
+      "image": ""
+    }
+  },
+  {
+    "model": "homepage.extensionactivity",
+    "pk": 2,
+    "fields": {
+      "title": "YRC",
+      "slug": "yrc",
+      "content": "YRC activities and programs.",
+      "image": ""
+    }
+  },
+  {
+    "model": "homepage.iccsection",
+    "pk": 1,
+    "fields": {
+      "title": "ICC About",
+      "slug": "icc-about",
+      "content": "ICC introduction.",
+      "image": ""
+    }
+  },
+  {
+    "model": "homepage.iicsection",
+    "pk": 1,
+    "fields": {
+      "title": "IIC Mission",
+      "slug": "iic-mission",
+      "content": "IIC mission and objectives.",
+      "image": ""
+    }
+  },
+  {
+    "model": "homepage.otheractivity",
+    "pk": 1,
+    "fields": {
+      "title": "Clubs Overview",
+      "slug": "clubs-overview",
+      "content": "Details about various clubs.",
+      "image": ""
+    }
+  }
+]

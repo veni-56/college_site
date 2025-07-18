@@ -1,0 +1,120 @@
+{% extends "homepage/base.html" %}
+{% load static %}
+{% block fullwidth %}
+
+<style>
+  .about-block {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin-bottom: -1px; /* reduced space */
+  }
+
+  .about-text {
+    flex: 1 1 60%;
+    padding: 10px;
+    color: black; /* real black */
+    font-size: 18px;
+    line-height: 1.8;
+    text-align: justify;
+  }
+
+  .about-image {
+    flex: 1 1 40%;
+    padding: 10px;
+    text-align: center;
+    margin-top: 90px;
+  }
+
+  .about-image img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  .about-content {
+  font-size: 17px;
+  font-weight: bold;
+  color: #111;
+  line-height: 1.8;
+  text-align: justify;
+  margin-bottom: 20px;
+}
+
+
+  .about-image img:hover {
+    transform: scale(1.03);
+  }
+
+  .about-heading {
+    font-weight: bold;
+    font-size: 22px;
+    margin-bottom: 10px;
+    color: #004080;
+  }
+
+  .about-divider {
+    width: 70px;
+    height: 4px;
+    background-color: #006400;
+    margin-bottom: 20px;
+    border: none;
+  }
+
+  @media (max-width: 768px) {
+    .about-block {
+      flex-direction: column;
+    }
+
+    .about-text,
+    .about-image {
+      flex: 1 1 100%;
+    }
+
+    .about-image {
+      margin-top: 20px;
+    }
+  }
+</style>
+
+<div class="container my-5">
+
+  {% if content_blocks %}
+    {% for block in content_blocks %}
+      <div class="about-block">
+        <!-- Text block -->
+        <div class="about-text">
+          {% if block.heading %}
+            <div class="about-heading">{{ block.heading }}</div>
+            <hr class="about-divider">
+          {% endif %}
+       {% if block.content %}
+           <div class="about-content">
+          {{ block.content|linebreaks }}
+       </div>
+       {% endif %}
+
+          {% if block.table_html %}
+            <div class="table-responsive mt-3">{{ block.table_html|safe }}</div>
+          {% endif %}
+
+          {% if block.pdf %}
+            <a href="{{ block.pdf.url }}" target="_blank" class="btn btn-outline-primary btn-sm mt-3">Download PDF</a>
+          {% endif %}
+        </div>
+
+        <!-- Image block only if image exists -->
+        {% if block.image %}
+          <div class="about-image">
+            <img src="{{ block.image.url }}" alt="{{ block.heading }}">
+          </div>
+        {% endif %}
+      </div>
+    {% endfor %}
+  {% else %}
+    <p class="text-muted">No content available.</p>
+  {% endif %}
+
+</div>
+{% endblock %}

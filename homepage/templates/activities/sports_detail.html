@@ -1,0 +1,112 @@
+{% extends 'homepage/base.html' %}
+{% load static %}
+
+{% block fullwidth %}
+<style>
+  .custom-heading {
+    color: #004080;
+    font-weight: bold;
+    font-size: 22px;
+  }
+
+  .divider-line {
+    width: 80px;
+    height: 4px;
+    background-color: #84e9848e;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border-radius: 2px;
+  }
+
+  .nav-tabs .nav-link {
+    font-weight: 600;
+    color: #004080;
+    border-radius: 0;
+  }
+
+  .nav-tabs .nav-link.active {
+    background-color: #004080;
+    color: white !important;
+    border: none;
+  }
+
+  .content-paragraph {
+    text-align: justify;
+    font-size: 30px;  /* Increased from 17px */
+    line-height: 1.9;
+    color: #111;
+    font-weight: bold !important;
+    margin-bottom: 24px;
+  }
+
+  .custom-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+    margin-top: 10px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+
+  .custom-image:hover {
+    transform: scale(1.03);
+  }
+
+  .tab-pane {
+    animation: fadeIn 0.4s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+</style>
+
+<div class="container mt-4">
+  <!-- Sports Tabs -->
+  <ul class="nav nav-tabs mt-4">
+    {% for section in sections %}
+      <li class="nav-item">
+        <a class="nav-link {% if section.id == active_section.id %}active{% endif %}"
+           href="{% url 'sports_section' section.id %}">
+          {{ section.title }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <!-- Section Content -->
+  <div class="tab-content mt-4">
+    {% for block in active_section.content_blocks.all %}
+      <div class="mb-5">
+        {% if block.heading %}
+          <h4 class="custom-heading">{{ block.heading }}</h4>
+          <div class="divider-line"></div>
+        {% endif %}
+
+        {% if block.content %}
+          <p class="content-paragraph"><strong>{{ block.content|linebreaks }}</strong></p>
+        {% endif %}
+
+        {% if block.image %}
+          <img src="{{ block.image.url }}" alt="{{ block.heading }}" class="custom-image my-3">
+        {% endif %}
+
+        {% if block.table_html %}
+          <div class="table-responsive mt-3">
+            {{ block.table_html|safe }}
+          </div>
+        {% endif %}
+
+        {% if block.pdf %}
+          <a href="{{ block.pdf.url }}" target="_blank" class="btn btn-outline-primary btn-sm mt-3">
+            Download PDF
+          </a>
+        {% endif %}
+      </div>
+    {% empty %}
+      <p>No content added yet.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

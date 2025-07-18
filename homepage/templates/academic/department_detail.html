@@ -1,0 +1,135 @@
+{% extends 'homepage/base.html' %}
+{% load static %}
+
+{% block fullwidth %}
+<style>
+  .divider-line {
+    width: 80px;
+    height: 4px;
+    background-color: #84e9848e;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    border-radius: 2px;
+  }
+
+  .custom-heading {
+    color: #004080;
+    font-weight: bold;
+  }
+
+  .nav-tabs .nav-link {
+    font-weight: 600;
+    color: #004080;
+    border-radius: 0;
+  }
+
+  .nav-tabs .nav-link.active {
+    background-color: #004080;
+    color: white !important;
+    border: none;
+  }
+
+  .tab-pane {
+    animation: fadeIn 0.4s ease-in-out;
+  }
+
+  @keyframes fadeIn {
+    from {opacity: 0;}
+    to {opacity: 1;}
+  }
+
+  .faculty-table th, .faculty-table td {
+    text-align: center;
+    vertical-align: middle;
+  }
+</style>
+
+<div class="container mt-4">
+  <h2 class="mb-3" style="color:#004080;">{{ department.name }}</h2>
+  <div class="text-center">
+    <hr class="divider-line">
+  </div>
+
+  <ul class="nav nav-tabs mt-4">
+    {% for key in content %}
+      <li class="nav-item">
+        <a class="nav-link {% if forloop.first %}active{% endif %}" data-bs-toggle="tab" href="#{{ key }}">
+          {{ key|capfirst }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <div class="tab-content mt-4">
+    {% for key, items in content.items %}
+      <div class="tab-pane fade {% if forloop.first %}show active{% endif %}" id="{{ key }}">
+
+        {% for item in items %}
+          {% if item.type == 'faculty' %}
+            {% if forloop.first %}
+              <div class="table-responsive">
+                <table class="table table-bordered faculty-table">
+                  <thead style="background-color: #004080; color: white;">
+                    <tr>
+                      <th>Photo</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Position</th>
+                      <th>Qualifications</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+            {% endif %}
+                    <tr>
+                      <td>
+                        {% if item.data.photo %}
+                          <img src="{{ item.data.photo.url }}" style="height:60px;">
+                        {% endif %}
+                      </td>
+                      <td>{{ item.data.name }}</td>
+                      <td>{{ item.data.email }}</td>
+                      <td>{{ item.data.position }}</td>
+                      <td>{{ item.data.qualifications }}</td>
+                    </tr>
+            {% if forloop.last %}
+                  </tbody>
+                </table>
+              </div>
+            {% endif %}
+          {% else %}
+            {% if item.data.heading %}
+              <h4 class="custom-heading mb-2">{{ item.data.heading }}</h4>
+              <div class="divider-line"></div>
+            {% endif %}
+
+            {% if item.data.content %}
+              <p class="text-dark" style="text-align: justify; font-size: 17px; line-height: 1.8;">
+                {{ item.data.content|linebreaks }}
+              </p>
+            {% endif %}
+
+            {% if item.data.table_html %}
+              <div class="table-responsive mt-3">
+                {{ item.data.table_html|safe }}
+              </div>
+            {% endif %}
+
+            {% if item.data.pdf %}
+              <a href="{{ item.data.pdf.url }}" target="_blank" class="btn btn-outline-primary btn-sm mt-3">
+                Download PDF
+              </a>
+            {% endif %}
+
+            {% if item.data.image %}
+              <div class="text-center mt-3">
+                <img src="{{ item.data.image.url }}" class="img-fluid rounded shadow" alt="">
+              </div>
+            {% endif %}
+          {% endif %}
+          <hr>
+        {% endfor %}
+      </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

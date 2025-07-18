@@ -1,0 +1,48 @@
+[
+  {
+    "model": "homepage.academicmenu",
+    "pk": 1,
+    "fields": {
+      "title": "Faculty",
+      "slug": "faculty"
+    }
+  },
+  {
+    "model": "homepage.academicsubmenu",
+    "pk": 1,
+    "fields": {
+      "menu": 1,
+      "title": "Self",
+      "slug": "self"
+    }
+  },
+  {
+    "model": "homepage.academicsubmenu",
+    "pk": 2,
+    "fields": {
+      "menu": 1,
+      "title": "Aided",
+      "slug": "aided"
+    }
+  },
+  {
+    "model": "homepage.academiccontent",
+    "pk": 1,
+    "fields": {
+      "submenu": 1,
+      "title": "Faculty List - Self",
+      "content": "Details of self-financed faculty.",
+      "file": ""
+    }
+  },
+  {
+    "model": "homepage.academiccontent",
+    "pk": 2,
+    "fields": {
+      "submenu": 2,
+      "title": "Faculty List - Aided",
+      "content": "Details of aided faculty.",
+      "file": ""
+    }
+  }
+]

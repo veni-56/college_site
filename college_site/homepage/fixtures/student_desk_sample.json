@@ -1,0 +1,52 @@
+[
+  {
+    "model": "homepage.studentdeskmenu",
+    "pk": 1,
+    "fields": {
+      "title": "Examination"
+    }
+  },
+  {
+    "model": "homepage.studentdeskmenu",
+    "pk": 2,
+    "fields": {
+      "title": "Code of Conduct"
+    }
+  },
+  {
+    "model": "homepage.studentdeskitem",
+    "pk": 1,
+    "fields": {
+      "menu": 1,
+      "title": "Examination Time Table",
+      "description": "The latest timetable for semester exams.",
+      "file": "",
+      "image": "",
+      "video": ""
+    }
+  },
+  {
+    "model": "homepage.studentdeskitem",
+    "pk": 2,
+    "fields": {
+      "menu": 1,
+      "title": "Examination Book",
+      "description": "Syllabus and instructions for examination.",
+      "file": "",
+      "image": "",
+      "video": ""
+    }
+  },
+  {
+    "model": "homepage.studentdeskitem",
+    "pk": 3,
+    "fields": {
+      "menu": 2,
+      "title": "Code of Conduct Guidelines",
+      "description": "General code of conduct to be followed by all students.",
+      "file": "",
+      "image": "",
+      "video": ""
+    }
+  }
+]

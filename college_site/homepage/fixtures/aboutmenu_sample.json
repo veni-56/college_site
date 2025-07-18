@@ -1,0 +1,62 @@
+[
+  {
+    "model": "homepage.aboutmenu",
+    "pk": 1,
+    "fields": {
+      "title": "Our Institution",
+      "slug": "our-institution",
+      "content": "Welcome to our institution. Our college provides quality education for women.",
+      "image": ""
+    }
+  },
+  {
+    "model": "homepage.aboutmenu",
+    "pk": 2,
+    "fields": {
+      "title": "Vision and Mission",
+      "slug": "vision-and-mission",
+      "content": "Our vision is to empower women through education and skill development.",
+      "image": ""
+    }
+  },
+  {
+    "model": "homepage.aboutmenu",
+    "pk": 3,
+    "fields": {
+      "title": "Secretary",
+      "slug": "secretary",
+      "content": "Details about the Secretary of our college.",
+      "image": ""
+    }
+  },
+  {
+    "model": "homepage.aboutmenu",
+    "pk": 4,
+    "fields": {
+      "title": "Principal",
+      "slug": "principal",
+      "content": "Information about the Principal and their message to students.",
+      "image": ""
+    }
+  },
+  {
+    "model": "homepage.aboutmenu",
+    "pk": 5,
+    "fields": {
+      "title": "Academic Council",
+      "slug": "academic-council",
+      "content": "Structure and members of the Academic Council.",
+      "image": ""
+    }
+  },
+  {
+    "model": "homepage.aboutmenu",
+    "pk": 6,
+    "fields": {
+      "title": "Magazine",
+      "slug": "magazine",
+      "content": "Details about the college magazine and student contributions.",
+      "image": ""
+    }
+  }
+]

@@ -1,0 +1,79 @@
+{% extends 'homepage/base.html' %}
+{% load static %}
+
+{% block fullwidth %}
+<style>
+  h2 {
+    color: #004080;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+
+  .nav-tabs .nav-link {
+    color: #004080;
+    font-weight: 600;
+    border: 1px solid #ccc;
+    border-bottom: none;
+    background-color: #f0f8ff;
+    margin-right: 5px;
+    border-radius: 5px 5px 0 0;
+  }
+
+  .nav-tabs .nav-link.active {
+    background-color: #ffffff;
+    border-bottom: 2px solid white;
+    font-weight: bold;
+  }
+
+  .mb-4 h4 {
+    color: #006400;
+    font-weight: bold;
+    font-size: 20px;
+  }
+
+  .mb-4 img {
+    border-radius: 8px;
+    border: 2px solid #ccc;
+    max-width: 100%;
+  }
+
+  .mb-4 a {
+    color: #007bff;
+    text-decoration: underline;
+  }
+
+  hr {
+    border-top: 1px dashed #ccc;
+  }
+</style>
+
+<div class="container my-4">
+  <h2 class="mb-4">{{ unit.title }}</h2>
+
+  <!-- Tab bar -->
+  <ul class="nav nav-tabs mb-3">
+    {% for sec in sections %}
+      <li class="nav-item">
+        <a class="nav-link {% if sec.id == active_section.id %}active{% endif %}"
+           href="{% url 'extension_section' unit.id sec.id %}">
+          {{ sec.title }}
+        </a>
+      </li>
+    {% endfor %}
+  </ul>
+
+  <!-- Tab content -->
+  {% for block in active_section.content_blocks.all %}
+    <div class="mb-4">
+      {% if block.heading %}<h4>{{ block.heading }}</h4>{% endif %}
+      {% if block.content %}<p>{{ block.content|linebreaks }}</p>{% endif %}
+      {% if block.image %}<img src="{{ block.image.url }}" class="img-fluid my-2">{% endif %}
+      {% if block.pdf %}<p><a href="{{ block.pdf.url }}" target="_blank">Download PDF</a></p>{% endif %}
+      {% if block.table_html %}{{ block.table_html|safe }}{% endif %}
+    </div>
+    <hr>
+  {% empty %}
+    <p>No content available.</p>
+  {% endfor %}
+</div>
+{% endblock %}

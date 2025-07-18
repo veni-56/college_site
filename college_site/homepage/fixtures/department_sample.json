@@ -1,0 +1,74 @@
+[
+  {
+    "model": "homepage.department",
+    "pk": 1,
+    "fields": {
+      "name": "B.A Tamil",
+      "slug": "ba-tamil",
+      "description": "Tamil Department (UG)"
+    }
+  },
+  {
+    "model": "homepage.department",
+    "pk": 2,
+    "fields": {
+      "name": "B.A English",
+      "slug": "ba-english",
+      "description": "English Department (UG)"
+    }
+  },
+  {
+    "model": "homepage.department",
+    "pk": 3,
+    "fields": {
+      "name": "M.Sc Computer Science",
+      "slug": "msc-computer-science",
+      "description": "Computer Science Department (PG)"
+    }
+  },
+  {
+    "model": "homepage.department",
+    "pk": 4,
+    "fields": {
+      "name": "M.Sc Physics",
+      "slug": "msc-physics",
+      "description": "Physics Department (PG)"
+    }
+  },
+  {
+    "model": "homepage.department",
+    "pk": 5,
+    "fields": {
+      "name": "M.Sc Mathematics",
+      "slug": "msc-mathematics",
+      "description": "Mathematics Department (PG)"
+    }
+  },
+  {
+    "model": "homepage.department",
+    "pk": 6,
+    "fields": {
+      "name": "BBA",
+      "slug": "bba",
+      "description": "Bachelor of Business Administration"
+    }
+  },
+  {
+    "model": "homepage.department",
+    "pk": 7,
+    "fields": {
+      "name": "B.Com",
+      "slug": "bcom",
+      "description": "Commerce Department"
+    }
+  },
+  {
+    "model": "homepage.department",
+    "pk": 8,
+    "fields": {
+      "name": "B.Com CA",
+      "slug": "bcom-ca",
+      "description": "Commerce with Computer Applications"
+    }
+  }
+]

@@ -1,0 +1,31 @@
+{% extends "homepage/base.html" %}
+{% load static %}
+
+{% block fullwidth %}
+<div class="container my-4">
+
+  {% for section in iic_sections %}
+    <div class="row my-4 p-3 border-bottom">
+      <!-- Left: Image -->
+      <div class="col-md-4 text-center">
+        {% if section.image %}
+          <img src="{{ section.image.url }}" class="img-fluid" style="max-height:200px;" alt="{{ section.title }}">
+        {% else %}
+          <div class="border rounded-circle d-flex align-items-center justify-content-center" style="height:150px;width:150px;margin:auto;">
+            NO IMAGE AVAILABLE
+          </div>
+        {% endif %}
+      </div>
+
+      <!-- Right: Content -->
+      <div class="col-md-8">
+        <h4 class="fw-bold">{{ section.title }}</h4>
+        <p>{{ section.subtitle }}</p>
+        {% if section.pdf %}
+          <a href="{{ section.pdf.url }}" target="_blank" class="btn btn-success">{{ section.button_text }}</a>
+        {% endif %}
+      </div>
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

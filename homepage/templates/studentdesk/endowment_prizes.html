@@ -1,0 +1,51 @@
+{% extends "homepage/base.html" %}
+{% block fullwidth %}
+<div class="container my-4">
+  <div class="table-responsive">
+    <table class="table table-bordered endowment-table">
+      <thead>
+        <tr>
+          <th>S.No</th>
+          <th>Title of the Endowment Prize</th>
+          <th>Name of the Founder</th>
+          <th>In Memory of</th>
+          <th>Awarded to the Student who passes</th>
+          <th>Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for prize in prizes %}
+        <tr>
+          <td>{{ prize.sno }}</td>
+          <td>{{ prize.title }}</td>
+          <td>{{ prize.founder }}</td>
+          <td>{{ prize.memory_of }}</td>
+          <td>{{ prize.awarded_to }}</td>
+          <td>{{ prize.amount }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<style>
+  .endowment-table thead {
+    background-color: #006400; /* Dark green header */
+    color: white;
+    text-align: center;
+  }
+
+  .endowment-table td, .endowment-table th {
+    text-align: center;
+    vertical-align: middle;
+    padding: 10px;
+    
+  }
+
+  .endowment-table tbody tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+</style>
+
+{% endblock %}
