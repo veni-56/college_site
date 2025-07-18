@@ -50,11 +50,24 @@ class HomeQuickLink(models.Model):
 
     def __str__(self):
         return self.title
+from django.db import models
+
 class CollegeVideo(models.Model):
-    title = models.CharField(max_length=100)
-    video_file = models.FileField(upload_to='college_videos/', blank=True, null=True)
-    video_link = models.URLField(blank=True, null=True)  # if YouTube
-    description = models.TextField(blank=True)
+    title = models.CharField(max_length=200)
+    video = models.FileField(upload_to='videos/')
+
+    def __str__(self):
+        return self.title
+
+
+from django.db import models
+
+class StudentLogin(models.Model):
+    email = models.EmailField(max_length=254, unique=True)
+    password = models.CharField(max_length=100)  # store securely if for actual login use
+
+    def __str__(self):
+        return self.email
 
 
 class HomepageCounter(models.Model):
@@ -381,15 +394,15 @@ class Administrative(models.Model):
     class Meta:
         verbose_name = "Administrative Staff"
         verbose_name_plural = "Administrative Staff"
-from django.db import models
+
+from django.db import models  # <- Correct import at the top
 
 class News(models.Model):
-    title = models.CharField(max_length=255)
+    title = models.CharField(max_length=255)  # <- Correct field
     date = models.DateField()
 
     def __str__(self):
         return f"{self.date} - {self.title}"
-
 
 class Achievement(models.Model):
     title = models.CharField(max_length=255)

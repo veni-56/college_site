@@ -1,0 +1,8 @@
+<h2>Achievements</h2>
+<ul>
+  {% for ach in achievements %}
+    <li>{{ ach.title }}</li>
+  {% empty %}
+    <li>No achievements added.</li>
+  {% endfor %}
+</ul>

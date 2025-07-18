@@ -1,0 +1,16 @@
+{% extends 'homepage/base.html' %}
+
+{% block content %}
+<div class="container py-4">
+  <h2 class="text-center text-primary mb-4">College Video</h2>
+
+  {% if video %}
+    <video width="100%" height="auto" controls>
+      <source src="{{ video.video.url }}" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
+  {% else %}
+    <p>No video uploaded yet.</p>
+  {% endif %}
+</div>
+{% endblock %}

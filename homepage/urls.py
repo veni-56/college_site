@@ -3,6 +3,10 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
+    path('video/', views.college_video, name='college_video'),  # College Video detail page
+    path('student/login/', views.student_login, name='student_login'),
+    path('news/', views.news_list, name='news_list'),
+    path('achievements/', views.achievement_list, name='achievement_list'),
 
     # Staff
     path('staff/login/', views.staff_login, name='staff_login'),
@@ -25,7 +29,7 @@ urlpatterns = [
     path('academic/department/<slug:slug>/', views.department_detail, name='department_detail'),  
     path('academic/<slug:slug>/', views.academic_detail, name='academic_detail'),  
 
-#studentdesk
+    # Student Desk
     path('students-desk/rank-holders/', views.rank_holders, name='rank_holders'),
     path('students-desk/endowment-prizes/', views.endowment_prizes, name='endowment_prizes'),
     path('students-desk/forms/', views.student_forms, name='student_forms'),
@@ -33,19 +37,21 @@ urlpatterns = [
 
     # NAAC
     path('naac/<int:submenu_id>/', views.naac_detail_view, name='naac_detail'),
-#Activity
+
+    # Activity
     path('sports/', views.sports_home, name='sports_home'),
     path('sports/<int:section_id>/', views.sports_section, name='sports_section'),
 
     path('events/', views.event_list, name='event_list'),
     path('events/<int:pk>/', views.event_detail, name='event_detail'),
+    path('events/pdf/<int:event_id>/', views.event_pdf_view, name='event_pdf_view'),
 
     path('extension/', views.extension_list, name='extension_list'),
     path('extension/<int:unit_id>/', views.extension_detail, name='extension_detail'),
     path('extension/<int:unit_id>/<int:section_id>/', views.extension_detail, name='extension_section'),
 
     path('icc/', views.icc_view, name='icc_view'),
-    path('iic/', views.iic_view, name='iic_view'), 
+    path('iic/', views.iic_view, name='iic_view'),
 
-    path('activities/<int:submenu_id>/', views.activity_detail, name='activity_detail'),  # updated generic path
+    path('activities/<int:submenu_id>/', views.activity_detail, name='activity_detail'),
 ]

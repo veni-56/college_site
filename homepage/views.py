@@ -78,16 +78,44 @@ def home_view(request):
 def home(request):
     counters = HomepageCounter.objects.all().order_by('order')
     return render(request, 'homepage/index.html', {'homepage_counters': counters})
+from django.shortcuts import render
 from .models import HomeQuickLink, CollegeVideo
 
 def homepage(request):
     quick_links = HomeQuickLink.objects.all()
-    college_video = CollegeVideo.objects.first()  # only 1 video
-
     return render(request, 'homepage/index.html', {
         'quick_links': quick_links,
-        'college_video': college_video,
     })
+
+def college_video(request):
+    video = CollegeVideo.objects.first()  # Shows first uploaded video
+    return render(request, 'homepage/college_video.html', {'video': video})
+
+from django.shortcuts import get_object_or_404
+from django.http import FileResponse
+from .models import Event  # or your model name
+
+def event_pdf_view(request, event_id):
+    event = get_object_or_404(Event, pk=event_id)
+    if event.pdf:
+        return FileResponse(event.pdf.open(), content_type='application/pdf')
+    else:
+        return render(request, 'homepage/pdf_not_found.html')
+from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+
+def student_login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user is not None:
+            login(request, user)
+            return redirect('student_dashboard')  # You can replace this with your own page
+        else:
+            messages.error(request, 'Invalid register number or password.')
+    return render(request, 'homepage/student/student_login.html')
 
 #about
 
@@ -242,6 +270,16 @@ from django.shortcuts import render, get_object_or_404
 def extension_list(request):
     units = ExtensionUnit.objects.order_by('order')
     return render(request, 'activities/extension_list.html', {'units': units})
+from django.shortcuts import render
+from .models import News, Achievement
+
+def news_list(request):
+    news_items = News.objects.all().order_by('-date')
+    return render(request, 'homepage/news_list.html', {'news_items': news_items})
+
+def achievement_list(request):
+    achievements = Achievement.objects.all()
+    return render(request, 'homepage/achievement_list.html', {'achievements': achievements})
 
 
 def extension_detail(request, unit_id, section_id=None):

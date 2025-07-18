@@ -122,13 +122,49 @@
 
   </ul>
 </li>
+<li class="nav-item">
+  <a href="{% url 'staff_login' %}" class="btn btn-sm staff-login-btn">Staff Login</a>
+</li>
 
-        <!-- Staff Login -->
-        <li class="nav-item">
-          <a class="nav-link {% if request.resolver_match.url_name == 'staff_login' %}active{% endif %}" href="{% url 'staff_login' %}">
-            Staff Login
-          </a>
-        </li>
+<style>
+  .staff-login-btn {
+    background-color: #004080;
+    color: white;
+    border: none;
+    border-radius: 1.5rem; /* Smooth circular effect */
+    padding: 6px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+  }
+
+  .staff-login-btn:hover {
+    background-color: #003366;
+    color: #fff;
+  }
+</style>
+<li class="nav-item">
+  <a href="{% url 'student_login' %}" class="btn btn-sm student-login-btn">Student Login</a>
+</li>
+
+<style>
+  .student-login-btn {
+    background-color: #004080;
+    color: white;
+    border: none;
+    border-radius: 1.5rem; /* Circular corners */
+    padding: 6px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.3s ease;
+    margin-right: 8px;
+  }
+
+  .student-login-btn:hover {
+    background-color: #003366;
+    color: #fff;
+  }
+</style>
 
       </ul>
     </div>

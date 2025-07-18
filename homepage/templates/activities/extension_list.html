@@ -2,19 +2,61 @@
 {% load static %}
 
 {% block fullwidth %}
+<style>
+  .extension-card {
+    height: 100%;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    text-decoration: none !important;
+  }
+
+  .extension-card:hover {
+    transform: scale(1.02);
+  }
+
+  .extension-card img {
+    width: auto;
+    height: 160px;
+    object-fit:cover;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .extension-card .card-body {
+    padding: 15px;
+  }
+
+  .extension-card .card-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #004080;
+  }
+
+  .card-link-wrapper {
+    text-decoration: none !important;
+    color: inherit;
+    display: block;
+    height: 100%;
+  }
+</style>
+
 <div class="container my-4">
   <h2 class="mb-4">Extension Activities</h2>
   <div class="row">
     {% for unit in units %}
-      <div class="col-md-3 mb-4">
-        <a href="{% url 'extension_detail' unit.id %}">
-          <div class="card shadow-sm text-center">
-            <img src="{{ unit.image.url }}" class="card-img-top" style="height:180px; object-fit:cover;">
+      <div class="col-md-3 mb-4 d-flex">
+        <div class="card extension-card shadow-sm text-center w-100">
+          <a href="{% url 'extension_detail' unit.id %}" class="card-link-wrapper">
+            {% if unit.image %}
+              <img src="{{ unit.image.url }}" alt="{{ unit.title }}">
+            {% else %}
+              <img src="{% static 'images/no-image.png' %}" alt="No Image">
+            {% endif %}
             <div class="card-body">
               <h5 class="card-title">{{ unit.title }}</h5>
             </div>
-          </div>
-        </a>
+          </a>
+        </div>
       </div>
     {% endfor %}
   </div>

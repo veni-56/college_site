@@ -1,0 +1,8 @@
+<h2>Latest News</h2>
+<ul>
+  {% for news in news_items %}
+    <li><strong>{{ news.date }}</strong>: {{ news.title }}</li>
+  {% empty %}
+    <li>No news available.</li>
+  {% endfor %}
+</ul>

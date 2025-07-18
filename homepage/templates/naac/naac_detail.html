@@ -1,11 +1,10 @@
 {% extends 'homepage/base.html' %}
-
-{% block content %}
+{% load static %}
+{% block fullwidth %}
 <div class="container mt-4">
-  <h2 class="text-center text-primary fw-blod">{{ submenu.title }}</h2>
 
   {% for block in content %}
-    <div class="mb-4 p-3 bg-light rounded shadow-sm">
+    <div class="mb-4" style="font-weight: bold; font-size: 17px;">
 
         {% if block.heading %}
           <h4 class="text-secondary">{{ block.heading }}</h4>
@@ -38,4 +37,5 @@
       </div>
   {% endfor %}
 </div>
-{% endblock %}
+{% endblock %} 
+ 

@@ -12,21 +12,18 @@ from .models import HomeQuickLink, CollegeVideo
 class HomeQuickLinkAdmin(admin.ModelAdmin):
     list_display = ('title', 'icon', 'link')
 
+from django.contrib import admin
+from .models import CollegeVideo
 
-@admin.register(CollegeVideo)
-class CollegeVideoAdmin(admin.ModelAdmin):
-    list_display = ('title', 'has_file', 'has_link')
-    search_fields = ('title',)
+admin.site.register(CollegeVideo)
 
-    def has_file(self, obj):
-        return bool(obj.video_file)
-    has_file.boolean = True
-    has_file.short_description = 'File?'
+from django.contrib import admin
+from .models import StudentLogin
 
-    def has_link(self, obj):
-        return bool(obj.video_link)
-    has_link.boolean = True
-    has_link.short_description = 'YouTube Link?'
+@admin.register(StudentLogin)
+class StudentLoginAdmin(admin.ModelAdmin):
+    list_display = ('email',)
+    search_fields = ('email',)
 @admin.register(HomepageCounter)
 class HomepageCounterAdmin(admin.ModelAdmin):
     list_display = ('label', 'value', 'order')
@@ -66,9 +63,16 @@ admin.site.register(AcademicSubMenu, AcademicSubMenuAdmin)
 from django.contrib import admin
 from .models import News, Achievement
 
-admin.site.register(News)
-admin.site.register(Achievement)
+@admin.register(News)
+class NewsAdmin(admin.ModelAdmin):
+    list_display = ('title', 'date')
+    list_filter = ('date',)
+    search_fields = ('title',)
 
+@admin.register(Achievement)
+class AchievementAdmin(admin.ModelAdmin):
+    list_display = ('title',)
+    search_fields = ('title',)
 class DepartmentContentInline(admin.StackedInline):
     model = DepartmentContent
     extra = 1
