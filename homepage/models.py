@@ -151,7 +151,7 @@ class DepartmentContent(models.Model):
 
 class FacultyMember(models.Model):
     name = models.CharField(max_length=200)
-    email = models.EmailField()
+    email = models.EmailField(blank=True, null=True)
     photo = models.ImageField(upload_to="faculty/photos/")
     department = models.ForeignKey(Department, on_delete=models.CASCADE)
     cv_pdf = models.FileField(upload_to="faculty/cv/", blank=True, null=True)
