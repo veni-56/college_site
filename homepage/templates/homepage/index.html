@@ -53,88 +53,62 @@
     </div>
   </div>
 </div>
-<!-- ✅ News & Achievements Section -->
-<style>
-  .news-section {
-    background-color: #f4f4f4;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 30px;
-    position: relative;
-    height: 160px;
-    overflow: hidden;
-  }
 
-  .news-items {
-    position: absolute;
-    animation: scrollNews 12s linear infinite;
-  }
-
-  @keyframes scrollNews {
-    0% {
-      top: 100%;
-    }
-    100% {
-      top: -100%;
-    }
-  }
-
-  .news-item {
-    margin-bottom: 20px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #000;
-  }
-
-  .news-date {
-    color: #0b6ff3;
-    font-weight: bold;
-    margin-right: 8px;
-  }
-
-  .achievements-section {
-    background-color: #dff0ff;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 30px;
-  }
-
-  .section-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 15px;
-    color: #004080;
-  }
-
-  .achievement-item {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
-  }
-</style>
-
-<div class="container py-3">
-  <h2 class="fw-bold">News & Events</h2>
-  <div class="news-section">
-    <div class="news-items">
-      {% for news in news_list %}
-        <div class="news-item">
-          <span class="news-date">📅 {{ news.date }}</span>
-          {{ news.title }}
-        </div>
-      {% endfor %}
-    </div>
   </div>
 
-  <div class="achievements-section">
-    <div class="section-title">Achievements</div>
-    {% for ach in achievements %}
-      <div class="achievement-item">🏆 {{ ach.title }}</div>
-    {% endfor %}
-  </div>
-</div>
-
+  <!DOCTYPE html>
+  <html>
+  <head>
+      <title>College Home</title>
+      <style>
+          body { font-family: Arial; padding: 20px; }
+          .section { margin-bottom: 30px; }
+          .section h2 { color: #003366; }
+          .news-item, .ach-item { margin-bottom: 15px; }
+          .ach-image { max-width: 200px; height: auto; display: block; margin-bottom: 10px; }
+      </style>
+  </head>
+  <body>
+  
+      <h1>🎓 Welcome to Our College</h1>
+  
+      <!-- NEWS SECTION -->
+      <div class="section">
+          <h2>🔔 News & Events</h2>
+          {% for news in news_list %}
+              <div class="news-item">
+                  <strong>📅 {{ news.date|date:"d-m-Y" }}</strong><br>
+                  <h4>🗞️ {{ news.title }}</h4>
+                  <p>{{ news.description }}</p>
+                  {% if news.pdf %}
+                      <a href="{{ news.pdf.url }}" target="_blank">📎 Download PDF</a>
+                  {% endif %}
+              </div>
+          {% empty %}
+              <p>No news available.</p>
+          {% endfor %}
+      </div>
+  
+      <!-- ACHIEVEMENTS SECTION -->
+      <div class="section">
+          <h2>🏆 Achievements</h2>
+          {% for ach in achievement_list %}
+              <div class="ach-item">
+                  {% if ach.image %}
+                      <img src="{{ ach.image.url }}" class="ach-image" alt="{{ ach.title }}">
+                  {% endif %}
+                  <h4> {{ ach.title }}</h4>
+                  <p>{{ ach.description }}</p>
+                  <small><i>📅 {{ ach.date|date:"d-m-Y" }}</i></small>
+              </div>
+          {% empty %}
+              <p>No achievements yet.</p>
+          {% endfor %}
+      </div>
+  
+  </body>
+  </html>
+  
 <!-- ✅ Statistics Section -->
 <section class="statistics-section text-white py-5" style="background-color: #0f1c2e;">
   <div class="container text-center">
