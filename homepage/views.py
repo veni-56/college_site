@@ -196,16 +196,6 @@ def faculty_view(request, dept_slug=None):
         'faculty_members': faculty_members,
         'selected_dept': selected_dept,
     })
-from django.shortcuts import render
-from .models import News, Achievement
-
-def homepage(request):
-    news_list = News.objects.order_by('-date')  # Latest news first
-    achievements = Achievement.objects.all()
-    return render(request, 'homepage/index.html', {
-        'news_list': news_list,
-        'achievements': achievements
-    })
 
 def programmes_offered(request):
     ug_programmes = Programme.objects.filter(level='UG')
@@ -354,3 +344,13 @@ def sports_section(request, section_id):
         'active_section': section, # which tab is open
     }
     return render(request, 'activities/sports_detail.html', context)
+from django.shortcuts import render
+from .models import News, Achievement
+
+def home(request):
+    news_list = News.objects.order_by('-date')[:5]
+    achievement_list = Achievement.objects.order_by('-date')[:5]
+    return render(request, 'home.html', {
+        'news_list': news_list,
+        'achievement_list': achievement_list
+    })

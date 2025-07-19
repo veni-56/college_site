@@ -395,17 +395,20 @@ class Administrative(models.Model):
         verbose_name = "Administrative Staff"
         verbose_name_plural = "Administrative Staff"
 
-from django.db import models  # <- Correct import at the top
-
 class News(models.Model):
-    title = models.CharField(max_length=255)  # <- Correct field
+    title = models.CharField(max_length=255)
     date = models.DateField()
+    description = models.TextField(blank=True)
+    pdf = models.FileField(upload_to='news_pdfs/', blank=True, null=True)  # optional
 
     def __str__(self):
         return f"{self.date} - {self.title}"
 
 class Achievement(models.Model):
     title = models.CharField(max_length=255)
+    description = models.TextField(blank=True)
+    image = models.ImageField(upload_to='achievement_images/', blank=True, null=True)
+    date = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return self.title

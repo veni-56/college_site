@@ -60,19 +60,6 @@ class AcademicSubMenuAdmin(admin.ModelAdmin):
     inlines = [AcademicContentBlockInline]
 
 admin.site.register(AcademicSubMenu, AcademicSubMenuAdmin)
-from django.contrib import admin
-from .models import News, Achievement
-
-@admin.register(News)
-class NewsAdmin(admin.ModelAdmin):
-    list_display = ('title', 'date')
-    list_filter = ('date',)
-    search_fields = ('title',)
-
-@admin.register(Achievement)
-class AchievementAdmin(admin.ModelAdmin):
-    list_display = ('title',)
-    search_fields = ('title',)
 class DepartmentContentInline(admin.StackedInline):
     model = DepartmentContent
     extra = 1
@@ -214,3 +201,8 @@ from .models import Magazine
 @admin.register(Magazine)
 class MagazineAdmin(admin.ModelAdmin):
     list_display = ('year', 'title')
+from django.contrib import admin
+from .models import News, Achievement
+
+admin.site.register(News)
+admin.site.register(Achievement)
