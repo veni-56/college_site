@@ -133,9 +133,9 @@
           </div>
           <div class="faculty-details">
             <h5>{{ f.name }}</h5>
+            <a href="mailto:{{ f.email }}" style="text-decoration: none;">{{ f.email }}</a>
             {% if f.position %}<p>{{ f.position }}</p>{% endif %}
             {% if f.qualifications %}<p>{{ f.qualifications }}</p>{% endif %}
-          <a href="mailto:{{ f.email }}" style="text-decoration: none;">{{ f.email }}</a>
             <p>Department: {{ f.department.name }}</p>
             {% if f.cv_pdf %}
               <a href="{{ f.cv_pdf.url }}" class="cv-button" target="_blank">Download CV</a>
