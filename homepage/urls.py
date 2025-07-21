@@ -3,10 +3,7 @@ from . import views
 
 urlpatterns = [
     path('', views.home, name='home'),
-    path('video/', views.college_video, name='college_video'),  # College Video detail page
     path('student/login/', views.student_login, name='student_login'),
-    path('news/', views.news_list, name='news_list'),
-    path('achievements/', views.achievement_list, name='achievement_list'),
 
     # Staff
     path('staff/login/', views.staff_login, name='staff_login'),
@@ -36,7 +33,8 @@ urlpatterns = [
     path('students-desk/<slug:slug>/', views.studentdesk_detail, name='student_desk_detail'),
 
     # NAAC
-    path('naac/<int:submenu_id>/', views.naac_detail_view, name='naac_detail'),
+    path('iqac/<int:submenu_id>/', views.iqac_detail_view, name='iqac_detail'),
+    path('naac/', views.naac_page, name='naac_page'),
 
     # Activity
     path('sports/', views.sports_home, name='sports_home'),

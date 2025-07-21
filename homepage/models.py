@@ -43,22 +43,6 @@ class SliderImage(models.Model):
         return self.caption or f"Slider Image {self.id}"
 
 
-class HomeQuickLink(models.Model):
-    title = models.CharField(max_length=100)
-    icon = models.CharField(max_length=50, help_text="Use Bootstrap icon class (e.g., 'bi-bank')")
-    link = models.CharField(max_length=200, blank=True, help_text="Enter internal (e.g., /placement/) or full URL")
-
-    def __str__(self):
-        return self.title
-from django.db import models
-
-class CollegeVideo(models.Model):
-    title = models.CharField(max_length=200)
-    video = models.FileField(upload_to='videos/')
-
-    def __str__(self):
-        return self.title
-
 
 from django.db import models
 
@@ -162,7 +146,6 @@ class FacultyMember(models.Model):
         return f"{self.name} - {self.department.name}"
 
 class Programme(models.Model):
-    """College-ல் Offered ஆகும் Courses (UG / PG)."""
     LEVEL_CHOICES = [
         ('UG', 'UG'),
         ('PG', 'PG'),
@@ -238,17 +221,17 @@ class Form(models.Model):
         return f"{self.sno}. {self.name}"
 
 
-class NAACSubmenu(models.Model):
+class IQACSubmenu(models.Model):
     title = models.CharField(max_length=200)
 
     def __str__(self):
         return self.title
-class NAACContentBlock(models.Model):
-    submenu = models.ForeignKey(NAACSubmenu, on_delete=models.CASCADE)
+class IQACContentBlock(models.Model):
+    submenu = models.ForeignKey(IQACSubmenu, on_delete=models.CASCADE)
     heading = models.CharField(max_length=200, blank=True)
     content = models.TextField(blank=True)
-    image = models.ImageField(upload_to='naac/images/', blank=True, null=True)
-    pdf = models.FileField(upload_to='naac/pdfs/', blank=True, null=True)
+    image = models.ImageField(upload_to='iqac/images/', blank=True, null=True)
+    pdf = models.FileField(upload_to='iqac/pdfs/', blank=True, null=True)
     table_html = models.TextField(blank=True)
     
     def __str__(self):
@@ -395,17 +378,36 @@ class Administrative(models.Model):
         verbose_name = "Administrative Staff"
         verbose_name_plural = "Administrative Staff"
 
-from django.db import models  # <- Correct import at the top
+
+from django.db import models
 
 class News(models.Model):
-    title = models.CharField(max_length=255)  # <- Correct field
+    title = models.CharField(max_length=255)
     date = models.DateField()
-
-    def __str__(self):
-        return f"{self.date} - {self.title}"
+    pdf_file = models.FileField(upload_to='news_pdfs/', blank=True, null=True)
 
 class Achievement(models.Model):
     title = models.CharField(max_length=255)
+    date = models.DateField()
+    pdf_file = models.FileField(upload_to='achievements_pdfs/', blank=True, null=True)
+
+from django.db import models
+
+class HomeQuickLink(models.Model):
+    section = models.CharField(max_length=100)
+    title = models.CharField(max_length=200)
+    description = models.TextField(blank=True)
+    pdf_file = models.FileField(upload_to='quick_links/pdfs/', blank=True, null=True)
+    video_file = models.FileField(upload_to='quick_links/videos/', blank=True, null=True)
+    icon = models.CharField(max_length=100, blank=True, help_text="Use Bootstrap icon class, e.g., 'bi-file-earmark-pdf'")
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.title
+        return f"{self.section} - {self.title}"    
+
+class NAACSubmenu(models.Model):
+    name = models.CharField(max_length=100)
+    pdf = models.FileField(upload_to='naac_documents/')
+
+    def __str__(self):
+        return self.name

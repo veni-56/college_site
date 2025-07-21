@@ -1,21 +1,11 @@
 from django.contrib import admin
-from .models import HomePageContent,StaffProfile,SliderImage,HomepageCounter,HomeQuickLink,AboutSubmenu, AboutContentBlock,AcademicSubMenu,AcademicContentBlock,Department,DepartmentContent,FacultyMember,Programme,StudentDeskMenu,StudentDeskContentBlock,RankHolder,EndowmentPrize,Form,NAACSubmenu,NAACContentBlock 
+from .models import HomePageContent,StaffProfile,SliderImage,HomepageCounter,HomeQuickLink,AboutSubmenu, AboutContentBlock,AcademicSubMenu,AcademicContentBlock,Department,DepartmentContent,FacultyMember,Programme,StudentDeskMenu,StudentDeskContentBlock,RankHolder,EndowmentPrize,Form,IQACSubmenu,IQACContentBlock 
 from django.contrib.auth.admin import UserAdmin
 from django.contrib.auth.models import User
 
 admin.site.register(HomePageContent)
 admin.site.register(SliderImage)
-from django.contrib import admin
-from .models import HomeQuickLink, CollegeVideo
 
-@admin.register(HomeQuickLink)
-class HomeQuickLinkAdmin(admin.ModelAdmin):
-    list_display = ('title', 'icon', 'link')
-
-from django.contrib import admin
-from .models import CollegeVideo
-
-admin.site.register(CollegeVideo)
 
 from django.contrib import admin
 from .models import StudentLogin
@@ -60,19 +50,6 @@ class AcademicSubMenuAdmin(admin.ModelAdmin):
     inlines = [AcademicContentBlockInline]
 
 admin.site.register(AcademicSubMenu, AcademicSubMenuAdmin)
-from django.contrib import admin
-from .models import News, Achievement
-
-@admin.register(News)
-class NewsAdmin(admin.ModelAdmin):
-    list_display = ('title', 'date')
-    list_filter = ('date',)
-    search_fields = ('title',)
-
-@admin.register(Achievement)
-class AchievementAdmin(admin.ModelAdmin):
-    list_display = ('title',)
-    search_fields = ('title',)
 class DepartmentContentInline(admin.StackedInline):
     model = DepartmentContent
     extra = 1
@@ -123,15 +100,15 @@ admin.site.register(StudentDeskMenu, StudentDeskMenuAdmin)
 class RankHolderAdmin(admin.ModelAdmin):
     list_display = ['academic_year', 'department', 'name', 'rank']
 
-class NAACContentBlockInline(admin.StackedInline):
-    model = NAACContentBlock
+class IQACContentBlockInline(admin.StackedInline):
+    model = IQACContentBlock
     extra = 1
     fields = ['heading', 'image', 'content', 'table_html', 'pdf']
 
-class NAACSubmenuAdmin(admin.ModelAdmin):
-    inlines = [NAACContentBlockInline]
+class IQACSubmenuAdmin(admin.ModelAdmin):
+    inlines = [IQACContentBlockInline]
 
-admin.site.register(NAACSubmenu, NAACSubmenuAdmin)
+admin.site.register(IQACSubmenu, IQACSubmenuAdmin)
 
 from django.contrib import admin
 from .models import ActivitySubmenu, ActivityContentBlock
@@ -214,3 +191,21 @@ from .models import Magazine
 @admin.register(Magazine)
 class MagazineAdmin(admin.ModelAdmin):
     list_display = ('year', 'title')
+
+from .models import News, Achievement
+
+admin.site.register(News)
+admin.site.register(Achievement)
+
+from .models import HomeQuickLink
+
+@admin.register(HomeQuickLink)
+class HomeQuickLinkAdmin(admin.ModelAdmin):
+    list_display = ('section', 'title', 'created_at')
+    search_fields = ('section', 'title')
+from django.contrib import admin
+from .models import NAACSubmenu
+
+@admin.register(NAACSubmenu)
+class NAACSubmenuAdmin(admin.ModelAdmin):
+    list_display = ('name', 'pdf')

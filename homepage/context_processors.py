@@ -4,10 +4,10 @@ from .models import (
     HomeQuickLink,
     AboutSubmenu,
     StudentDeskMenu,
-    NAACSubmenu,
+    IQACSubmenu,
     HomepageCounter,
     AcademicSubMenu,
-    Department,ActivitySubmenu
+    Department,ActivitySubmenu,NAACSubmenu
 
 )
 from django.db.models import Prefetch
@@ -19,8 +19,9 @@ def basic_info(request):
         'quick_links': HomeQuickLink.objects.all(),
         "about_menus": AboutSubmenu.objects.all(),
         "student_desk_menus": StudentDeskMenu.objects.all(),
-        "submenus": NAACSubmenu.objects.all(),
+        "submenus": IQACSubmenu.objects.all(),
         'activity_menus': ActivitySubmenu.objects.all(),
+        'naac_submenus': NAACSubmenu.objects.all(),
 
     }
 

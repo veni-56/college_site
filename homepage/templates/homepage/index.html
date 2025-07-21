@@ -10,7 +10,6 @@
         {% if forloop.first %}class="active"{% endif %} aria-label="Slide {{ forloop.counter }}"></button>
     {% endfor %}
   </div>
-
   <div class="carousel-inner">
     {% for image in slider_images %}
       <div class="carousel-item {% if forloop.first %}active{% endif %}">
@@ -23,7 +22,6 @@
       </div>
     {% endfor %}
   </div>
-
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
     <span class="carousel-control-prev-icon" aria-hidden="true"></span>
     <span class="visually-hidden">Previous</span>
@@ -33,19 +31,20 @@
     <span class="visually-hidden">Next</span>
   </button>
 </div>
-
-<!-- ✅ Quick Links -->
-<div class="container-fluid py-5" style="background-color: #004080;">
+<!-- ✅ Info Section Responsive -->
+<div class="container-fluid py-5" style="background: linear-gradient(to right, #003366, #004080);">
   <div class="container">
-    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-4 text-center text-white">
       {% for item in quick_links %}
-        <div class="col">
-          <a href="{{ item.link }}" class="text-decoration-none">
-            <div class="quicklink-box text-center d-flex flex-column justify-content-center align-items-center h-100">
-              <div class="icon-wrapper mb-3">
-                <i class="bi {{ item.icon }}"></i>
+        <div class="col d-flex">
+          <a href="{% if item.video_file %}{{ item.video_file.url }}{% elif item.pdf_file %}{{ item.pdf_file.url }}{% else %}#{% endif %}" 
+             target="_blank" 
+             class="text-decoration-none text-white w-100">
+            <div class="info-box shadow-lg rounded-4 p-4 h-100 d-flex flex-column justify-content-center align-items-center position-relative">
+              <div class="icon-circle mb-3">
+                <i class="{{ item.icon }} fs-1"></i>
               </div>
-              <h6 class="link-title">{{ item.title }}</h6>
+              <h6 class="fw-bold mb-0">{{ item.title }}</h6>
             </div>
           </a>
         </div>
@@ -53,93 +52,183 @@
     </div>
   </div>
 </div>
-
-<!-- ✅ News & Achievements Section -->
 <style>
-  .news-section {
-    background-color: #f4f4f4;
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 30px;
+  /* 🌟 Main info box */
+  .info-box {
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 1.5rem;
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    min-height: 180px;
+    padding: 2rem 1.5rem;
+    text-align: center;
+  }
+  
+  /* 🖱️ Hover effects (desktop only) */
+  @media (hover:hover) {
+    .info-box:hover {
+      transform: translateY(-6px);
+      background: rgba(255, 255, 255, 0.1);
+      border-color: white;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+    }
+  
+    .info-box:hover .icon-circle {
+      background-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 0 15px 4px rgba(255, 255, 255, 0.6);
+      transform: scale(1.1);
+    }
+  
+    .info-box:hover .icon-circle::after {
+      opacity: 1;
+    }
+  }
+  
+  /* 🔘 Icon inside glowing circle */
+  .icon-circle {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    border: 2px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: relative;
-    height: 160px;
-    overflow: hidden;
+    transition: all 0.3s ease;
+    z-index: 1;
   }
-
-  .news-items {
+  
+  /* ✨ Animated pulse ring */
+  .icon-circle::after {
+    content: "";
     position: absolute;
-    animation: scrollNews 12s linear infinite;
+    width: 100%;
+    height: 100%;
+    border: 2px solid rgba(255, 255, 255, 0.5);
+    border-radius: 50%;
+    animation: pulse-ring 1.5s infinite;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.3s;
   }
-
-  @keyframes scrollNews {
+  
+  @keyframes pulse-ring {
     0% {
-      top: 100%;
+      transform: scale(1);
+      opacity: 0.6;
     }
     100% {
-      top: -100%;
+      transform: scale(1.8);
+      opacity: 0;
     }
   }
-
-  .news-item {
-    margin-bottom: 20px;
-    font-size: 16px;
-    font-weight: bold;
-    color: #000;
+  
+  /* 📱 Mobile Responsive Adjustments */
+  @media (max-width: 576px) {
+    .icon-circle {
+      width: 55px;
+      height: 55px;
+      font-size: 1.3rem;
+    }
+  
+    .info-box {
+      padding: 1.2rem 0.8rem;
+      min-height: 150px;
+      text-align: center;
+    }
+  
+    .info-box h6 {
+      font-size: 0.95rem;
+      margin-top: 0.5rem;
+    }
+  
+    .info-box i {
+      font-size: 1.5rem;
+    }
   }
+  </style>
+  
+    <!-- 🎓 About + News & Achievements Section -->
+<div class="scroll-section my-5 d-flex justify-content-center gap-4 flex-wrap">
 
-  .news-date {
-    color: #0b6ff3;
-    font-weight: bold;
-    margin-right: 8px;
-  }
+  <!-- 🎓 College Info -->
+  <div class="about-block" style="flex: 1 1 600px; max-width: 600px;">
 
-  .achievements-section {
-    background-color: #dff0ff;
-    padding: 20px;
-    border-radius: 10px;
-    margin-bottom: 30px;
-  }
-
-  .section-title {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 15px;
-    color: #004080;
-  }
-
-  .achievement-item {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 10px;
-  }
-</style>
-
-<div class="container py-3">
-  <h2 class="fw-bold">News & Events</h2>
-  <div class="news-section">
-    <div class="news-items">
-      {% for news in news_list %}
-        <div class="news-item">
-          <span class="news-date">📅 {{ news.date }}</span>
-          {{ news.title }}
-        </div>
-      {% endfor %}
+    <div class="about-text">
+      <h2 class="about-heading" style="color: #004080;">About Our College</h2>
+      <hr class="about-divider" style="
+        width: 70px;
+        height: 4px;
+        background-color: #006400;
+        margin-bottom: 20px;
+        border: none;">
+      <p class="about-content" style="font-weight: bold; font-size: 18px;">
+        Welcome to our esteemed institution where excellence in education meets real-world innovation.
+        Our college has been a beacon of academic brilliance, offering a wide range of courses and holistic development
+        opportunities for students. With state-of-the-art infrastructure, experienced faculty, and a vibrant campus culture,
+        we prepare future leaders and thinkers. Join us on a journey of growth, knowledge, and transformation.
+      </p>
     </div>
+
   </div>
 
-  <div class="achievements-section">
-    <div class="section-title">Achievements</div>
-    {% for ach in achievements %}
-      <div class="achievement-item">🏆 {{ ach.title }}</div>
-    {% endfor %}
+  <!-- 📦 News & Achievements (stacked inside) -->
+  <div class="d-flex flex-column gap-4" style="flex: 1 1 600px; max-width: 600px;">
+
+    <!-- 📰 News -->
+    <div class="scroll-box" style="background: white; border: 2px solid #003399; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); padding: 15px; height: 250px;">
+      <h2 class="section-title" style="text-align: center; font-size: 20px; font-weight: bold; color: #1a237e; margin-bottom: 10px;">
+        News & Events
+      </h2>
+      <marquee behavior="scroll" direction="up" scrollamount="2" scrolldelay="100" onmouseover="this.stop();" onmouseout="this.start();" height="180px">
+        <ul style="list-style: none; padding: 0; margin: 0;">
+          {% for news in news_list %}
+            <li style="margin-bottom: 20px; text-align: center;">
+              <div style="font-weight: bold; font-size: 14px; color: #555;">📅 {{ news.date|date:"d-m-Y" }}</div>
+              <div style="font-size: 16px; font-weight: 600; color: #0033cc;">
+                {% if news.pdf_file %}
+                  <a href="{{ news.pdf_file.url }}" target="_blank">{{ news.title }}</a>
+                {% else %}
+                  {{ news.title }}
+                {% endif %}
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      </marquee>
+    </div>
+
+    <!-- 🏆 Achievements -->
+    <div class="scroll-box" style="background: white; border: 2px solid #003399; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); padding: 15px; height: 250px;">
+      <h2 class="section-title" style="text-align: center; font-size: 20px; font-weight: bold; color: #1a237e; margin-bottom: 10px;">
+        Achievements
+      </h2>
+      <marquee behavior="scroll" direction="up" scrollamount="2" scrolldelay="100" onmouseover="this.stop();" onmouseout="this.start();" height="180px">
+        <ul style="list-style: none; padding: 0; margin: 0;">
+          {% for ach in achievement_list %}
+            <li style="margin-bottom: 20px; text-align: center;">
+              <div style="font-weight: bold; font-size: 14px; color: #555;">🏆 {{ ach.date|date:"d-m-Y" }}</div>
+              <div style="font-size: 16px; font-weight: 600; color: #0033cc;">
+                {% if ach.pdf_file %}
+                  <a href="{{ ach.pdf_file.url }}" target="_blank">{{ ach.title }}</a>
+                {% else %}
+                  {{ ach.title }}
+                {% endif %}
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      </marquee>
+    </div>
+
   </div>
 </div>
-
-<!-- ✅ Statistics Section -->
-<section class="statistics-section text-white py-5" style="background-color: #0f1c2e;">
+<!-- 📊 Statistics Section (Full Width) -->
+<section id="stats" class="statistics-section text-white py-5 my-5" style="background-color:#004080;">
   <div class="container text-center">
-    <div class="row">
+    <div class="row justify-content-center">
       {% for counter in homepage_counters %}
         <div class="col-md-2 col-6 mb-3">
           <h2 class="counter" data-target="{{ counter.value }}">0</h2>
@@ -149,25 +238,40 @@
     </div>
   </div>
 </section>
-
+<!-- ✅ Counters Script (Triggers on scroll into view) -->
 <script>
   const counters = document.querySelectorAll('.counter');
-  counters.forEach(counter => {
-    counter.innerText = '0';
-    const updateCounter = () => {
-      const target = +counter.getAttribute('data-target');
-      const current = +counter.innerText;
-      const increment = target / 100;
+  let started = false;
 
-      if (current < target) {
-        counter.innerText = `${Math.ceil(current + increment)}`;
-        setTimeout(updateCounter, 30);
-      } else {
-        counter.innerText = target;
-      }
-    };
-    updateCounter();
+  function animateCounters() {
+    counters.forEach(counter => {
+      const update = () => {
+        const target = +counter.getAttribute('data-target');
+        const current = +counter.innerText;
+        const step = target / 80;
+
+        if (current < target) {
+          counter.innerText = `${Math.ceil(current + step)}`;
+          setTimeout(update, 20);
+        } else {
+          counter.innerText = target;
+        }
+      };
+      update();
+    });
+  }
+
+  function isInView(el) {
+    const rect = el.getBoundingClientRect();
+    return rect.top <= window.innerHeight && rect.bottom >= 0;
+  }
+
+  window.addEventListener('scroll', () => {
+    const statsSection = document.getElementById('stats');
+    if (!started && isInView(statsSection)) {
+      started = true;
+      animateCounters();
+    }
   });
 </script>
-
 {% endblock %}

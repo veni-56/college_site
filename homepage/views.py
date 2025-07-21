@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404,redirect
-from .models import HomePageContent,SliderImage,HomeQuickLink,HomepageCounter,Form,SportsSection,AboutSubmenu,AcademicSubMenu,Programme,Department,Department, DepartmentContent,FacultyMember,StudentDeskMenu,RankHolder,EndowmentPrize,NAACSubmenu,NAACContentBlock,StaffProfile
+from .models import HomePageContent,SliderImage,HomeQuickLink,HomepageCounter,Form,SportsSection,AboutSubmenu,AcademicSubMenu,Programme,Department,Department, DepartmentContent,FacultyMember,StudentDeskMenu,RankHolder,EndowmentPrize,IQACSubmenu,IQACContentBlock,StaffProfile
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
@@ -69,27 +69,9 @@ def home(request):
     slider_images = SliderImage.objects.all()
     return render(request, 'homepage/index.html', {'slider_images': slider_images})
 
-def home_view(request):
-    quick_links = HomeQuickLink.objects.all()
-    return render(request, 'homepage/index.html', {
-        'quick_links': quick_links
-    })
-
 def home(request):
     counters = HomepageCounter.objects.all().order_by('order')
     return render(request, 'homepage/index.html', {'homepage_counters': counters})
-from django.shortcuts import render
-from .models import HomeQuickLink, CollegeVideo
-
-def homepage(request):
-    quick_links = HomeQuickLink.objects.all()
-    return render(request, 'homepage/index.html', {
-        'quick_links': quick_links,
-    })
-
-def college_video(request):
-    video = CollegeVideo.objects.first()  # Shows first uploaded video
-    return render(request, 'homepage/college_video.html', {'video': video})
 
 from django.shortcuts import get_object_or_404
 from django.http import FileResponse
@@ -196,16 +178,6 @@ def faculty_view(request, dept_slug=None):
         'faculty_members': faculty_members,
         'selected_dept': selected_dept,
     })
-from django.shortcuts import render
-from .models import News, Achievement
-
-def homepage(request):
-    news_list = News.objects.order_by('-date')  # Latest news first
-    achievements = Achievement.objects.all()
-    return render(request, 'homepage/index.html', {
-        'news_list': news_list,
-        'achievements': achievements
-    })
 
 def programmes_offered(request):
     ug_programmes = Programme.objects.filter(level='UG')
@@ -236,10 +208,10 @@ def student_forms(request):
     return render(request, 'studentdesk/student_forms.html', {'forms': forms})
 
 #naac
-def naac_detail_view(request, submenu_id):
-    submenu = get_object_or_404(NAACSubmenu, id=submenu_id)
-    content = NAACContentBlock.objects.filter(submenu=submenu)
-    return render(request, 'naac/naac_detail.html', {
+def iqac_detail_view(request, submenu_id):
+    submenu = get_object_or_404(IQACSubmenu, id=submenu_id)
+    content = IQACContentBlock.objects.filter(submenu=submenu)
+    return render(request, 'iqac/iqac_detail.html', {
         'submenu': submenu,
         'content' : content
     })
@@ -270,16 +242,6 @@ from django.shortcuts import render, get_object_or_404
 def extension_list(request):
     units = ExtensionUnit.objects.order_by('order')
     return render(request, 'activities/extension_list.html', {'units': units})
-from django.shortcuts import render
-from .models import News, Achievement
-
-def news_list(request):
-    news_items = News.objects.all().order_by('-date')
-    return render(request, 'homepage/news_list.html', {'news_items': news_items})
-
-def achievement_list(request):
-    achievements = Achievement.objects.all()
-    return render(request, 'homepage/achievement_list.html', {'achievements': achievements})
 
 
 def extension_detail(request, unit_id, section_id=None):
@@ -354,3 +316,29 @@ def sports_section(request, section_id):
         'active_section': section, # which tab is open
     }
     return render(request, 'activities/sports_detail.html', context)
+
+from .models import News, Achievement
+
+def home(request):
+    news_list = News.objects.all().order_by('-date')
+    achievement_list = Achievement.objects.all().order_by('-date')  # ✅ Make sure this line is here
+
+    return render(request, 'homepage/index.html', {
+        'news_list': news_list,
+        'achievement_list': achievement_list,  
+    })  
+
+
+from django.shortcuts import render
+from .models import HomeQuickLink
+
+def home_view(request):
+    quick_links = HomeQuickLink.objects.all()
+    return render(request, 'homepage/index.html', {
+        'quick_links': quick_links
+    })
+
+def naac_page(request):
+    # Get all NAAC submenu items from the database
+    docs = NAACSubmenu.objects.all()
+    return render(request, 'naac.html', {'naac_submenus': docs})    
