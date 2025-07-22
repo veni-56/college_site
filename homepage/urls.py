@@ -14,6 +14,7 @@ urlpatterns = [
     path('staff/leave/apply/', views.leave_apply, name='leave_apply'),
 
     # About
+    
     path('about/magazine/', views.magazines_view, name='magazine'),
     path('about/administrative/', views.administrative_view, name='administrative'),
     path('about/<int:submenu_id>/', views.about_submenu_detail, name='about_detail'),
@@ -52,4 +53,4 @@ urlpatterns = [
     path('iic/', views.iic_view, name='iic_view'),
 
     path('activities/<int:submenu_id>/', views.activity_detail, name='activity_detail'),
-]
+]  

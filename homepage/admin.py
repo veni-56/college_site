@@ -209,3 +209,4 @@ from .models import NAACSubmenu
 @admin.register(NAACSubmenu)
 class NAACSubmenuAdmin(admin.ModelAdmin):
     list_display = ('name', 'pdf')
+

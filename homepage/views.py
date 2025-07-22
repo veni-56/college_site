@@ -342,3 +342,4 @@ def naac_page(request):
     # Get all NAAC submenu items from the database
     docs = NAACSubmenu.objects.all()
     return render(request, 'naac.html', {'naac_submenus': docs})    
+
