@@ -415,3 +415,31 @@ class NAACSubmenu(models.Model):
 
     def __str__(self):
         return f"{self.name} - {self.complaint_type}"
+class CommitteeUnit(models.Model):
+    title = models.CharField(max_length=200)
+    image = models.ImageField(upload_to="committee_units/")
+    order = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return self.title
+
+
+class CommitteeSection(models.Model):
+    unit = models.ForeignKey(CommitteeUnit, on_delete=models.CASCADE, related_name='sections')
+    title = models.CharField(max_length=200)  # About, Vision & Mission etc.
+    order = models.PositiveIntegerField(default=0)
+
+    def __str__(self):
+        return f"{self.unit.title} - {self.title}"
+
+
+class CommitteeContentBlock(models.Model):
+    section = models.ForeignKey(CommitteeSection, on_delete=models.CASCADE, related_name='content_blocks')
+    heading = models.CharField(max_length=200, blank=True, null=True)
+    content = models.TextField(blank=True, null=True)
+    image = models.ImageField(upload_to='committee_content/', blank=True, null=True)
+    pdf = models.FileField(upload_to='committee_pdfs/', blank=True, null=True)
+    table_html = models.TextField(blank=True, null=True)
+
+    def __str__(self):
+        return self.heading or "Content Block"

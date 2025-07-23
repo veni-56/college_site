@@ -210,3 +210,24 @@ from .models import NAACSubmenu
 class NAACSubmenuAdmin(admin.ModelAdmin):
     list_display = ('name', 'pdf')
 
+from .models import CommitteeUnit, CommitteeSection, CommitteeContentBlock
+
+class CommitteeContentInline(admin.TabularInline):
+    model = CommitteeContentBlock
+    extra = 1
+
+class CommitteeSectionInline(admin.TabularInline):
+    model = CommitteeSection
+    extra = 1
+
+@admin.register(CommitteeUnit)
+class CommitteeUnitAdmin(admin.ModelAdmin):
+    list_display = ['title', 'order']
+    inlines = [CommitteeSectionInline]
+    ordering = ['order']
+
+@admin.register(CommitteeSection)
+class CommitteeSectionAdmin(admin.ModelAdmin):
+    list_display = ['unit', 'title', 'order']
+    ordering = ['unit', 'order']
+    inlines = [CommitteeContentInline]

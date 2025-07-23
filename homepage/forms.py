@@ -55,4 +55,3 @@ class ICCForm(forms.ModelForm):
             'class_or_dept': forms.TextInput(attrs={'placeholder': 'Enter Class/Department', 'class': 'form-control'}),
             'roll_or_designation': forms.TextInput(attrs={'placeholder': 'Enter Roll No/ Designation', 'class': 'form-control'}),
         }
-f

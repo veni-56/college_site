@@ -343,3 +343,26 @@ def naac_page(request):
     docs = NAACSubmenu.objects.all()
     return render(request, 'naac.html', {'naac_submenus': docs})    
 
+from .models import CommitteeUnit, CommitteeSection
+from django.shortcuts import render, get_object_or_404
+
+def committee_list(request):
+    units = CommitteeUnit.objects.order_by('order')
+    return render(request, 'about/committee_list.html', {'units': units})
+
+
+def committee_detail(request, unit_id, section_id=None):
+    unit = get_object_or_404(CommitteeUnit, id=unit_id)
+    sections = unit.sections.order_by('order')
+    if section_id:
+        about_section = get_object_or_404(CommitteeSection, id=section_id, unit=unit)
+    else:
+        about_section = sections.first()
+    
+    context = {
+        'unit': unit,
+        'sections': sections,
+        'about_section': about_section,
+    }
+    return render(request, 'about/committee_detail.html', context)
+
